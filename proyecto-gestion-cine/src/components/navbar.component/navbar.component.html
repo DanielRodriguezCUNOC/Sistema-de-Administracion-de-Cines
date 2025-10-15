@@ -1,0 +1,67 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+  <div class="container">
+    <a class="navbar-brand fw-bold text-uppercase" href="/">CineAgora</a>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto align-items-center">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/">Inicio</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/companies">Compañías</a>
+        </li>
+
+        <!-- Solo visible si el usuario ha iniciado sesión -->
+        <li class="nav-item" *ngIf="isLoggedIn">
+          <a class="nav-link" routerLink="/movies">Películas</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/promotions">Promociones</a>
+        </li>
+
+        <!-- Mostrar "Iniciar sesión" si el usuario es invitado -->
+        <li class="nav-item ms-lg-3" *ngIf="!isLoggedIn">
+          <a class="btn btn-outline-light btn-sm" routerLink="/login" routerLinkActive="active">
+            Iniciar Sesión
+          </a>
+        </li>
+
+        <!-- Mostrar "Perfil / Cerrar sesión" si está logueado -->
+        <li class="nav-item dropdown ms-lg-3" *ngIf="isLoggedIn">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="userDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <i class="bi bi-person-circle"></i> Mi Cuenta
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+            <li>
+              <a class="dropdown-item" routerLink="/profile">Perfil</a>
+            </li>
+            <li>
+              <button class="dropdown-item text-danger" (click)="logout()">Cerrar sesión</button>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

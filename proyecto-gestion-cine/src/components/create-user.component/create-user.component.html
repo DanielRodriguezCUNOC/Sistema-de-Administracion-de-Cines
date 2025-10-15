@@ -1,0 +1,53 @@
+<form [formGroup]="nuevoRegistroUsuario" (submit)="submit()">
+  <div class="row g-3">
+    <div class="col-sm-6">
+      <label for="firstName" class="form-label">Nombre Completo</label>
+
+      <input
+        type="text"
+        class="form-control"
+        name="nombre"
+        id="nombre"
+        autocomplete="off"
+        placeholder="Tu Nombre"
+        formControlName="nombre"
+        [class.is-invalid]="
+          nuevoRegistroUsuario.controls['nombre'].dirty &&
+          nuevoRegistroUsuario.controls['nombre'].invalid
+        "
+      />
+
+      @if (nuevoRegistroUsuario.controls['nombre'].invalid &&
+      nuevoRegistroUsuario.controls['nombre'].touched) {
+      <div class="invalid-feedback">
+        <div>Ingrese un nombre valido</div>
+      </div>
+      }
+    </div>
+
+    <div class="col-sm-6">
+      <label for="email" class="form-label">Correo Electrónico</label>
+
+      <input
+        type="email"
+        class="form-control"
+        name="email"
+        id="email"
+        autocomplete="off"
+        placeholder="Tu Correo Electrónico"
+        formControlName="email"
+        [class.is-invalid]="
+          nuevoRegistroUsuario.controls['email'].dirty &&
+          nuevoRegistroUsuario.controls['email'].invalid
+        "
+      />
+
+      @if (nuevoRegistroUsuario.controls['email'].invalid &&
+      nuevoRegistroUsuario.controls['email'].touched) {
+      <div class="invalid-feedback">
+        <div>Ingrese un correo electrónico válido</div>
+      </div>
+      }
+    </div>
+  </div>
+</form>
