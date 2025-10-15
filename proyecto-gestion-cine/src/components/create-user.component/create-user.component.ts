@@ -20,6 +20,9 @@ export class CreateUserComponent implements OnInit {
     this.nuevoRegistroUsuario = this.formBuilder.group({
       nombre: [null, [Validators.required, Validators.minLength(2), Validators.maxLength(150)]],
       email: [null, [Validators.required, Validators.email]],
+      usuario: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(20)]],
+      password: [null, [Validators.required, Validators.minLength(8), Validators.maxLength(20)]],
+      telefono: [null, [Validators.required, Validators.pattern('^[0-9]{10}$')]],
     });
   }
 

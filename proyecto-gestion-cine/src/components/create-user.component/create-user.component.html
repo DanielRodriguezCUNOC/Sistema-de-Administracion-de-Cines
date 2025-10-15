@@ -49,5 +49,77 @@
       </div>
       }
     </div>
+    <div class="col-sm-6">
+      <label for="usuario" class="form-label">Nombre de Usuario</label>
+
+      <input
+        type="text"
+        class="form-control"
+        name="usuario"
+        id="usuario"
+        autocomplete="off"
+        placeholder="Tu Nombre de Usuario"
+        formControlName="usuario"
+        [class.is-invalid]="
+          nuevoRegistroUsuario.controls['usuario'].dirty &&
+          nuevoRegistroUsuario.controls['usuario'].invalid
+        "
+      />
+
+      @if (nuevoRegistroUsuario.controls['usuario'].invalid &&
+      nuevoRegistroUsuario.controls['usuario'].touched) {
+      <div class="invalid-feedback">
+        <div>Ingrese un nombre de usuario válido (5-20 caracteres)</div>
+      </div>
+      }
+    </div>
+    <div class="col-sm-6">
+      <label for="password" class="form-label">Contraseña</label>
+
+      <input
+        type="password"
+        class="form-control"
+        name="password"
+        id="password"
+        autocomplete="off"
+        placeholder="Tu Contraseña"
+        formControlName="password"
+        [class.is-invalid]="
+          nuevoRegistroUsuario.controls['password'].dirty &&
+          nuevoRegistroUsuario.controls['password'].invalid
+        "
+      />
+
+      @if (nuevoRegistroUsuario.controls['password'].invalid &&
+      nuevoRegistroUsuario.controls['password'].touched) {
+      <div class="invalid-feedback">
+        <div>Ingrese una contraseña válida (8-20 caracteres)</div>
+      </div>
+      }
+    </div>
+    <div class="col-sm-6">
+      <label for="telefono" class="form-label">Teléfono</label>
+
+      <input
+        type="text"
+        class="form-control"
+        name="telefono"
+        id="telefono"
+        autocomplete="off"
+        placeholder="Tu Número de Teléfono"
+        formControlName="telefono"
+        [class.is-invalid]="
+          nuevoRegistroUsuario.controls['telefono'].dirty &&
+          nuevoRegistroUsuario.controls['telefono'].invalid
+        "
+      />
+
+      @if (nuevoRegistroUsuario.controls['telefono'].invalid &&
+      nuevoRegistroUsuario.controls['telefono'].touched) {
+      <div class="invalid-feedback">
+        <div>Ingrese un número de teléfono válido (10 dígitos)</div>
+      </div>
+      }
+    </div>
   </div>
 </form>

@@ -1,28 +1,34 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
-  private loggedIn = false;
+  private isLoggedInSubject = new BehaviorSubject<boolean>(false);
 
-  login(email: string, password: string): boolean {
-    // Aquí podrías llamar a un backend real (HTTP request)
-    // Este ejemplo simula un login correcto:
-    if (email && password) {
-      this.loggedIn = true;
-      localStorage.setItem('isLoggedIn', 'true');
-      return true;
-    }
-    return false;
+  public isLoggedIn$ = this.isLoggedInSubject.asObservable();
+
+  constructor() {
+    this.checkLoginStatus();
   }
 
-  logout(): void {
-    this.loggedIn = false;
+  private checkLoginStatus() {
+    const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    this.isLoggedInSubject.next(loggedIn);
+  }
+
+  login() {
+    this.isLoggedInSubject.next(false);
     localStorage.removeItem('isLoggedIn');
   }
 
-  isAuthenticated(): boolean {
-    return this.loggedIn || localStorage.getItem('isLoggedIn') === 'true';
+  logout() {
+    this.isLoggedInSubject.next(false);
+    localStorage.removeItem('isLoggedIn');
+  }
+
+  get isLoggedIn(): boolean {
+    return this.isLoggedInSubject.value;
   }
 }
