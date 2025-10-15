@@ -1,0 +1,47 @@
+.login-container {
+  background: linear-gradient(
+      rgba(0, 0, 0, 0.7),
+      rgba(0, 0, 0, 0.7)
+    ),
+    url('/assets/banner-cine.jpg') center/cover no-repeat;
+}
+
+.login-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  width: 100%;
+  max-width: 400px;
+  border-radius: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+  }
+
+  .form-control {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: #fff;
+    border-radius: 10px;
+
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    &:focus {
+      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+    }
+  }
+
+  label {
+    font-weight: 500;
+  }
+
+  .btn-primary {
+    border-radius: 10px;
+    font-size: 1rem;
+  }
+}
