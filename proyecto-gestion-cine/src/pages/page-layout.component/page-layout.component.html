@@ -1,0 +1,21 @@
+<div class="page-container d-flex flex-column min-vh-100">
+  <app-navbar></app-navbar>
+
+  <div class="content flex-grow-1 container-fluid py-3">
+    <div class="row">
+      <div class="col-12 col-md-2 mb-3 mb-md-0 d-flex flex-column align-items-center">
+        <app-advertisement [position]="'left'"></app-advertisement>
+      </div>
+
+      <div class="col-12 col-md-8">
+        <ng-content></ng-content>
+      </div>
+
+      <div class="col-12 col-md-2 mt-3 mt-md-0 d-flex flex-column align-items-center">
+        <app-advertisement [position]="'right'"></app-advertisement>
+      </div>
+    </div>
+  </div>
+
+  <app-footer></app-footer>
+</div>

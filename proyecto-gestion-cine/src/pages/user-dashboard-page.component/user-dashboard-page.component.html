@@ -1,0 +1,22 @@
+<app-page-layout>
+  <div class="home-container position-relative d-flex align-items-center justify-content-center">
+    <img src="/assets/images/cinema-bg.jpg" alt="Fondo de cine" class="bg-image" />
+
+    <div class="overlay"></div>
+
+    <div class="content text-center text-light">
+      <h1 class="mb-3">🎬 Bienvenido, {{ userName || 'Cinéfilo' }}!</h1>
+      <p class="lead mb-5">
+        Explora cines, descubre películas y vive la experiencia del séptimo arte.
+      </p>
+
+      <div class="d-flex flex-wrap justify-content-center gap-3">
+        <button class="btn btn-primary btn-lg" routerLink="/cines">Ver Cines</button>
+        <button class="btn btn-outline-light btn-lg" routerLink="/peliculas">
+          Películas Populares
+        </button>
+        <button class="btn btn-outline-light btn-lg" routerLink="/perfil">Mi Perfil</button>
+      </div>
+    </div>
+  </div>
+</app-page-layout>

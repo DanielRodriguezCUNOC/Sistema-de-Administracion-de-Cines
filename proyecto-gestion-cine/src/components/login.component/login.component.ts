@@ -14,8 +14,8 @@ export class LoginComponent {
   constructor(private loginService: LoginService, private router: Router) {}
 
   login() {
-    const success = this.loginService.login(this.email, this.password);
-    if (success) {
+    const success = this.loginService.login();
+    if (this.email && this.password) {
       this.router.navigate(['/movies']); // Redirige a películas
     } else {
       alert('Correo o contraseña incorrectos');

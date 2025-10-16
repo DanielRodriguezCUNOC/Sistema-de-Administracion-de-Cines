@@ -19,9 +19,6 @@
         <li class="nav-item">
           <a class="nav-link" routerLink="/">Inicio</a>
         </li>
-
-        <!-- Solo visible si el usuario ha iniciado sesión -->
-
         @if(isLoggedIn){
         <li class="nav-item">
           <a class="nav-link" routerLink="/companies">Cines</a>
@@ -34,19 +31,13 @@
         <li class="nav-item">
           <a class="nav-link" routerLink="/promotions">Ver Perfil</a>
         </li>
-        }
-
-        <!-- Mostrar "Iniciar sesión" si el usuario es invitado -->
-        @if(!isLoggedIn){
+        } @if(!isLoggedIn){
         <li class="nav-item ms-lg-3">
           <a class="btn btn-outline-light btn-sm" routerLink="/login" routerLinkActive="active">
             Iniciar Sesión
           </a>
         </li>
-        }
-
-        <!-- Mostrar "Perfil / Cerrar sesión" si está logueado -->
-        @if(isLoggedIn){
+        } @if(isLoggedIn){
         <li class="nav-item dropdown ms-lg-3">
           <a
             class="nav-link dropdown-toggle"
