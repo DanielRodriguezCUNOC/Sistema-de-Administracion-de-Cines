@@ -1,0 +1,87 @@
+<app-page-layout>
+  <div
+    class="admin-system-dashboard position-relative d-flex align-items-center justify-content-center"
+  >
+    <img src="/assets/images/system-admin-bg.jpg" alt="Fondo dashboard sistema" class="bg-image" />
+
+    <div class="overlay"></div>
+
+    <div class="dashboard-content container text-light">
+      <h1 class="text-center mb-5">🧭 Panel del Administrador del Sistema</h1>
+
+      <div class="row g-4 justify-content-center">
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="dashboard-card" routerLink="/sysadmin/registrar-cine">
+            <div class="icon mb-3"><i class="bi bi-building-add"></i></div>
+            <h4>Registrar Cine</h4>
+            <p>Agrega nuevos cines al sistema.</p>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="dashboard-card" routerLink="/sysadmin/registrar-pelicula">
+            <div class="icon mb-3"><i class="bi bi-camera-reels"></i></div>
+            <h4>Registrar Película</h4>
+            <p>Registra películas disponibles para todos los cines.</p>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="dashboard-card" routerLink="/sysadmin/cambiar-costo-cine">
+            <div class="icon mb-3"><i class="bi bi-currency-dollar"></i></div>
+            <h4>Cambiar Costo de Cine</h4>
+            <p>Actualiza las tarifas asignadas a cada cine.</p>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="dashboard-card" routerLink="/sysadmin/gestionar-peliculas">
+            <div class="icon mb-3"><i class="bi bi-collection-play"></i></div>
+            <h4>Gestionar Películas</h4>
+            <p>Edita, activa o elimina películas del catálogo.</p>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="dashboard-card" routerLink="/sysadmin/listar-anuncios">
+            <div class="icon mb-3"><i class="bi bi-megaphone"></i></div>
+            <h4>Listar Anuncios</h4>
+            <p>Consulta todos los anuncios registrados en el sistema.</p>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="dashboard-card" routerLink="/sysadmin/costo-bloqueo">
+            <div class="icon mb-3"><i class="bi bi-shield-check"></i></div>
+            <h4>Gestionar Costo de Bloqueo</h4>
+            <p>Administra los precios de bloqueo de anuncios.</p>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="dashboard-card" routerLink="/sysadmin/listar-peliculas">
+            <div class="icon mb-3"><i class="bi bi-list-ul"></i></div>
+            <h4>Listar Películas</h4>
+            <p>Visualiza todas las películas registradas en el sistema.</p>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="dashboard-card" routerLink="/sysadmin/listar-cines">
+            <div class="icon mb-3"><i class="bi bi-geo-alt"></i></div>
+            <h4>Listar Cines</h4>
+            <p>Consulta los cines registrados y su estado actual.</p>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="dashboard-card" routerLink="/sysadmin/registrar-admin-cine">
+            <div class="icon mb-3"><i class="bi bi-person-gear"></i></div>
+            <h4>Registrar Administrador de Cine</h4>
+            <p>Agrega nuevos administradores para cada cine.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-page-layout>

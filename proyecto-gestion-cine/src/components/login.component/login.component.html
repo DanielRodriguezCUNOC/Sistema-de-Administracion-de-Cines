@@ -1,4 +1,4 @@
-<form>
+<form [formGroup]="loginForm" (submit)="submit()">
   <div class="mb-3">
     <label for="email" class="form-label">Correo Electrónico</label>
     <input type="email" id="email" class="form-control" placeholder="ejemplo@correo.com" required />
