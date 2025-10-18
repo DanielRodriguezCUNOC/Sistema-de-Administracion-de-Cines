@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { LoginService } from '../../services/login.service';
+import { LoginService } from '../../../services/login/login.service';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { UsuarioLoginDTO } from '../../services/users/usuario-login-dto';
+import { UsuarioLoginDTO } from '../../../services/users/usuario-login-dto';
 
 @Component({
   selector: 'app-login',

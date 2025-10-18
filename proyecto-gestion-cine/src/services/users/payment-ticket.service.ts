@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { PagoBoleto } from '../../models/pago-boleto';
+import { PagoBoleto } from '../../models/payments/pago-boleto';
 
 @Injectable({
   providedIn: 'root',

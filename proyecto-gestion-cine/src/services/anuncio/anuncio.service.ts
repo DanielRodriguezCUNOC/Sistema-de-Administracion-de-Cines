@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { RestConstants } from '../../shared/rest-constants';
-import { Anuncio } from '../../models/anuncio';
+import { Anuncio } from '../../models/advertisements/anuncio';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 

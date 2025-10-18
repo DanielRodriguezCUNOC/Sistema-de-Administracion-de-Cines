@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { PageLayoutComponent } from '../../components/page-layout.component/page-layout.component';
+import { PageLayoutComponent } from '../../components/share/page-layout.component/page-layout.component';
 
 @Component({
   selector: 'app-user-dashboard-page.component',

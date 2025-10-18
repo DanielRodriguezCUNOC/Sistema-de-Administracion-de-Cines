@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { FooterComponent } from '../../components/footer.component/footer.component';
-import { NavbarComponent } from '../../components/navbar.component/navbar.component';
-import { AdvertisementComponent } from '../../components/advertisement.component/advertisement.component';
+import { FooterComponent } from '../footer.component/footer.component';
+import { NavbarComponent } from '../navbar.component/navbar.component';
+import { AdvertisementComponent } from '../../advertisements/advertisement.component/advertisement.component';
 
 @Component({
   selector: 'app-page-layout',
