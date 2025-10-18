@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CreateUserComponent } from '../../components/create-user.component/create-user.component';
+import { CreateUserComponent } from '../../components/users/create-user.component/create-user.component';
 
 @Component({
   selector: 'app-create-user-page.component',

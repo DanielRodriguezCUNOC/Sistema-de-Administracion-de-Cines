@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { PagoBoleto } from '../../models/pago-boleto';
-import { PaymentTicketService } from '../../services/users/payment-ticket.service';
+import { PagoBoleto } from '../../../models/payments/pago-boleto';
+import { PaymentTicketService } from '../../../services/users/payment-ticket.service';
 
 @Component({
   selector: 'app-pay-ticket-form.component',

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Pelicula } from '../../models/pelicula';
+import { Pelicula } from '../../models/movies/pelicula';
 import { RestConstants } from '../../shared/rest-constants';
 
 export class PeliculaService {
