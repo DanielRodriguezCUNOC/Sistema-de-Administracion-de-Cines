@@ -1,0 +1,113 @@
+<form [formGroup]="roomForm" (ngSubmit)="onSubmit()" novalidate class="create-room-form">
+  <div class="mb-3">
+    <label for="idCine" class="form-label">Cine</label>
+    <select
+      id="idCine"
+      class="form-select"
+      formControlName="idCine"
+      [class.is-invalid]="submitted && f['idCine'].invalid"
+    >
+      <option value="">Seleccione un cine</option>
+      @for (c of cines; track c.id) {
+      <option [value]="c.id">{{ c.nombre }}</option>
+      }
+    </select>
+    @if (submitted && f['idCine'].invalid) {
+    <div class="invalid-feedback">
+      @if (f['idCine'].errors?.['required']) {
+      <div>El cine es obligatorio.</div>
+      }
+    </div>
+    }
+  </div>
+
+  <div class="mb-3">
+    <label for="nombreSala" class="form-label">Nombre de la Sala</label>
+    <input
+      id="nombreSala"
+      type="text"
+      class="form-control"
+      formControlName="nombreSala"
+      maxlength="100"
+      [class.is-invalid]="submitted && f['nombreSala'].invalid"
+    />
+    @if (submitted && f['nombreSala'].invalid) {
+    <div class="invalid-feedback">
+      @if (f['nombreSala'].errors?.['required']) {
+      <div>El nombre de la sala es obligatorio.</div>
+      } @if (f['nombreSala'].errors?.['maxlength']) {
+      <div>Máximo 100 caracteres.</div>
+      }
+    </div>
+    }
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <label for="fila" class="form-label">Filas</label>
+      <input
+        id="fila"
+        type="number"
+        class="form-control"
+        formControlName="fila"
+        min="1"
+        [class.is-invalid]="submitted && f['fila'].invalid"
+      />
+      @if (submitted && f['fila'].invalid) {
+      <div class="invalid-feedback">
+        @if (f['fila'].errors?.['required']) {
+        <div>La cantidad de filas es obligatoria.</div>
+        } @if (f['fila'].errors?.['min']) {
+        <div>Debe ser al menos 1.</div>
+        }
+      </div>
+      }
+    </div>
+
+    <div class="col-md-6 mb-3">
+      <label for="columna" class="form-label">Columnas</label>
+      <input
+        id="columna"
+        type="number"
+        class="form-control"
+        formControlName="columna"
+        min="1"
+        [class.is-invalid]="submitted && f['columna'].invalid"
+      />
+      @if (submitted && f['columna'].invalid) {
+      <div class="invalid-feedback">
+        @if (f['columna'].errors?.['required']) {
+        <div>La cantidad de columnas es obligatoria.</div>
+        } @if (f['columna'].errors?.['min']) {
+        <div>Debe ser al menos 1.</div>
+        }
+      </div>
+      }
+    </div>
+  </div>
+
+  <div class="form-check mb-2">
+    <input
+      id="estadoComentario"
+      class="form-check-input"
+      type="checkbox"
+      formControlName="estadoComentario"
+    />
+    <label class="form-check-label" for="estadoComentario">Habilitar comentarios</label>
+  </div>
+
+  <div class="form-check mb-3">
+    <input
+      id="estadoValoracion"
+      class="form-check-input"
+      type="checkbox"
+      formControlName="estadoValoracion"
+    />
+    <label class="form-check-label" for="estadoValoracion">Habilitar valoraciones</label>
+  </div>
+
+  <div class="d-flex">
+    <button type="submit" class="btn btn-primary">Guardar Sala</button>
+    <button type="button" class="btn btn-secondary ms-2" (click)="onReset()">Limpiar</button>
+  </div>
+</form>

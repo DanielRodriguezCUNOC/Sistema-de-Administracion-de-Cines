@@ -1,0 +1,61 @@
+<form
+  [formGroup]="payAdvertisementForm"
+  (ngSubmit)="onSubmit()"
+  novalidate
+  class="pay-advertisement-form"
+>
+  <div class="mb-3">
+    <label for="anuncio" class="form-label">Anuncio</label>
+    <input id="anuncio" type="text" class="form-control" [value]="nombreAnuncio" readonly />
+    <small class="form-text text-muted">Anuncio seleccionado para pago</small>
+  </div>
+
+  <div class="mb-3">
+    <label for="fechaPago" class="form-label">Fecha de Pago</label>
+    <input
+      id="fechaPago"
+      type="date"
+      class="form-control"
+      formControlName="fechaPago"
+      [class.is-invalid]="submitted && f['fechaPago'].invalid"
+    />
+    @if (submitted && f['fechaPago'].invalid) {
+    <div class="invalid-feedback">
+      @if (f['fechaPago'].errors?.['required']) {
+      <div>La fecha de pago es obligatoria.</div>
+      }
+    </div>
+    }
+  </div>
+
+  <div class="mb-3">
+    <label for="montoPago" class="form-label">Monto del Pago</label>
+    <div class="input-group">
+      <span class="input-group-text">$</span>
+      <input
+        id="montoPago"
+        type="number"
+        class="form-control"
+        formControlName="montoPago"
+        step="0.01"
+        min="0.01"
+        placeholder="0.00"
+        [class.is-invalid]="submitted && f['montoPago'].invalid"
+      />
+    </div>
+    @if (submitted && f['montoPago'].invalid) {
+    <div class="invalid-feedback">
+      @if (f['montoPago'].errors?.['required']) {
+      <div>El monto del pago es obligatorio.</div>
+      } @if (f['montoPago'].errors?.['min']) {
+      <div>El monto debe ser mayor a 0.</div>
+      }
+    </div>
+    }
+  </div>
+
+  <div class="d-flex">
+    <button type="submit" class="btn btn-primary">Registrar Pago</button>
+    <button type="button" class="btn btn-secondary ms-2" (click)="onReset()">Limpiar</button>
+  </div>
+</form>
