@@ -1,9 +1,9 @@
 export class UsuarioLoginDTO {
-  email: string = '';
+  usuario: string = '';
   password: string = '';
 
-  constructor(email: string, password: string) {
-    this.email = email;
+  constructor(usuario: string, password: string) {
+    this.usuario = usuario;
     this.password = password;
   }
 }
