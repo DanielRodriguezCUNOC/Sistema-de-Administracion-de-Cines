@@ -1,0 +1,59 @@
+<div class="card shadow-sm p-4">
+  <h5 class="card-title mb-3">Registrar Pago de Boleto</h5>
+
+  <form [formGroup]="payForm" (submit)="onSubmit()" novalidate>
+    <div class="mb-3">
+      <label class="form-label">Fecha de Pago</label>
+      <input
+        type="date"
+        class="form-control"
+        formControlName="fechaPago"
+        [class.is-invalid]="enviado && f['fechaPago'].invalid"
+      />
+      @if (enviado && f['fechaPago'].invalid) {
+      <div class="invalid-feedback">La fecha es obligatoria</div>
+      }
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Cantidad de Boletos</label>
+      <input
+        type="number"
+        min="1"
+        class="form-control"
+        formControlName="cantidadBoleto"
+        [class.is-invalid]="enviado && f['cantidadBoleto'].invalid"
+      />
+      @if (enviado && f['cantidadBoleto'].invalid) {
+      <div class="invalid-feedback">Ingresa una cantidad válida (mínimo 1)</div>
+      }
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Monto Total (Q)</label>
+      <input
+        type="number"
+        min="0"
+        step="0.01"
+        class="form-control"
+        formControlName="totalPago"
+        [class.is-invalid]="enviado && f['totalPago'].invalid"
+      />
+      @if (enviado && f['totalPago'].invalid) {
+      <div class="invalid-feedback">Ingresa un monto válido</div>
+      }
+    </div>
+
+    <button class="btn btn-primary w-100" type="submit" [disabled]="cargando">
+      @if (cargando) {
+      <span class="spinner-border spinner-border-sm me-2"></span> Enviando... } @else { Registrar
+      Pago }
+    </button>
+  </form>
+
+  @if (mensaje) {
+  <div class="alert alert-info mt-3 text-center">
+    {{ mensaje }}
+  </div>
+  }
+</div>

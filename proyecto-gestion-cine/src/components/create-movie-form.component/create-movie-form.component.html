@@ -1,0 +1,205 @@
+<form [formGroup]="movieForm" (submit)="onSubmit()" novalidate class="create-movie-form">
+  <div class="mb-3">
+    <label for="titulo" class="form-label">Título</label>
+    <input
+      id="titulo"
+      type="text"
+      class="form-control"
+      formControlName="tituloPelicula"
+      [class.is-invalid]="submitted && f['tituloPelicula'].invalid"
+      maxlength="50"
+    />
+
+    @if(submitted && f['tituloPelicula'].invalid){
+    <div class="invalid-feedback">
+      @if (f['tituloPelicula'].errors?.['required']) {
+      <div>El título es obligatorio.</div>
+      } @if (f['tituloPelicula'].errors?.['maxlength']) {
+      <div>Máximo 50 caracteres.</div>
+      }
+    </div>
+    }
+  </div>
+
+  <div class="mb-3">
+    <label for="sinopsis" class="form-label">Sinopsis</label>
+    <textarea
+      id="sinopsis"
+      class="form-control"
+      formControlName="sinopsis"
+      rows="4"
+      [class.is-invalid]="submitted && f['sinopsis'].invalid"
+      maxlength="500"
+    ></textarea>
+
+    @if(submitted && f['sinopsis'].invalid){
+    <div class="invalid-feedback">
+      @if (f['sinopsis'].errors?.['required']) {
+      <div>La sinopsis es obligatoria.</div>
+      } @if (f['sinopsis'].errors?.['maxlength']) {
+      <div>Máximo 500 caracteres.</div>
+      }
+    </div>
+    }
+  </div>
+
+  <div class="row">
+    <div class="col-md-4 mb-3">
+      <label for="duracion" class="form-label">Duración (mm:ss)</label>
+      <input
+        id="duracion"
+        type="text"
+        class="form-control"
+        formControlName="duracion"
+        placeholder="e.g. 02:15"
+        [class.is-invalid]="submitted && f['duracion'].invalid"
+        maxlength="5"
+      />
+
+      @if(submitted && f['duracion'].invalid){
+      <div class="invalid-feedback">
+        @if (f['duracion'].errors?.['required']) {
+        <div>La duración es obligatoria.</div>
+        } @if (f['duracion'].errors?.['maxlength']) {
+        <div>Máximo 5 caracteres.</div>
+        } @if (f['duracion'].errors?.['pattern']) {
+        <div>Formato mm:ss.</div>
+        }
+      </div>
+      }
+    </div>
+
+    <div class="col-md-4 mb-3">
+      <label for="clasificacion" class="form-label">Clasificación</label>
+      <input
+        id="clasificacion"
+        type="text"
+        class="form-control"
+        formControlName="clasificacion"
+        placeholder="PG-13"
+        [class.is-invalid]="submitted && f['clasificacion'].invalid"
+        maxlength="5"
+      />
+
+      @if(submitted && f['clasificacion'].invalid){
+      <div class="invalid-feedback">
+        @if (f['clasificacion'].errors?.['required']) {
+        <div>La clasificación es obligatoria.</div>
+        } @if (f['clasificacion'].errors?.['maxlength']) {
+        <div>Máximo 5 caracteres.</div>
+        }
+      </div>
+      }
+    </div>
+
+    <div class="col-md-4 mb-3">
+      <label for="fechaEstreno" class="form-label">Fecha de Estreno</label>
+      <input
+        id="fechaEstreno"
+        type="date"
+        class="form-control"
+        formControlName="fechaEstreno"
+        [class.is-invalid]="submitted && f['fechaEstreno'].invalid"
+      />
+      @if(submitted && f['fechaEstreno'].invalid){
+      <div class="invalid-feedback">
+        @if (f['fechaEstreno'].errors?.['required']) {
+        <div>La fecha de estreno es obligatoria.</div>
+        }
+      </div>
+      }
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label for="cast" class="form-label">Reparto (cast)</label>
+    <input
+      id="cast"
+      type="text"
+      class="form-control"
+      formControlName="cast"
+      [class.is-invalid]="submitted && f['cast'].invalid"
+      maxlength="300"
+    />
+
+    @if(submitted && f['cast'].invalid){
+    <div class="invalid-feedback">
+      @if(movieForm.controls['cast'].errors?.['required']){
+      <div>El reparto es obligatorio.</div>
+
+      } @if(movieForm.controls['cast'].errors?.['maxlength']){
+      <div>Máximo 300 caracteres.</div>
+      }
+    </div>
+    }
+  </div>
+
+  <div class="mb-3">
+    <label for="director" class="form-label">Director</label>
+    <input
+      id="director"
+      type="text"
+      class="form-control"
+      formControlName="director"
+      [class.is-invalid]="submitted && f['director'].invalid"
+      maxlength="150"
+    />
+    @if(submitted && f['director'].invalid){
+    <div class="invalid-feedback">
+      @if(f['director'].errors?.['required']){
+      <div>El director es obligatorio.</div>
+      } @if(f['director'].errors?.['maxlength']){
+      <div>Máximo 150 caracteres.</div>
+      }
+    </div>
+    }
+  </div>
+
+  <div class="mb-3">
+    <label for="precio" class="form-label">Precio (USD)</label>
+    <input
+      id="precio"
+      type="number"
+      class="form-control"
+      formControlName="precioPelicula"
+      step="0.01"
+      min="0"
+      [class.is-invalid]="submitted && f['precioPelicula'].invalid"
+    />
+
+    @if(submitted && f['precioPelicula'].invalid){
+    <div class="invalid-feedback">
+      @if(f['precioPelicula'].errors?.['required']){
+      <div>El precio es obligatorio.</div>
+      } @if(f['precioPelicula'].errors?.['min']){
+      <div>El precio no puede ser negativo.</div>
+      }
+    </div>
+    }
+  </div>
+
+  <div class="mb-3">
+    <label for="poster" class="form-label">Poster (imagen)</label>
+    <input
+      id="poster"
+      type="file"
+      accept="image/*"
+      class="form-control"
+      (change)="onFileChange($event)"
+      [class.is-invalid]="submitted && f['poster'].invalid"
+    />
+
+    @if(submitted && f['poster'].invalid){
+    <div class="invalid-feedback">
+      @if(f['poster'].errors?.['required']){
+      <div>El poster es obligatorio.</div>
+      }
+    </div>
+    }
+  </div>
+
+  <div class="d-flex">
+    <button type="submit" class="btn btn-primary">Guardar Película</button>
+    <button type="button" class="btn btn-secondary ms-2" (click)="onReset()">Limpiar</button>
+  </div>
+</form>

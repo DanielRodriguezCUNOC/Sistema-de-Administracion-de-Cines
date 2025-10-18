@@ -1,0 +1,179 @@
+<form
+  [formGroup]="advertisementForm"
+  (submit)="onSubmit()"
+  novalidate
+  class="create-advertisement-form"
+>
+  <div class="mb-3">
+    <label for="tipoAnuncio" class="form-label">Tipo de Anuncio</label>
+    <select
+      id="tipoAnuncio"
+      class="form-select"
+      formControlName="tipoAnuncio"
+      [class.is-invalid]="submitted && f['tipoAnuncio'].invalid"
+    >
+      <option value="">Seleccione un tipo de anuncio</option>
+      @for (tipo of tipoAnuncio; track tipo.id) {
+      <option [value]="tipo.id">{{ tipo.nombre }}</option>
+      }
+    </select>
+    @if (submitted && f['tipoAnuncio'].invalid) {
+    <div class="invalid-feedback">
+      @if (f['tipoAnuncio'].errors?.['required']) {
+      <div>El tipo de anuncio es obligatorio.</div>
+      }
+    </div>
+    }
+  </div>
+
+  <div class="mb-3">
+    <label for="vigenciaAnuncio" class="form-label">Vigencia de Anuncio</label>
+    <select
+      id="vigenciaAnuncio"
+      class="form-select"
+      formControlName="vigenciaAnuncio"
+      [class.is-invalid]="submitted && f['vigenciaAnuncio'].invalid"
+    >
+      <option value="">Seleccione una vigencia</option>
+      @for (vigencia of vigenciaAnuncio; track vigencia.id) {
+      <option [value]="vigencia.id">{{ vigencia.nombre }}</option>
+      }
+    </select>
+    @if (submitted && f['vigenciaAnuncio'].invalid) {
+    <div class="invalid-feedback">
+      @if (f['vigenciaAnuncio'].errors?.['required']) {
+      <div>La vigencia del anuncio es obligatoria.</div>
+      }
+    </div>
+    }
+  </div>
+
+  <div class="mb-3">
+    <label for="nombreAnuncio" class="form-label">Nombre del Anuncio</label>
+    <input
+      id="nombreAnuncio"
+      type="text"
+      class="form-control"
+      formControlName="nombreAnuncio"
+      maxlength="100"
+      [class.is-invalid]="submitted && f['nombreAnuncio'].invalid"
+    />
+    @if (submitted && f['nombreAnuncio'].invalid) {
+    <div class="invalid-feedback">
+      @if (f['nombreAnuncio'].errors?.['required']) {
+      <div>El nombre del anuncio es obligatorio.</div>
+      } @if (f['nombreAnuncio'].errors?.['maxlength']) {
+      <div>Máximo 100 caracteres.</div>
+      }
+    </div>
+    }
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <label for="fechaCompra" class="form-label">Fecha de Compra</label>
+      <input
+        id="fechaCompra"
+        type="datetime-local"
+        class="form-control"
+        formControlName="fechaCompra"
+        [class.is-invalid]="submitted && f['fechaCompra'].invalid"
+      />
+      @if (submitted && f['fechaCompra'].invalid) {
+      <div class="invalid-feedback">
+        @if (f['fechaCompra'].errors?.['required']) {
+        <div>La fecha de compra es obligatoria.</div>
+        }
+      </div>
+      }
+    </div>
+
+    <div class="col-md-6 mb-3">
+      <label for="fechaCaducidad" class="form-label">Fecha de Caducidad</label>
+      <input
+        id="fechaCaducidad"
+        type="datetime-local"
+        class="form-control"
+        formControlName="fechaCaducidad"
+        [class.is-invalid]="submitted && f['fechaCaducidad'].invalid"
+      />
+      @if (submitted && f['fechaCaducidad'].invalid) {
+      <div class="invalid-feedback">
+        @if (f['fechaCaducidad'].errors?.['required']) {
+        <div>La fecha de caducidad es obligatoria.</div>
+        }
+      </div>
+      }
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label for="texto" class="form-label">Texto del Anuncio</label>
+    <textarea
+      id="texto"
+      class="form-control"
+      formControlName="texto"
+      rows="3"
+      maxlength="600"
+      [class.is-invalid]="submitted && f['texto'].invalid"
+    ></textarea>
+    @if (submitted && f['texto'].invalid) {
+    <div class="invalid-feedback">
+      @if (f['texto'].errors?.['maxlength']) {
+      <div>Máximo 600 caracteres.</div>
+      }
+    </div>
+    }
+  </div>
+
+  <div class="mb-3">
+    <label for="imagen" class="form-label">Imagen del Anuncio</label>
+    <input
+      id="imagen"
+      type="file"
+      class="form-control"
+      (change)="onFileSelected($event)"
+      accept="image/*"
+      [class.is-invalid]="submitted && f['imagen'].invalid"
+    />
+    @if (submitted && f['imagen'].invalid) {
+    <div class="invalid-feedback">
+      @if (f['imagen'].errors?.['required']) {
+      <div>La imagen es obligatoria.</div>
+      }
+    </div>
+    }
+  </div>
+
+  <div class="mb-3">
+    <label for="linkVideo" class="form-label">Link de Video</label>
+    <input
+      id="linkVideo"
+      type="url"
+      class="form-control"
+      formControlName="linkVideo"
+      maxlength="600"
+      placeholder="https://ejemplo.com/video"
+      [class.is-invalid]="submitted && f['linkVideo'].invalid"
+    />
+    @if (submitted && f['linkVideo'].invalid) {
+    <div class="invalid-feedback">
+      @if (f['linkVideo'].errors?.['maxlength']) {
+      <div>Máximo 600 caracteres.</div>
+      } @if (f['linkVideo'].errors?.['pattern']) {
+      <div>Ingrese una URL válida.</div>
+      }
+    </div>
+    }
+  </div>
+
+  <div class="form-check mb-3">
+    <input id="estado" class="form-check-input" type="checkbox" formControlName="estado" />
+    <label class="form-check-label" for="estado">Anuncio Activo</label>
+  </div>
+
+  <div class="d-flex">
+    <button type="submit" class="btn btn-primary">Guardar Anuncio</button>
+    <button type="button" class="btn btn-secondary ms-2" (click)="onReset()">Limpiar</button>
+  </div>
+</form>

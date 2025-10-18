@@ -6,5 +6,5 @@ export interface User {
   password: string;
   correo: string;
   telefono: string;
-  foto: string;
+  foto?: string;
 }
