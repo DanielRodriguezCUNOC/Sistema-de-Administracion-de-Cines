@@ -6,20 +6,39 @@ PROJECT_DIR="/home/luluwalilith/Documentos/2S 2025 CUNOC/IPC2/proyecto 2/Sistema
 # Ruta al archivo pom.xml
 POM_FILE="$PROJECT_DIR/pom.xml"
 
-# Eliminar el directorio target/ si existe
-echo "Eliminando directorio target/..."
-rm -rf "$PROJECT_DIR/target/"
+# Función para limpiar el proyecto
+clean_project() {
+  echo "Eliminando directorio target/..."
+  rm -rf "$PROJECT_DIR/target/"
+  echo "Ejecutando mvn clean..."
+  mvn clean -f "$POM_FILE"
+}
 
-# Ejecutar mvn clean
-echo "Ejecutando mvn clean..."
-mvn clean -f "$POM_FILE"
+# Función para construir el proyecto
+build_project() {
+  echo "Ejecutando mvn compile..."
+  mvn compile -f "$POM_FILE"
 
-# Ejecutar mvn compile
-echo "Ejecutando mvn compile..."
-mvn compile -f "$POM_FILE"
+  echo "Ejecutando mvn package..."
+  mvn package -f "$POM_FILE"
 
-# Ejecutar mvn package
-echo "Ejecutando mvn package..."
-mvn package -f "$POM_FILE"
+  echo "Build completado exitosamente."
+}
 
-echo "Proceso completado."
+# Verificar argumento
+case "$1" in
+  clean)
+    clean_project
+    ;;
+  build)
+    build_project
+    ;;
+  clean-build | rebuild)
+    clean_project
+    build_project
+    ;;
+  *)
+    echo "Uso: $0 {clean|build|clean-build}"
+    exit 1
+    ;;
+esac
