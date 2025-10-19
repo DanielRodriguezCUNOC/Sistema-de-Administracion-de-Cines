@@ -1,0 +1,94 @@
+<div class="user-dashboard position-relative">
+  <img src="/assets/images/cinema-bg.jpg" alt="Fondo cine" class="bg-image" />
+
+  <div class="overlay"></div>
+
+  <div class="dashboard-content container">
+    <!-- Header con saludo personalizado -->
+    <div class="welcome-section text-center mb-5">
+      <div class="welcome-icon">🎬</div>
+      <h1 class="text-light mb-3">¡Bienvenido al Cine!</h1>
+      <p class="text-light opacity-75 fs-5">
+        Explora nuestra cartelera y disfruta de la mejor experiencia cinematográfica
+      </p>
+    </div>
+
+    <!-- Cards de opciones principales -->
+    <div class="row g-4 justify-content-center mb-5">
+      <!-- Explorar Cines -->
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="dashboard-card featured" routerLink="/user/cines">
+          <div class="card-icon">
+            <i class="bi bi-building"></i>
+          </div>
+          <h3>Explorar Cines</h3>
+          <p>Descubre todos los cines disponibles cerca de ti</p>
+          <div class="card-badge">Popular</div>
+        </div>
+      </div>
+
+      <!-- Mis Reservaciones -->
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="dashboard-card" routerLink="/user/reservaciones">
+          <div class="card-icon">
+            <i class="bi bi-ticket-perforated"></i>
+          </div>
+          <h3>Mis Reservaciones</h3>
+          <p>Consulta y gestiona tus boletos reservados</p>
+        </div>
+      </div>
+
+      <!-- Mi Perfil -->
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="dashboard-card" routerLink="/user/perfil">
+          <div class="card-icon">
+            <i class="bi bi-person-circle"></i>
+          </div>
+          <h3>Mi Perfil</h3>
+          <p>Actualiza tu información personal</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sección de acciones rápidas -->
+    <div class="quick-actions">
+      <h2 class="text-light text-center mb-4">Acciones Rápidas</h2>
+      <div class="row g-3 justify-content-center">
+        <div class="col-6 col-sm-4 col-lg-3">
+          <button class="action-btn" routerLink="/user/cines">
+            <i class="bi bi-search"></i>
+            <span>Buscar Cine</span>
+          </button>
+        </div>
+        <div class="col-6 col-sm-4 col-lg-3">
+          <button class="action-btn" routerLink="/user/peliculas">
+            <i class="bi bi-film"></i>
+            <span>Cartelera</span>
+          </button>
+        </div>
+        <div class="col-6 col-sm-4 col-lg-3">
+          <button class="action-btn" routerLink="/user/historial">
+            <i class="bi bi-clock-history"></i>
+            <span>Historial</span>
+          </button>
+        </div>
+        <div class="col-6 col-sm-4 col-lg-3">
+          <button class="action-btn" routerLink="/user/ayuda">
+            <i class="bi bi-question-circle"></i>
+            <span>Ayuda</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Banner promocional (opcional) -->
+    <div class="promo-banner text-center mt-5">
+      <div class="promo-content">
+        <i class="bi bi-gift-fill"></i>
+        <h3>¡Ofertas Especiales!</h3>
+        <p>Descubre nuestras promociones y descuentos exclusivos</p>
+        <button class="btn btn-light btn-lg" routerLink="/user/promociones">Ver Promociones</button>
+      </div>
+    </div>
+  </div>
+</div>

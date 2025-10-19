@@ -15,23 +15,14 @@ export class NavbarComponent {
 
   constructor(private masterLoginService: MasterLoginService) {
     this.readDataLoggedIn();
-    this.masterLoginService.onLogin.subscribe((data) => {
-      this.readDataLoggedIn();
-    });
   }
 
   readDataLoggedIn() {
-    const dataLogged = localStorage.getItem('adminCine');
-    console.log('Data logged desde el navbar: ' + dataLogged);
-    if (dataLogged != null) {
-      this.isLoggedIn = true;
-    }
+    this.isLoggedIn = this.masterLoginService.isLoggedIn();
   }
 
   logout() {
-    this.isLoggedIn = false;
-    localStorage.removeItem('adminCine');
-    // Redirigir al login
+    this.masterLoginService.setLogout();
     this.router.navigateByUrl('/login');
   }
 }

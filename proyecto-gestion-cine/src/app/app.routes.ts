@@ -1,12 +1,17 @@
 import { Routes } from '@angular/router';
 import { HomePageComponent } from '../pages/home-page.component/home-page.component';
 import { UserDashboardPageComponent } from '../pages/user-dashboard-page.component/user-dashboard-page.component';
-import { AdminCineDashboardComponent } from '../pages/admin-cine-dashboard.component/admin-cine-dashboard.component';
-import { AdminSystemDashboardComponent } from '../pages/admin-system-dashboard.component/admin-system-dashboard.component';
-import { UserSpecialDashboardComponent } from '../pages/user-special-dashboard.component/user-special-dashboard.component';
+import { AdminCineDashboardComponent } from '../components/users/admin-cine-dashboard.component/admin-cine-dashboard.component';
+import { UserSpecialDashboardComponent } from '../components/users/user-special-dashboard.component/user-special-dashboard.component';
 import { authGuard } from './guards/auth-guard';
 import { LoginComponent } from '../components/login/login.component/login.component';
 import { ShowCinemaComponent } from '../components/cinema/show-cinema.component/show-cinema.component';
+import { UserSpecialDashboardPageComponent } from '../pages/user-special-dashboard-page.component/user-special-dashboard-page.component';
+import { AdminSystemDashboardComponent } from '../components/users/admin-system-dashboard.component/admin-system-dashboard.component';
+import { CinemaAdminDashboardPageComponent } from '../pages/cinema-admin-dashboard-page.component/cinema-admin-dashboard-page.component';
+import { SystemAdminDashboardPageComponent } from '../pages/system-admin-dashboard-page.component/system-admin-dashboard-page.component';
+import { UserDashboardComponent } from '../components/users/user-dashboard.component/user-dashboard.component';
+import { LoginPageComponent } from '../pages/login-page.component/login-page.component';
 
 export const routes: Routes = [
   {
@@ -15,36 +20,93 @@ export const routes: Routes = [
   },
   {
     path: 'login',
-    component: LoginComponent,
+    component: LoginPageComponent,
+
+    children: [
+      {
+        path: 'form',
+        component: LoginComponent,
+      },
+      {
+        path: '',
+        redirectTo: 'form',
+        pathMatch: 'full',
+      },
+    ],
   },
-  //Ruta de pruebas
+  {
+    path: 'user',
+    component: UserDashboardPageComponent,
+    canActivate: [authGuard],
+    children: [
+      {
+        path: 'dashboard',
+        component: UserDashboardComponent,
+      },
+      {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full',
+      },
+    ],
+  },
   {
     path: 'user-special',
-    component: UserSpecialDashboardComponent,
+    component: UserSpecialDashboardPageComponent,
     canActivate: [authGuard],
 
-    children: [],
+    children: [
+      {
+        path: 'dashboard',
+        component: UserSpecialDashboardComponent,
+      },
+      {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full',
+      },
+    ],
   },
 
   {
     path: 'admin-cine',
-    component: AdminCineDashboardComponent,
+    component: CinemaAdminDashboardPageComponent,
     canActivate: [authGuard],
 
-    children: [],
+    children: [
+      {
+        path: 'dashboard',
+        component: AdminCineDashboardComponent,
+      },
+      {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full',
+      },
+    ],
   },
 
   {
     path: 'admin-system',
-    component: AdminSystemDashboardComponent,
+    component: SystemAdminDashboardPageComponent,
     canActivate: [authGuard],
 
-    children: [],
+    children: [
+      {
+        path: '',
+        component: AdminSystemDashboardComponent,
+      },
+      {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full',
+      },
+    ],
   },
 
   {
     path: 'show-cinemas',
     component: ShowCinemaComponent,
-    //canActivate: [authGuard],
+    canActivate: [authGuard],
   },
 ];
