@@ -1,0 +1,307 @@
+.user-dashboard {
+  position: relative;
+  min-height: 100vh;
+  background-color: #000;
+  overflow: hidden;
+  padding: 3rem 0;
+
+  .bg-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: blur(8px) brightness(0.4);
+    z-index: 0;
+  }
+
+  .overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.7) 0%,
+      rgba(0, 0, 0, 0.85) 50%,
+      rgba(0, 0, 0, 0.9) 100%
+    );
+    z-index: 1;
+  }
+
+  .dashboard-content {
+    position: relative;
+    z-index: 2;
+  }
+}
+
+// Welcome Section
+.welcome-section {
+  animation: fadeInDown 0.8s ease-out;
+
+  .welcome-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    animation: bounce 2s ease-in-out infinite;
+  }
+
+  h1 {
+    font-weight: 700;
+    font-size: 2.5rem;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+// Dashboard Cards
+.dashboard-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 1.5rem;
+  padding: 2.5rem 2rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  height: 100%;
+  overflow: hidden;
+  animation: fadeInUp 0.6s ease-out backwards;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+  }
+
+  .card-icon {
+    font-size: 3.5rem;
+    color: #667eea;
+    margin-bottom: 1.5rem;
+    transition: transform 0.3s ease;
+
+    i {
+      display: block;
+    }
+  }
+
+  h3 {
+    color: #fff;
+    font-weight: 600;
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  p {
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 1rem;
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  &.featured {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
+    border: 2px solid rgba(102, 126, 234, 0.4);
+    transform: scale(1.02);
+
+    .card-icon {
+      color: #a78bfa;
+    }
+  }
+
+  .card-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 0.375rem 0.875rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  &:hover {
+    transform: translateY(-10px) scale(1.02);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.3);
+
+    &::before {
+      transform: scaleX(1);
+    }
+
+    .card-icon {
+      transform: scale(1.1) rotate(5deg);
+    }
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Delays para animación escalonada
+.dashboard-card {
+  &:nth-child(1) { animation-delay: 0.1s; }
+  &:nth-child(2) { animation-delay: 0.2s; }
+  &:nth-child(3) { animation-delay: 0.3s; }
+}
+
+// Quick Actions
+.quick-actions {
+  animation: fadeIn 1s ease-out 0.4s backwards;
+
+  h2 {
+    font-weight: 600;
+    font-size: 1.75rem;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+  }
+}
+
+.action-btn {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 1rem;
+  padding: 1.5rem 1rem;
+  color: white;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  backdrop-filter: blur(5px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+
+  i {
+    font-size: 2rem;
+    transition: transform 0.3s ease;
+  }
+
+  span {
+    font-size: 0.9rem;
+  }
+
+  &:hover {
+    background: rgba(102, 126, 234, 0.3);
+    border-color: rgba(102, 126, 234, 0.5);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+
+    i {
+      transform: scale(1.2);
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+// Promo Banner
+.promo-banner {
+  animation: fadeIn 1.2s ease-out 0.6s backwards;
+
+  .promo-content {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.15), rgba(118, 75, 162, 0.15));
+    border: 2px solid rgba(102, 126, 234, 0.3);
+    border-radius: 1.5rem;
+    padding: 3rem 2rem;
+    backdrop-filter: blur(10px);
+
+    i {
+      font-size: 3rem;
+      color: #fbbf24;
+      margin-bottom: 1rem;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    h3 {
+      color: white;
+      font-weight: 700;
+      font-size: 2rem;
+      margin-bottom: 0.75rem;
+    }
+
+    p {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 1.125rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn {
+      border-radius: 30px;
+      padding: 0.75rem 2rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+
+      &:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 20px rgba(255, 255, 255, 0.3);
+      }
+    }
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .welcome-section {
+    h1 {
+      font-size: 2rem;
+    }
+
+    p {
+      font-size: 1rem;
+    }
+  }
+
+  .dashboard-card {
+    padding: 2rem 1.5rem;
+
+    h3 {
+      font-size: 1.25rem;
+    }
+  }
+
+  .promo-banner .promo-content {
+    padding: 2rem 1.5rem;
+
+    h3 {
+      font-size: 1.5rem;
+    }
+  }
+}

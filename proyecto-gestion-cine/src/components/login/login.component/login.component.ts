@@ -12,6 +12,8 @@ import { UsuarioLoginDTO } from '../../../services/users/usuario-login-dto';
 })
 export class LoginComponent {
   loginForm: FormGroup;
+  errorMessage: string = '';
+  isLoading: boolean = false;
 
   constructor(private fb: FormBuilder, private loginService: LoginService, private router: Router) {
     this.loginForm = this.fb.group({
@@ -21,8 +23,12 @@ export class LoginComponent {
   }
 
   submit(): void {
-    if (this.loginForm.invalid) return;
-
+    if (this.loginForm.invalid) {
+      this.errorMessage = 'Por favor, complete todos los campos.';
+      return;
+    }
+    this.isLoading = true;
+    this.errorMessage = '';
     const usuarioLoginDto = new UsuarioLoginDTO(
       this.loginForm.value.usuario,
       this.loginForm.value.password
@@ -32,10 +38,25 @@ export class LoginComponent {
       .subscribe({
         next: (user) => {
           //Redirigir al dashboard del usuario
-          this.router.navigateByUrl('user-special');
+          this.router.navigateByUrl('user');
+          console.log('Usuario autenticado:', user);
         },
         error: (err) => {
+          this.isLoading = false;
           console.error('Error en la autenticación:', err);
+
+          if (err.status === 401) {
+            this.errorMessage = 'Credenciales inválidas. Por favor, inténtelo de nuevo.';
+          } else if (err.status === 0) {
+            this.errorMessage = 'Error de conexión. Por favor, verifique su conexión a Internet.';
+          } else if (err.status === 500) {
+            this.errorMessage = 'Error interno del servidor. Por favor, inténtelo más tarde.';
+          } else {
+            this.errorMessage = 'Ocurrió un error inesperado. Por favor, inténtelo de nuevo.';
+          }
+        },
+        complete: () => {
+          this.isLoading = false;
         },
       });
   }

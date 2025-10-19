@@ -3,6 +3,7 @@ import { BehaviorSubject, catchError, map, throwError } from 'rxjs';
 import { environment } from '../../enviroments/enviroments';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from '../../models/users/user';
+import { MasterLoginService } from '../masterlogin/master';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +21,7 @@ export class LoginService {
   // Exponemos el estado de autenticación como un Observable
   private isLoggedIn$ = this.isLoggedInSubject.asObservable();
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private masterLoginService: MasterLoginService) {
     this.estadoLogin();
   }
 
@@ -32,30 +33,31 @@ export class LoginService {
 
   // Método para autenticar al usuario con el backend, este devuelve un objeto de tipo Usuario
   autenticacionBackend(usuario: string, password: String) {
-    return this.http
-      .post<User>(`${this.apiUrl}/auth`, { usuario, password }, this.httpOptions)
-      .pipe(
-        map((user) => {
-          //Almacenar al usuario en localStorage
-          localStorage.setItem('usuarioActual', JSON.stringify(user));
-          this.isLoggedInSubject.next(true);
-          return user;
-        }),
-        catchError((error) => {
-          // No guardamos nada en localStorage
-          return throwError(() => error);
-        })
-      );
+    return this.http.post<User>(this.apiUrl, { usuario, password }, this.httpOptions).pipe(
+      map((user) => {
+        //* Notificar al MasterLoginService sobre el inicio de sesión
+        this.masterLoginService.setLogin(user);
+        return user;
+      }),
+      catchError((error) => {
+        // No guardamos nada en localStorage
+        return throwError(() => error);
+      })
+    );
   }
 
   // Método para cerrar sesión
-  logOut(): void {
-    localStorage.removeItem('usuarioActual');
-    this.isLoggedInSubject.next(false);
+  logout(): void {
+    this.masterLoginService.setLogout();
   }
 
   // Getter para obtener el estado de autenticación
   get isLoggedIn() {
-    return this.isLoggedInSubject.value;
+    return this.masterLoginService.isLoggedIn();
+  }
+
+  // Getter para obtener el usuario autenticado
+  get currentUser() {
+    return this.masterLoginService.getCurrentUser();
   }
 }
