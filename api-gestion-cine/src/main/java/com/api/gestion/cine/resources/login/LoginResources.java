@@ -2,7 +2,7 @@ package com.api.gestion.cine.resources.login;
 
 import com.api.gestion.cine.dto.login.LoginDTO;
 import com.api.gestion.cine.dto.users.UserResponseLoginDTO;
-import com.api.gestion.cine.services.LoginService;
+import com.api.gestion.cine.services.login.LoginService;
 
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;

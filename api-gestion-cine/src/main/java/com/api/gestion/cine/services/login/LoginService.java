@@ -1,4 +1,4 @@
-package com.api.gestion.cine.services;
+package com.api.gestion.cine.services.login;
 
 import com.api.gestion.cine.dto.login.LoginDTO;
 import com.api.gestion.cine.dto.users.UserResponseLoginDTO;
