@@ -18,9 +18,10 @@ public class CinemaCostReport {
     public CinemaCostReport() {
     }
 
-    public CinemaCostReport(int idCine, String nombreCine, int[] costoCine) {
+    public CinemaCostReport(int idCine, String nombreCine, LocalDate fechaPago, int[] costoCine) {
         this.idCine = idCine;
         this.nombreCine = nombreCine;
+        this.fechaPago = fechaPago;
         this.costoCine = costoCine;
     }
 
@@ -46,5 +47,13 @@ public class CinemaCostReport {
 
     public void setCostoTotal(int[] costoCine) {
         this.costoCine = costoCine;
+    }
+
+    public LocalDate getFechaPago() {
+        return fechaPago;
+    }
+
+    public void setFechaPago(LocalDate fechaPago) {
+        this.fechaPago = fechaPago;
     }
 }
