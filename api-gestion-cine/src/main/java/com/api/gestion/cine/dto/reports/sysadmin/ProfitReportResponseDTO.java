@@ -1,10 +1,16 @@
 package com.api.gestion.cine.dto.reports.sysadmin;
 
+import java.math.BigDecimal;
+
 public class ProfitReportResponseDTO {
 
     private CinemaCostReport[] costoCinema;
     private AdvertisementProfitReport[] advertisementPaymentAmount;
     private AdvertisementProfitReport[] amountAdBlock;
+
+    private BigDecimal totalProfit;
+    private BigDecimal totalRevenue;
+    private BigDecimal totalExpenses;
 
     public ProfitReportResponseDTO() {
     }
@@ -41,29 +47,49 @@ public class ProfitReportResponseDTO {
         this.amountAdBlock = amountAdBlock;
     }
 
-    public int totalExpenses() {
-        int totalCostCinema = 0;
+    public BigDecimal getTotalProfit() {
+        return totalProfit;
+    }
+
+    public BigDecimal getTotalRevenue() {
+        return totalRevenue;
+    }
+
+    public BigDecimal getTotalExpenses() {
+        return totalExpenses;
+    }
+
+    public BigDecimal totalExpenses() {
+        BigDecimal totalCostCinema = BigDecimal.ZERO;
         for (CinemaCostReport report : costoCinema) {
             for (int cost : report.getCostoTotal()) {
-                totalCostCinema += cost;
+                totalCostCinema = totalCostCinema.add(BigDecimal.valueOf(cost));
             }
         }
         return totalCostCinema;
     }
 
-    public int totalRevenue() {
-        int totalAdvertisementPaymentAmount = 0;
-        int totalAmountAdBlock = 0;
+    public BigDecimal totalRevenue() {
+        BigDecimal totalAdvertisementPaymentAmount = BigDecimal.ZERO;
+        BigDecimal totalAmountAdBlock = BigDecimal.ZERO;
         for (AdvertisementProfitReport report : advertisementPaymentAmount) {
-            totalAdvertisementPaymentAmount += report.getAmount();
+            totalAdvertisementPaymentAmount = totalAdvertisementPaymentAmount
+                    .add(BigDecimal.valueOf(report.getAmount()));
         }
         for (AdvertisementProfitReport report : amountAdBlock) {
-            totalAmountAdBlock += report.getAmount();
+            totalAmountAdBlock = totalAmountAdBlock.add(BigDecimal.valueOf(report.getAmount()));
         }
-        return totalAdvertisementPaymentAmount + totalAmountAdBlock;
+        return totalAdvertisementPaymentAmount.add(totalAmountAdBlock);
     }
 
-    public int totalProfit() {
-        return totalRevenue() - totalExpenses();
+    public BigDecimal totalProfit() {
+        return totalRevenue().subtract(totalExpenses());
+    }
+
+    // Cálculos (null-safe) y seteo de variables
+    public void assignValues() {
+        this.totalExpenses = totalExpenses();
+        this.totalRevenue = totalRevenue();
+        this.totalProfit = this.totalRevenue.subtract(this.totalExpenses);
     }
 }
