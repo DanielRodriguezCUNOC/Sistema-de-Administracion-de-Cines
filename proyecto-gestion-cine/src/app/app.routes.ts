@@ -3,7 +3,7 @@ import { HomePageComponent } from '../pages/home-page.component/home-page.compon
 import { UserDashboardPageComponent } from '../pages/user-dashboard-page.component/user-dashboard-page.component';
 import { AdminCineDashboardComponent } from '../components/users/admin-cine-dashboard.component/admin-cine-dashboard.component';
 import { UserSpecialDashboardComponent } from '../components/users/user-special-dashboard.component/user-special-dashboard.component';
-import { authGuard } from './guards/auth-guard';
+import { authGuard } from '../guards/auth-guard';
 import { LoginComponent } from '../components/login/login.component/login.component';
 import { ShowCinemaComponent } from '../components/cinema/show-cinema.component/show-cinema.component';
 import { UserSpecialDashboardPageComponent } from '../pages/user-special-dashboard-page.component/user-special-dashboard-page.component';
@@ -12,6 +12,10 @@ import { CinemaAdminDashboardPageComponent } from '../pages/cinema-admin-dashboa
 import { SystemAdminDashboardPageComponent } from '../pages/system-admin-dashboard-page.component/system-admin-dashboard-page.component';
 import { UserDashboardComponent } from '../components/users/user-dashboard.component/user-dashboard.component';
 import { LoginPageComponent } from '../pages/login-page.component/login-page.component';
+import { authSysadminGuard } from '../guards/auth-sysadmin-guard';
+import { authCinemaAdminGuard } from '../guards/auth-cinema-admin-guard';
+import { authSpecialUserGuard } from '../guards/auth-special-user-guard';
+import { authNormalUserGuard } from '../guards/auth-normal-user-guard';
 
 export const routes: Routes = [
   {
@@ -38,6 +42,7 @@ export const routes: Routes = [
     path: 'user',
     component: UserDashboardPageComponent,
     canActivate: [authGuard],
+    canActivateChild: [authGuard, authNormalUserGuard],
     children: [
       {
         path: 'dashboard',
@@ -54,6 +59,7 @@ export const routes: Routes = [
     path: 'user-special',
     component: UserSpecialDashboardPageComponent,
     canActivate: [authGuard],
+    canActivateChild: [authGuard, authSpecialUserGuard],
 
     children: [
       {
@@ -72,6 +78,7 @@ export const routes: Routes = [
     path: 'admin-cine',
     component: CinemaAdminDashboardPageComponent,
     canActivate: [authGuard],
+    canActivateChild: [authGuard, authCinemaAdminGuard],
 
     children: [
       {
@@ -90,6 +97,7 @@ export const routes: Routes = [
     path: 'admin-system',
     component: SystemAdminDashboardPageComponent,
     canActivate: [authGuard],
+    canActivateChild: [authGuard, authSysadminGuard],
 
     children: [
       {

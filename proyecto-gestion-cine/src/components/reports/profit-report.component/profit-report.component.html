@@ -135,10 +135,10 @@
           </tr>
         </thead>
         <tbody>
-          @for (ad of report.advertisementPaymentAmount; track ad.id) {
+          @for (ad of report.advertisementPaymentAmount; track ad.idAnuncio) {
           <tr>
-            <td>{{ ad.id }}</td>
-            <td class="fw-bold">{{ ad.nombre }}</td>
+            <td>{{ ad.idAnuncio }}</td>
+            <td class="fw-bold">{{ ad.nombreAnuncio }}</td>
             <td>{{ ad.fechaPago | date : 'dd/MM/yyyy' }}</td>
             <td class="text-success fw-bold">Q {{ ad.montoPago | number : '1.2-2' }}</td>
           </tr>
@@ -166,10 +166,10 @@
           </tr>
         </thead>
         <tbody>
-          @for (adBlock of report.amountAdBlock; track adBlock.id) {
+          @for (adBlock of report.amountAdBlock; track adBlock.idAnuncio) {
           <tr>
-            <td>{{ adBlock.id }}</td>
-            <td class="fw-bold">{{ adBlock.nombre }}</td>
+            <td>{{ adBlock.idAnuncio }}</td>
+            <td class="fw-bold">{{ adBlock.nombreAnuncio }}</td>
             <td>{{ adBlock.fechaPago | date : 'dd/MM/yyyy' }}</td>
             <td class="text-success fw-bold">Q {{ adBlock.montoPago | number : '1.2-2' }}</td>
           </tr>

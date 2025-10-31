@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { LoginService } from '../../../services/login/login.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { UsuarioLoginDTO } from '../../../services/users/usuario-login-dto';
+import { UsuarioLoginDTO } from '../../../models/dto/login/usuario-login-dto';
 
 @Component({
   selector: 'app-login',

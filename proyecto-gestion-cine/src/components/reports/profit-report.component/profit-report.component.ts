@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ProfitReportResponseDTO } from '../../../models/dto/sysadmin/ProfitReport/profit-report-response-dto';
+import { ProfitReportResponseDTO } from '../../../models/dto/sysadmin/profit-report/profit-report-response-dto';
 import { ProfitReportService } from '../../../services/sysadmin/reports/profit-report-service.service';
 import { CommonModule } from '@angular/common';
 
