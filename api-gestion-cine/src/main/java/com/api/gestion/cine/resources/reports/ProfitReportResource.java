@@ -1,9 +1,10 @@
 package com.api.gestion.cine.resources.reports;
 
-import com.api.gestion.cine.dto.reports.sysadmin.ProfitReportResponseDTO;
-
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
+
+import com.api.gestion.cine.dto.reports.sysadmin.profit_report.ProfitReportResponseDTO;
+
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.MediaType;

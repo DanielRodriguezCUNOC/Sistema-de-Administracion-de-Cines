@@ -2,9 +2,9 @@ package com.api.gestion.cine.services.reports.sysadmin;
 
 import java.time.LocalDate;
 
-import com.api.gestion.cine.dto.reports.sysadmin.AdvertisementProfitReport;
-import com.api.gestion.cine.dto.reports.sysadmin.CinemaCostReport;
-import com.api.gestion.cine.dto.reports.sysadmin.ProfitReportResponseDTO;
+import com.api.gestion.cine.dto.reports.sysadmin.profit_report.AdvertisementProfitReport;
+import com.api.gestion.cine.dto.reports.sysadmin.profit_report.CinemaCostReport;
+import com.api.gestion.cine.dto.reports.sysadmin.profit_report.ProfitReportResponseDTO;
 
 public class ProfitReportService {
 
