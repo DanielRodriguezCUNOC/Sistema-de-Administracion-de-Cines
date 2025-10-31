@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { UsuarioLoginDTO } from '../users/usuario-login-dto';
+import { UsuarioLoginDTO } from '../../models/dto/login/usuario-login-dto';
 
 @Injectable({
   providedIn: 'root',

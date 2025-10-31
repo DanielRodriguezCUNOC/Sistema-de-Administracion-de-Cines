@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { ProfitReportResponseDTO } from '../../../models/dto/sysadmin/ProfitReport/profit-report-response-dto';
+import { ProfitReportResponseDTO } from '../../../models/dto/sysadmin/profit-report/profit-report-response-dto';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
 
