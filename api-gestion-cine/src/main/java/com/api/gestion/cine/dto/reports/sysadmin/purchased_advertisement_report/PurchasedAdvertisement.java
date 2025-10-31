@@ -3,9 +3,15 @@ package com.api.gestion.cine.dto.reports.sysadmin.purchased_advertisement_report
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+
 public class PurchasedAdvertisement {
     private int idAnuncio;
     private String nombreAnuncio;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate fechaPago;
     private BigDecimal montoPago;
 
