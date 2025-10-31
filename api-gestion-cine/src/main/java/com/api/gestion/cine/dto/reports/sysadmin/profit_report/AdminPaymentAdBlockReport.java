@@ -1,4 +1,4 @@
-package com.api.gestion.cine.dto.reports.sysadmin;
+package com.api.gestion.cine.dto.reports.sysadmin.profit_report;
 
 import java.time.LocalDate;
 
