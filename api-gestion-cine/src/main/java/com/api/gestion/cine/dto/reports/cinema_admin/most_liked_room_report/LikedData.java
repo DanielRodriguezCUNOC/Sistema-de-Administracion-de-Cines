@@ -2,9 +2,15 @@ package com.api.gestion.cine.dto.reports.cinema_admin.most_liked_room_report;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+
 public class LikedData {
     private String nombreUsuario;
     private int valoracion;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate fechaValoracion;
 
     public LikedData() {

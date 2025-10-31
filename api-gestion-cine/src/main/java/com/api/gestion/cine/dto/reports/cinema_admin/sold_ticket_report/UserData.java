@@ -3,12 +3,18 @@ package com.api.gestion.cine.dto.reports.cinema_admin.sold_ticket_report;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+
 public class UserData {
 
     private int idUsuario;
     private String nombreUsuario;
     private int cantidadBoleto;
     private BigDecimal montoPago;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate fechaPago;
 
     public UserData() {
