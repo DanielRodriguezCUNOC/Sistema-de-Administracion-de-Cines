@@ -10,13 +10,13 @@ import com.api.gestion.cine.exceptions.DataBaseException;
 
 public class LoginDB {
 
-    private static final String AUTENTICAR_USUARIO_QUERY = "SELECT id_usuario, id_rol FROM usuarios WHERE usuario = ? AND password = ?";
+    private static final String AUTENTICAR_USUARIO_QUERY = "SELECT id_usuario, id_rol FROM usuario WHERE usuario = ? AND password = ?";
 
-    public boolean userExist(String username, String password) throws Exception {
+    public boolean userExist(String usuario, String password) throws Exception {
         Connection connection = DBConnectionSingleton.getInstance().getConnection();
         try (PreparedStatement ps = connection.prepareStatement(AUTENTICAR_USUARIO_QUERY)) {
 
-            ps.setString(1, username);
+            ps.setString(1, usuario);
             ps.setString(2, password);
 
             try (ResultSet rs = ps.executeQuery()) {
@@ -28,11 +28,11 @@ public class LoginDB {
         }
     }
 
-    public int[] getUserIdAndRole(String username, String password) throws Exception {
+    public int[] getUserIdAndRole(String usuario, String password) throws Exception {
         Connection connection = DBConnectionSingleton.getInstance().getConnection();
         try (PreparedStatement ps = connection.prepareStatement(AUTENTICAR_USUARIO_QUERY)) {
 
-            ps.setString(1, username);
+            ps.setString(1, usuario);
             ps.setString(2, password);
 
             try (ResultSet rs = ps.executeQuery()) {

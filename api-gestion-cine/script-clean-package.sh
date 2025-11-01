@@ -16,11 +16,12 @@ clean_project() {
 
 # Función para construir el proyecto
 build_project() {
-  echo "Ejecutando mvn compile..."
-  mvn compile -f "$POM_FILE"
-
-  echo "Ejecutando mvn package..."
-  mvn package -f "$POM_FILE"
+  echo "Ejecutando mvn clean package…"   # usamos package
+  mvn clean package -f "$POM_FILE"
+  
+  # — Si lo prefieres usar install, descomenta la siguiente línea y comenta la anterior:
+  # echo "Ejecutando mvn clean install…"
+  # mvn clean install -f "$POM_FILE"
 
   echo "Build completado exitosamente."
 }
