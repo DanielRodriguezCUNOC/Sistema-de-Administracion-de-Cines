@@ -2,12 +2,13 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { ProfitReportResponseDTO } from '../../../models/dto/sysadmin/profit-report/profit-report-response-dto';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
+import { environment } from '../../../enviroments/enviroments';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProfitReportService {
-  private apiUrl = 'http://localhost:8080/api/v1/sysadmin/report/profit';
+  private apiUrl = `${environment.apiBaseUrl}/sysadmin/reports/profit`;
 
   constructor(private http: HttpClient) {}
 

@@ -38,12 +38,10 @@ export class LoginComponent {
       .subscribe({
         next: (user) => {
           //Redirigir al dashboard del usuario
-          this.router.navigateByUrl('user');
-          console.log('Usuario autenticado:', user);
+          this.router.navigateByUrl('admin-system');
         },
         error: (err) => {
           this.isLoading = false;
-          console.error('Error en la autenticación:', err);
 
           if (err.status === 401) {
             this.errorMessage = 'Credenciales inválidas. Por favor, inténtelo de nuevo.';
@@ -59,5 +57,26 @@ export class LoginComponent {
           this.isLoading = false;
         },
       });
+  }
+
+  //* Metodo para redirigir al dashboard segun el rol del usuario
+
+  redirectDashboard(rol: number): void {
+    switch (rol) {
+      case 1:
+        this.router.navigateByUrl('/admin-dashboard');
+        break;
+      case 2:
+        this.router.navigateByUrl('/admin-cine');
+        break;
+      case 3:
+        this.router.navigateByUrl('/user-special');
+        break;
+      case 4:
+        this.router.navigateByUrl('/user');
+        break;
+      default:
+        this.router.navigateByUrl('/login');
+    }
   }
 }

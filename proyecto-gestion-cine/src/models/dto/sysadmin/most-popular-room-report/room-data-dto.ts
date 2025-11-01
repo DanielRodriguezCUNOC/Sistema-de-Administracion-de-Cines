@@ -4,4 +4,3 @@ export interface RoomDataDTO {
   nombreUsuario: string;
   totalBoletosVendidos: number;
 }
-w;

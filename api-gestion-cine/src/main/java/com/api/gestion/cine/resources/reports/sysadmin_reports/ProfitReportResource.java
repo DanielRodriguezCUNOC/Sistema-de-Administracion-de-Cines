@@ -1,4 +1,4 @@
-package com.api.gestion.cine.resources.reports;
+package com.api.gestion.cine.resources.reports.sysadmin_reports;
 
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
@@ -17,7 +17,6 @@ public class ProfitReportResource {
     public ProfitReportResponseDTO getProfitReport(
             @QueryParam("fechaInicio") String fechaInicio,
             @QueryParam("fechaFin") String fechaFin) {
-        // Lógica para generar el informe de ganancias
         return new ProfitReportResponseDTO();
     }
 }

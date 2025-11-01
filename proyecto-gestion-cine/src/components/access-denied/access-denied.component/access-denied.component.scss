@@ -1,0 +1,116 @@
+.access-denied-page {
+  min-height: calc(100vh - 80px);
+  background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.access-card {
+  width: 100%;
+  max-width: 760px;
+  background: rgba(20, 20, 40, 0.88);
+  border: 1px solid rgba(102, 126, 234, 0.18);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 2.25rem;
+  color: #fff;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+}
+
+.icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+
+  svg {
+    background: linear-gradient(180deg, rgba(102,126,234,0.12), rgba(118,75,162,0.08));
+    padding: 0.5rem;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(102,126,234,0.08);
+  }
+}
+
+.title {
+  font-size: 1.75rem;
+  margin: 0.5rem 0;
+  color: #fff;
+  font-weight: 700;
+  text-shadow: 0 4px 18px rgba(102,126,234,0.08);
+}
+
+.message {
+  color: rgba(255,255,255,0.85);
+  margin: 0.5rem 0 1.25rem;
+  font-size: 1rem;
+}
+
+.actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  border: none;
+  padding: 0.75rem 1.25rem;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform .12s ease, box-shadow .12s ease;
+  box-shadow: 0 8px 24px rgba(102,126,234,0.18);
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 36px rgba(102,126,234,0.28);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: rgba(255,255,255,0.92);
+  border: 1px solid rgba(102,126,234,0.16);
+  padding: 0.72rem 1.15rem;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .12s ease, border-color .12s ease;
+}
+
+.btn-ghost:hover {
+  background: rgba(102,126,234,0.06);
+  border-color: rgba(102,126,234,0.28);
+}
+
+.hint {
+  color: rgba(255,255,255,0.6);
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+  .access-card {
+    padding: 1.5rem;
+    border-radius: 12px;
+  }
+
+  .title {
+    font-size: 1.4rem;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  .btn-primary, .btn-ghost {
+    width: 100%;
+  }
+}
