@@ -3,7 +3,7 @@ import { PageLayoutComponent } from '../../../components/share/page-layout.compo
 
 @Component({
   selector: 'app-admin-system-dashboard.component',
-  imports: [PageLayoutComponent],
+  imports: [],
   templateUrl: './admin-system-dashboard.component.html',
   styleUrl: './admin-system-dashboard.component.scss',
 })

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { UsuarioLoginDTO } from '../../models/dto/login/usuario-login-dto';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { UserResponseLoginDTO } from '../../models/dto/login/user-response-login-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +17,8 @@ export class MasterLoginService {
   private currentUserSubject = new BehaviorSubject<any>(null);
 
   //*Observable para exponer el usuario autenticado
-  public currentUser$: Observable<UsuarioLoginDTO | null> = this.currentUserSubject.asObservable();
+  public currentUser$: Observable<UserResponseLoginDTO | null> =
+    this.currentUserSubject.asObservable();
 
   constructor(private http: HttpClient) {
     //Verificamos si hay sesiones activas
@@ -29,14 +30,14 @@ export class MasterLoginService {
   private checkLoginStatus(): void {
     const userLoginData = localStorage.getItem('usuarioActual');
     if (userLoginData) {
-      const user = JSON.parse(userLoginData) as UsuarioLoginDTO;
+      const user = JSON.parse(userLoginData) as UserResponseLoginDTO;
       this.currentUserSubject.next(user);
       this.isLoggedInSubject.next(true);
     }
   }
 
   //* Notificar el inicio de sesión
-  setLogin(user: UsuarioLoginDTO): void {
+  setLogin(user: UserResponseLoginDTO): void {
     localStorage.setItem('usuarioActual', JSON.stringify(user));
     this.isLoggedInSubject.next(true);
     this.currentUserSubject.next(user);
@@ -50,7 +51,7 @@ export class MasterLoginService {
   }
 
   //* Obtener el usuario de forma síncrona
-  getCurrentUser(): UsuarioLoginDTO | null {
+  getCurrentUser(): UserResponseLoginDTO | null {
     return this.currentUserSubject.value;
   }
 

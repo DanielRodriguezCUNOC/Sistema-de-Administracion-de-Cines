@@ -1,58 +1,56 @@
-<app-page-layout>
-  <div
-    class="admin-cine-dashboard position-relative d-flex align-items-center justify-content-center"
-  >
-    <img
-      src="/assets/images/admin-cine-bg.jpg"
-      alt="Fondo dashboard administrador"
-      class="bg-image"
-    />
+<div
+  class="admin-cine-dashboard position-relative d-flex align-items-center justify-content-center"
+>
+  <img
+    src="/assets/images/admin-cine-bg.jpg"
+    alt="Fondo dashboard administrador"
+    class="bg-image"
+  />
 
-    <div class="overlay"></div>
+  <div class="overlay"></div>
 
-    <div class="dashboard-content container text-light">
-      <h1 class="text-center mb-5">🎞️ Panel del Administrador de Cine</h1>
+  <div class="dashboard-content container text-light">
+    <h1 class="text-center mb-5">🎞️ Panel del Administrador de Cine</h1>
 
-      <div class="row g-4 justify-content-center">
-        <div class="col-12 col-sm-6 col-lg-4">
-          <div class="dashboard-card" routerLink="/admin/peliculas-activas">
-            <div class="icon mb-3">
-              <i class="bi bi-film"></i>
-            </div>
-            <h4>Consultar Películas Activas</h4>
-            <p>Visualiza y administra las películas actualmente en cartelera.</p>
+    <div class="row g-4 justify-content-center">
+      <div class="col-12 col-sm-6 col-lg-4">
+        <div class="dashboard-card" routerLink="/admin/peliculas-activas">
+          <div class="icon mb-3">
+            <i class="bi bi-film"></i>
           </div>
+          <h4>Consultar Películas Activas</h4>
+          <p>Visualiza y administra las películas actualmente en cartelera.</p>
         </div>
+      </div>
 
-        <div class="col-12 col-sm-6 col-lg-4">
-          <div class="dashboard-card" routerLink="/admin/registro-sala">
-            <div class="icon mb-3">
-              <i class="bi bi-building"></i>
-            </div>
-            <h4>Registro de Sala de Cine</h4>
-            <p>Agrega o modifica salas disponibles para proyecciones.</p>
+      <div class="col-12 col-sm-6 col-lg-4">
+        <div class="dashboard-card" routerLink="/admin/registro-sala">
+          <div class="icon mb-3">
+            <i class="bi bi-building"></i>
           </div>
+          <h4>Registro de Sala de Cine</h4>
+          <p>Agrega o modifica salas disponibles para proyecciones.</p>
         </div>
+      </div>
 
-        <div class="col-12 col-sm-6 col-lg-4">
-          <div class="dashboard-card" routerLink="/admin/bloqueo-anuncios">
-            <div class="icon mb-3">
-              <i class="bi bi-shield-lock"></i>
-            </div>
-            <h4>Bloqueo de Anuncios</h4>
-            <p>Configura y gestiona los anuncios en las páginas de cine.</p>
+      <div class="col-12 col-sm-6 col-lg-4">
+        <div class="dashboard-card" routerLink="/admin/bloqueo-anuncios">
+          <div class="icon mb-3">
+            <i class="bi bi-shield-lock"></i>
           </div>
+          <h4>Bloqueo de Anuncios</h4>
+          <p>Configura y gestiona los anuncios en las páginas de cine.</p>
         </div>
-        <div class="col-12 col-sm-6 col-lg-4">
-          <div class="dashboard-card" routerLink="/admin/recargar-cartera">
-            <div class="icon mb-3">
-              <i class="bi bi-wallet2"></i>
-            </div>
-            <h4>Recargar Cartera</h4>
-            <p>Gestiona el saldo y las recargas de la cartera del sistema.</p>
+      </div>
+      <div class="col-12 col-sm-6 col-lg-4">
+        <div class="dashboard-card" routerLink="/admin/recargar-cartera">
+          <div class="icon mb-3">
+            <i class="bi bi-wallet2"></i>
           </div>
+          <h4>Recargar Cartera</h4>
+          <p>Gestiona el saldo y las recargas de la cartera del sistema.</p>
         </div>
       </div>
     </div>
   </div>
-</app-page-layout>
+</div>

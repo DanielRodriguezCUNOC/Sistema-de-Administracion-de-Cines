@@ -17,6 +17,7 @@ import { authCinemaAdminGuard } from '../guards/auth-cinema-admin-guard';
 import { authSpecialUserGuard } from '../guards/auth-special-user-guard';
 import { authNormalUserGuard } from '../guards/auth-normal-user-guard';
 import { AccessDeniedComponent } from '../components/access-denied/access-denied.component/access-denied.component';
+import { ProfitReportComponent } from '../components/reports/profit-report.component/profit-report.component';
 
 export const routes: Routes = [
   {
@@ -109,6 +110,11 @@ export const routes: Routes = [
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full',
+      },
+
+      {
+        path: 'profit-report',
+        component: ProfitReportComponent,
       },
     ],
   },
