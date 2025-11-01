@@ -3,7 +3,7 @@ import { PageLayoutComponent } from '../../share/page-layout.component/page-layo
 
 @Component({
   selector: 'app-admin-cine-dashboard',
-  imports: [PageLayoutComponent],
+  imports: [],
   templateUrl: './admin-cine-dashboard.component.html',
   styleUrl: './admin-cine-dashboard.component.scss',
 })

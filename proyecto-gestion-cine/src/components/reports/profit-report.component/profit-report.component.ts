@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './profit-report.component.html',
   styleUrl: './profit-report.component.scss',
 })
-export class ProfitReportComponent implements OnInit {
+export class ProfitReportComponent {
   reportForm: FormGroup;
   report: ProfitReportResponseDTO | null = null;
   isLoading: boolean = false;
@@ -18,16 +18,12 @@ export class ProfitReportComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private profitReportService: ProfitReportService) {
     const today = new Date();
-    const firstDay = new Date(today.getFullYear());
+    const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
 
     this.reportForm = this.fb.group({
-      fechaInicio: [this.formatDate(firstDay), Validators.required],
+      fechaInicio: [this.formatDate(firstDayOfMonth), Validators.required],
       fechaFin: [this.formatDate(today), Validators.required],
     });
-  }
-
-  ngOnInit(): void {
-    this.generateReport();
   }
 
   formatDate(date: Date): string {
@@ -43,6 +39,7 @@ export class ProfitReportComponent implements OnInit {
     this.errorMessage = '';
 
     const { fechaInicio, fechaFin } = this.reportForm.value;
+    console.log('Generating report from', fechaInicio, 'to', fechaFin);
 
     this.profitReportService.generateProfitReport(fechaInicio, fechaFin).subscribe({
       next: (data: ProfitReportResponseDTO) => {

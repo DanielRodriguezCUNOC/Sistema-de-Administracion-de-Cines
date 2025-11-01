@@ -12,17 +12,17 @@ public class CinemaCostReport {
     private String nombreCine;
     @JsonFormat(pattern = "yyyy-MM-dd")
     @JsonSerialize(using = LocalDateSerializer.class)
-    private LocalDate fechaPago;
-    private int[] costoCine;
+    private LocalDate fechaModificacion;
+    private int[] costos;
 
     public CinemaCostReport() {
     }
 
-    public CinemaCostReport(int idCine, String nombreCine, LocalDate fechaPago, int[] costoCine) {
+    public CinemaCostReport(int idCine, String nombreCine, LocalDate fechaModificacion, int[] costos) {
         this.idCine = idCine;
         this.nombreCine = nombreCine;
-        this.fechaPago = fechaPago;
-        this.costoCine = costoCine;
+        this.fechaModificacion = fechaModificacion;
+        this.costos = costos;
     }
 
     public int getIdCine() {
@@ -42,18 +42,18 @@ public class CinemaCostReport {
     }
 
     public int[] getCostoTotal() {
-        return costoCine;
+        return costos;
     }
 
-    public void setCostoTotal(int[] costoCine) {
-        this.costoCine = costoCine;
+    public void setCostoTotal(int[] costos) {
+        this.costos = costos;
     }
 
     public LocalDate getFechaPago() {
-        return fechaPago;
+        return fechaModificacion;
     }
 
-    public void setFechaPago(LocalDate fechaPago) {
-        this.fechaPago = fechaPago;
+    public void setFechaPago(LocalDate fechaModificacion) {
+        this.fechaModificacion = fechaModificacion;
     }
 }

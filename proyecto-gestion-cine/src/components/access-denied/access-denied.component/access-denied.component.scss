@@ -73,22 +73,6 @@
   box-shadow: 0 12px 36px rgba(102,126,234,0.28);
 }
 
-.btn-ghost {
-  background: transparent;
-  color: rgba(255,255,255,0.92);
-  border: 1px solid rgba(102,126,234,0.16);
-  padding: 0.72rem 1.15rem;
-  border-radius: 10px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background .12s ease, border-color .12s ease;
-}
-
-.btn-ghost:hover {
-  background: rgba(102,126,234,0.06);
-  border-color: rgba(102,126,234,0.28);
-}
-
 .hint {
   color: rgba(255,255,255,0.6);
   font-size: 0.875rem;

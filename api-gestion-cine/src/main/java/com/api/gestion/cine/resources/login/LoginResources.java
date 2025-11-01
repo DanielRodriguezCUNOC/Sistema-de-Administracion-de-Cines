@@ -30,6 +30,7 @@ public class LoginResources {
             return Response.ok(userResponse).build();
 
         } catch (Exception e) {
+            // ! Retorno de la respuesta en caso de error */
             return Response.status(Response.Status.UNAUTHORIZED).entity(e.getMessage()).build();
         }
     }

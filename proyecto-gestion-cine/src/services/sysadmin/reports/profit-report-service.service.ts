@@ -8,12 +8,13 @@ import { environment } from '../../../enviroments/enviroments';
   providedIn: 'root',
 })
 export class ProfitReportService {
-  private apiUrl = `${environment.apiBaseUrl}/sysadmin/reports/profit`;
+  private apiUrl = `${environment.apiBaseUrl}/sysadmin/report/profit`;
 
   constructor(private http: HttpClient) {}
 
   generateProfitReport(startDate: string, endDate: string) {
     const url = `${this.apiUrl}?startDate=${startDate}&endDate=${endDate}`;
+    console.log('URL de la solicitud:', url);
     return this.http.get<ProfitReportResponseDTO>(url).pipe(
       map((report) => ({
         ...report,

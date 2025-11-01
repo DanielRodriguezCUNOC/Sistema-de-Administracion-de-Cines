@@ -4,6 +4,7 @@ import { environment } from '../../enviroments/enviroments';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from '../../models/users/user';
 import { MasterLoginService } from '../masterlogin/master';
+import { UserResponseLoginDTO } from '../../models/dto/login/user-response-login-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -25,18 +26,20 @@ export class LoginService {
     this.estadoLogin();
   }
 
-  // Verificamos si el estado del login
+  // Verificamos si el estado del login ha cambiado
   private estadoLogin(): void {
     const LOGGED = !!localStorage.getItem('usuarioActual');
     this.isLoggedInSubject.next(LOGGED);
   }
 
-  // Método para autenticar al usuario con el backend, este devuelve un objeto de tipo Usuario
+  //* Método para autenticar al usuario con el backend, este devuelve un objeto de tipo Usuario
   autenticacionBackend(usuario: string, password: String) {
     return this.http.post<User>(this.apiUrl, { usuario, password }, this.httpOptions).pipe(
-      map((user) => {
+      map((user: UserResponseLoginDTO) => {
         //* Notificar al MasterLoginService sobre el inicio de sesión
         this.masterLoginService.setLogin(user);
+
+        //* Retornamos los datos del usuario al componente
         return user;
       }),
       catchError((error) => {
