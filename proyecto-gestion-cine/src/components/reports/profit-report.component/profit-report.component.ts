@@ -39,7 +39,6 @@ export class ProfitReportComponent {
     this.errorMessage = '';
 
     const { fechaInicio, fechaFin } = this.reportForm.value;
-    console.log('Generating report from', fechaInicio, 'to', fechaFin);
 
     this.profitReportService.generateProfitReport(fechaInicio, fechaFin).subscribe({
       next: (data: ProfitReportResponseDTO) => {
@@ -52,8 +51,5 @@ export class ProfitReportComponent {
         this.isLoading = false;
       },
     });
-  }
-  getTotalCinemaCosts(costos: number[]): number {
-    return costos.reduce((sum, cost) => sum + cost, 0);
   }
 }

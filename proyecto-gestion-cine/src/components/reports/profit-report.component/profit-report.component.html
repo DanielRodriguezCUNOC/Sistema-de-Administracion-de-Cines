@@ -99,7 +99,13 @@
           <tr>
             <td>{{ cine.idCine }}</td>
             <td class="fw-bold">{{ cine.nombreCine }}</td>
-            <td>{{ cine.fechaModificacion | date : 'dd/MM/yyyy' }}</td>
+            <td>
+              <div class="cost-badges">
+                @for (fecha of cine.fechasModificacion; track fecha) {
+                <span class="badge bg-secondary">{{ fecha | date : 'dd/MM/yyyy' }}</span>
+                }
+              </div>
+            </td>
             <td>
               <div class="cost-badges">
                 @for (costo of cine.costos; track $index) {
@@ -107,9 +113,7 @@
                 }
               </div>
             </td>
-            <td class="text-danger fw-bold">
-              Q {{ getTotalCinemaCosts(cine.costos) | number : '1.2-2' }}
-            </td>
+            <td class="text-danger fw-bold">Q {{ cine.costoTotal | number : '1.2-2' }}</td>
           </tr>
           }
         </tbody>
@@ -135,10 +139,10 @@
           </tr>
         </thead>
         <tbody>
-          @for (ad of report.advertisementPaymentAmount; track ad.idAnuncio) {
+          @for (ad of report.advertisementPaymentAmount; track ad.id) {
           <tr>
-            <td>{{ ad.idAnuncio }}</td>
-            <td class="fw-bold">{{ ad.nombreAnuncio }}</td>
+            <td>{{ ad.id }}</td>
+            <td class="fw-bold">{{ ad.nombre }}</td>
             <td>{{ ad.fechaPago | date : 'dd/MM/yyyy' }}</td>
             <td class="text-success fw-bold">Q {{ ad.montoPago | number : '1.2-2' }}</td>
           </tr>
@@ -166,10 +170,10 @@
           </tr>
         </thead>
         <tbody>
-          @for (adBlock of report.amountAdBlock; track adBlock.idAnuncio) {
+          @for (adBlock of report.amountAdBlock; track adBlock.id) {
           <tr>
-            <td>{{ adBlock.idAnuncio }}</td>
-            <td class="fw-bold">{{ adBlock.nombreAnuncio }}</td>
+            <td>{{ adBlock.id }}</td>
+            <td class="fw-bold">{{ adBlock.nombre }}</td>
             <td>{{ adBlock.fechaPago | date : 'dd/MM/yyyy' }}</td>
             <td class="text-success fw-bold">Q {{ adBlock.montoPago | number : '1.2-2' }}</td>
           </tr>

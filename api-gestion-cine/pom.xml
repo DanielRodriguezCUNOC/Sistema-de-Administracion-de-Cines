@@ -28,6 +28,12 @@
             <scope>provided</scope>
         </dependency>
 
+        <dependency>
+            <groupId>jakarta.ws.rs</groupId>
+            <artifactId>jakarta.ws.rs-api</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+
         <!-- Implementación de JAX-RS (Jersey) -->
         <dependency>
             <groupId>org.glassfish.jersey.containers</groupId>
@@ -65,6 +71,13 @@
             <artifactId>tomcat-jdbc</artifactId>
             <version>11.0.11</version>
             <scope>provided</scope>
+        </dependency>
+
+        <!--JASPER REPORTS-->
+        <dependency>
+            <groupId>net.sf.jasperreports</groupId>
+            <artifactId>jasperreports-functions</artifactId>
+            <version>7.0.3</version>
         </dependency>
     </dependencies>
 

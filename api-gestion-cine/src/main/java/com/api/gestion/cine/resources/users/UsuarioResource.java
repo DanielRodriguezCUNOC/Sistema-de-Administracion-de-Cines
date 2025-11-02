@@ -1,6 +1,6 @@
 package com.api.gestion.cine.resources.users;
 
-import com.api.gestion.cine.model.UsuarioModel;
+import com.api.gestion.cine.model.user.UsuarioModel;
 
 import jakarta.websocket.server.PathParam;
 import jakarta.ws.rs.Consumes;

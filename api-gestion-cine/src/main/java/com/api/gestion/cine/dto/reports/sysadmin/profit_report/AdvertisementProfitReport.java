@@ -8,8 +8,8 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 
 public class AdvertisementProfitReport {
 
-    private int idAnuncio;
-    private String nombreAnuncio;
+    private int id;
+    private String nombre;
     @JsonFormat(pattern = "yyyy-MM-dd")
     @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate fechaPago;
@@ -18,27 +18,27 @@ public class AdvertisementProfitReport {
     public AdvertisementProfitReport() {
     }
 
-    public AdvertisementProfitReport(int idAnuncio, String nombreAnuncio, LocalDate fechaPago, int montoPago) {
-        this.idAnuncio = idAnuncio;
-        this.nombreAnuncio = nombreAnuncio;
+    public AdvertisementProfitReport(int id, String nombre, LocalDate fechaPago, int montoPago) {
+        this.id = id;
+        this.nombre = nombre;
         this.fechaPago = fechaPago;
         this.montoPago = montoPago;
     }
 
-    public int getIdAnuncio() {
-        return idAnuncio;
+    public int getId() {
+        return id;
     }
 
-    public void setIdAnuncio(int idAnuncio) {
-        this.idAnuncio = idAnuncio;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getNombreAnuncio() {
-        return nombreAnuncio;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setNombreAnuncio(String nombreAnuncio) {
-        this.nombreAnuncio = nombreAnuncio;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public LocalDate getFechaPago() {

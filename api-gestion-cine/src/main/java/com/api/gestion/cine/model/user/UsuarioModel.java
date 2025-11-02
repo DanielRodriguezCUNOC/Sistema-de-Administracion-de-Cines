@@ -1,6 +1,4 @@
-package com.api.gestion.cine.model;
-
-
+package com.api.gestion.cine.model.user;
 
 public class UsuarioModel {
     private int idUsuario;
@@ -17,8 +15,6 @@ public class UsuarioModel {
 
     public UsuarioModel(int idUsuario, int idRol, String nombreCompleto, String usuario, String password, String correo,
             String telefono, byte[] foto) {
-        
-      
 
         this.idUsuario = idUsuario;
         this.idRol = idRol;
@@ -95,6 +91,4 @@ public class UsuarioModel {
         this.foto = foto;
     }
 
-    
-    
 }

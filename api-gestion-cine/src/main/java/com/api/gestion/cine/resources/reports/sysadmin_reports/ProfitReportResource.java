@@ -1,13 +1,13 @@
 package com.api.gestion.cine.resources.reports.sysadmin_reports;
 
 import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.QueryParam;
 
 import com.api.gestion.cine.dto.reports.sysadmin.profit_report.ProfitReportResponseDTO;
 import com.api.gestion.cine.services.reports.sysadmin.ProfitReportService;
 
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
@@ -15,10 +15,11 @@ import jakarta.ws.rs.core.Response;
 public class ProfitReportResource {
 
     @GET
+    @Path("inicio/{fechaInicio}/fin/{fechaFin}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getProfitReport(
-            @QueryParam("fechaInicio") String fechaInicio,
-            @QueryParam("fechaFin") String fechaFin) {
+            @PathParam("fechaInicio") String fechaInicio,
+            @PathParam("fechaFin") String fechaFin) {
         try {
             // * Creación del servicio de informes de ganancias */
             ProfitReportService profitReportService = new ProfitReportService();
@@ -29,6 +30,7 @@ public class ProfitReportResource {
             // * Retorno de la respuesta exitosa */
             return Response.ok(report).build();
         } catch (Exception e) {
+            e.printStackTrace();
             // ! Retorno de la respuesta en caso de error */
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                     .entity(e.getMessage())
