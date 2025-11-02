@@ -16,22 +16,7 @@
 
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto align-items-center">
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/">Inicio</a>
-        </li>
-        @if(isLoggedIn){
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/companies">Cines</a>
-        </li>
-        } @if(isLoggedIn){
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/movies">Recargar Cartera</a>
-        </li>
-        } @if(isLoggedIn){
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/promotions">Ver Perfil</a>
-        </li>
-        } @if(!isLoggedIn){
+        @if(!isLoggedIn){
         <li class="nav-item ms-lg-3">
           <a class="btn btn-outline-light btn-sm" routerLink="/login" routerLinkActive="active">
             Iniciar Sesión
@@ -50,9 +35,6 @@
             <i class="bi bi-person-circle"></i> Mi Cuenta
           </a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-            <li>
-              <a class="dropdown-item" routerLink="/profile">Perfil</a>
-            </li>
             <li>
               <button class="dropdown-item text-danger" (click)="logout()">Cerrar sesión</button>
             </li>

@@ -1,27 +1,26 @@
 package com.api.gestion.cine.dto.reports.sysadmin.profit_report;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 
 public class CinemaCostReport {
 
     private int idCine;
     private String nombreCine;
     @JsonFormat(pattern = "yyyy-MM-dd")
-    @JsonSerialize(using = LocalDateSerializer.class)
-    private LocalDate fechaModificacion;
+    private List<LocalDate> fechasModificacion;
     private int[] costos;
+    private int costoTotal;
 
     public CinemaCostReport() {
     }
 
-    public CinemaCostReport(int idCine, String nombreCine, LocalDate fechaModificacion, int[] costos) {
+    public CinemaCostReport(int idCine, String nombreCine, List<LocalDate> fechasModificacion, int[] costos) {
         this.idCine = idCine;
         this.nombreCine = nombreCine;
-        this.fechaModificacion = fechaModificacion;
+        this.fechasModificacion = fechasModificacion;
         this.costos = costos;
     }
 
@@ -41,19 +40,35 @@ public class CinemaCostReport {
         this.nombreCine = nombreCine;
     }
 
-    public int[] getCostoTotal() {
+    public int[] getCostos() {
         return costos;
     }
 
-    public void setCostoTotal(int[] costos) {
+    public void setCostos(int[] costos) {
         this.costos = costos;
     }
 
-    public LocalDate getFechaPago() {
-        return fechaModificacion;
+    public List<LocalDate> getFechasModificacion() {
+        return fechasModificacion;
     }
 
-    public void setFechaPago(LocalDate fechaModificacion) {
-        this.fechaModificacion = fechaModificacion;
+    public void setFechasModificacion(List<LocalDate> fechasModificacion) {
+        this.fechasModificacion = fechasModificacion;
+    }
+
+    public int getCostoTotal() {
+        return costoTotal;
+    }
+
+    public void setCostoTotal(int costoTotal) {
+        this.costoTotal = costoTotal;
+    }
+
+    public void calcularCostoTotal() {
+        int total = 0;
+        for (int costo : costos) {
+            total += costo;
+        }
+        this.costoTotal = total;
     }
 }

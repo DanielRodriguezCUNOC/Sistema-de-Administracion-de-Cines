@@ -1,6 +1,6 @@
 export interface AdvertisementReportDTO {
-  idAnuncio: number;
-  nombreAnuncio: string;
+  id: number;
+  nombre: string;
   fechaPago: Date;
   montoPago: number;
 }

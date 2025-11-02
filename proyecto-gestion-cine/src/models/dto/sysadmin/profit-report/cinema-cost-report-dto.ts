@@ -1,6 +1,7 @@
 export interface CinemaCostReportDTO {
   idCine: number;
   nombreCine: string;
-  fechaModificacion: Date;
+  fechasModificacion: Date[];
   costos: number[];
+  costoTotal: number;
 }

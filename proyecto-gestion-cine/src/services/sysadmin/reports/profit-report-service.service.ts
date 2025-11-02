@@ -13,26 +13,8 @@ export class ProfitReportService {
   constructor(private http: HttpClient) {}
 
   generateProfitReport(startDate: string, endDate: string) {
-    const url = `${this.apiUrl}?startDate=${startDate}&endDate=${endDate}`;
-    console.log('URL de la solicitud:', url);
-    return this.http.get<ProfitReportResponseDTO>(url).pipe(
-      map((report) => ({
-        ...report,
-        costoCinema: report.costoCinema.map((cine) => ({
-          ...cine,
-          fechaModificacion: new Date(cine.fechaModificacion),
-        })),
-        advertisementPaymentAmount: report.advertisementPaymentAmount.map((ad) => ({
-          ...ad,
-          fechaPago: new Date(ad.fechaPago),
-        })),
-        amountAdBlock: report.amountAdBlock.map((ab) => ({
-          ...ab,
-          fechaPago: new Date(ab.fechaPago),
-        })),
-      })),
-      catchError(this.handleError)
-    );
+    const url = `${this.apiUrl}/inicio/${startDate}/fin/${endDate}`;
+    return this.http.get<ProfitReportResponseDTO>(url).pipe(catchError(this.handleError));
   }
 
   private handleError(error: HttpErrorResponse): Observable<never> {
