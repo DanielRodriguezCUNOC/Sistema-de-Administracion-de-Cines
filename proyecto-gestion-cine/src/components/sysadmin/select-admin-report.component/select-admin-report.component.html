@@ -1,0 +1,52 @@
+<div class="select-admin-report position-relative d-flex align-items-center justify-content-center">
+  <div class="overlay"></div>
+
+  <div class="content container text-light">
+    <h1 class="text-center mb-4">📑 Reportes del Sistema</h1>
+    <p class="text-center mb-5 subtitle">
+      Elige el reporte que deseas generar y luego selecciona el intervalo de tiempo
+    </p>
+
+    <div class="row g-4 justify-content-center">
+      <div class="col-12 col-sm-6 col-lg-4">
+        <div class="report-card" routerLink="/admin-system/reports/profit-report">
+          <div class="icon mb-3"><i class="bi bi-graph-up-arrow"></i></div>
+          <h4>Reporte de ganancias</h4>
+          <p>Ganancias en un intervalo de tiempo.</p>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-lg-4">
+        <div class="report-card" routerLink="/admin-system/reports/advertisement-purchased-report">
+          <div class="icon mb-3"><i class="bi bi-megaphone-fill"></i></div>
+          <h4>Anuncios comprados</h4>
+          <p>Pagos por anuncios en un intervalo de tiempo.</p>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-lg-4">
+        <div class="report-card" routerLink="/admin-system/reports/profit-by-advertiser">
+          <div class="icon mb-3"><i class="bi bi-person-lines-fill"></i></div>
+          <h4>Ganancias por anunciante</h4>
+          <p>Ingresos agrupados por anunciante.</p>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-lg-4">
+        <div class="report-card" routerLink="/admin-system/reports/top-liked-rooms">
+          <div class="icon mb-3"><i class="bi bi-star-fill"></i></div>
+          <h4>Top 5 salas (valoradas)</h4>
+          <p>Las 5 salas con mejor calificación en un periodo de tiempo.</p>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-lg-4">
+        <div class="report-card" routerLink="/admin-system/reports/top-commented-rooms">
+          <div class="icon mb-3"><i class="bi bi-chat-left-text-fill"></i></div>
+          <h4>Top 5 salas (comentadas)</h4>
+          <p>Las 5 salas con más comentarios en un periodo de tiempo.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

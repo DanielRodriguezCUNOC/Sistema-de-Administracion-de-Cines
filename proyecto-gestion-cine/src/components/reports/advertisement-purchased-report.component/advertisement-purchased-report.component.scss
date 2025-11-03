@@ -1,0 +1,72 @@
+.purchase-advertisement-report-container {
+  padding: 2rem;
+  background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+  border-radius: 1.5rem;
+
+  .report-header {
+    text-align: center;
+    margin-bottom: 2rem;
+
+    .report-title {
+      font-size: 2.5rem;
+      color: #fff;
+    }
+
+    .report-subtitle {
+      color: rgba(255, 255, 255, 0.7);
+    }
+  }
+
+  .filters-card {
+    background: rgba(20, 20, 40, 0.8);
+    padding: 2rem;
+    border-radius: 1.5rem;
+    margin-bottom: 2rem;
+
+    .form-label {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .btn-generate {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      border-radius: 12px;
+      padding: 0.75rem 1.5rem;
+      cursor: pointer;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+      }
+    }
+  }
+
+  .data-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+
+    thead {
+      tr {
+        background: rgba(102, 126, 234, 0.1);
+        th {
+          padding: 1rem;
+          color: rgba(255, 255, 255, 0.9);
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        background: rgba(255, 255, 255, 0.02);
+        &:hover {
+          background: rgba(102, 126, 234, 0.1);
+        }
+        td {
+          padding: 1rem;
+          color: rgba(255, 255, 255, 0.85);
+        }
+      }
+    }
+  }
+}
