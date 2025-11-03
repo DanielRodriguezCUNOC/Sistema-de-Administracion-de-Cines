@@ -1,5 +1,5 @@
 import { RoomCommentDTO } from './room-comment-dto';
 
-export interface MostCommentedRoomResponseReport {
+export interface MostCommentedRoomReportResponseDTO {
   salasConComentarios: RoomCommentDTO[];
 }

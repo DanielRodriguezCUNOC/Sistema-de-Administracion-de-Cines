@@ -11,7 +11,7 @@ import com.api.gestion.cine.services.util.FormatterDateCustom;
 
 public class ProfitReportService {
 
-        public ProfitReportResponseDTO generateProfitReport(String fechaInicio, String fechaFin) {
+        public ProfitReportResponseDTO generateReport(String fechaInicio, String fechaFin) {
 
                 LocalDate startDate = FormatterDateCustom.parseStringToDate(fechaInicio);
                 LocalDate endDate = FormatterDateCustom.parseStringToDate(fechaFin);

@@ -7,7 +7,7 @@ import { catchError, Observable, throwError } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class advertiserProfitReportService {
+export class AdvertiserProfitReportService {
   private apiUrl = `${environment.apiBaseUrl}/sysadmin/report/advertiser-profit`;
 
   constructor(private http: HttpClient) {}

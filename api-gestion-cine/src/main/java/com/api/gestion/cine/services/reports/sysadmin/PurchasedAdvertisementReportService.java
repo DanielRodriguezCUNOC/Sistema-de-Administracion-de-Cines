@@ -9,7 +9,7 @@ import com.api.gestion.cine.services.util.FormatterDateCustom;
 
 public class PurchasedAdvertisementReportService {
 
-  public PurchasedAdvertisementResponseReportDTO generatePurchasedAdvertisementReport(String fechaInicio,
+  public PurchasedAdvertisementResponseReportDTO generateReport(String fechaInicio,
       String fechaFin, String tipoAnuncio) {
 
     LocalDate startDate = FormatterDateCustom.parseStringToDate(fechaInicio);
@@ -30,10 +30,10 @@ public class PurchasedAdvertisementReportService {
     if (startDate != null && endDate != null) {
       // *Filtrar los anuncios comprados por el rango de fechas
       return report;
-    }else if(startDate != null && endDate != null && tipoAnuncio != "Todo"){
-        // *Filtrar los anuncios comprados por el rango de fechas y por tipo de anuncio
-    }else if(startDate == null && endDate == null && tipoAnuncio != "Todo"){
-        // *Filtrar los anuncios comprados por el tipo de anuncio
+    } else if (startDate != null && endDate != null && tipoAnuncio != "Todo") {
+      // *Filtrar los anuncios comprados por el rango de fechas y por tipo de anuncio
+    } else if (startDate == null && endDate == null && tipoAnuncio != "Todo") {
+      // *Filtrar los anuncios comprados por el tipo de anuncio
     }
     // !Si las fechas son nulas se retorna todo de la base de datos
     return report;

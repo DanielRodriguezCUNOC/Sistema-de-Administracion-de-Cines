@@ -16,7 +16,7 @@ public class PurchasedAdvertisementReportResource {
   @GET
   @Path("inicio/{fechaInicio}/fin/{fechaFin}/tipo-anuncio/{tipoAnuncio}")
   @Produces(MediaType.APPLICATION_JSON)
-  public Response getPurchasedAdvertisements(@PathParam("fechaInicio") String fechaInicio,
+  public Response getResponse(@PathParam("fechaInicio") String fechaInicio,
       @PathParam("fechaFin") String fechaFin,
       @PathParam("tipoAnuncio") String tipoAnuncio) {
     try {
@@ -25,7 +25,7 @@ public class PurchasedAdvertisementReportResource {
       PurchasedAdvertisementReportService service = new PurchasedAdvertisementReportService();
 
       // * Generación del informe de anuncios comprados */
-      PurchasedAdvertisementResponseReportDTO report = service.generatePurchasedAdvertisementReport(fechaInicio,
+      PurchasedAdvertisementResponseReportDTO report = service.generateReport(fechaInicio,
           fechaFin, tipoAnuncio);
 
       // * Retorno de la respuesta exitosa */

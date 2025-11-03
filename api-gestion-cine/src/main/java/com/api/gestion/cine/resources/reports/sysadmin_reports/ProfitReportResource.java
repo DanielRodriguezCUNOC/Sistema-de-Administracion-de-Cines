@@ -17,7 +17,7 @@ public class ProfitReportResource {
     @GET
     @Path("inicio/{fechaInicio}/fin/{fechaFin}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getProfitReport(
+    public Response getResponse(
             @PathParam("fechaInicio") String fechaInicio,
             @PathParam("fechaFin") String fechaFin) {
         try {
@@ -25,7 +25,7 @@ public class ProfitReportResource {
             ProfitReportService profitReportService = new ProfitReportService();
 
             // * Generación del informe de ganancias */
-            ProfitReportResponseDTO report = profitReportService.generateProfitReport(fechaInicio, fechaFin);
+            ProfitReportResponseDTO report = profitReportService.generateReport(fechaInicio, fechaFin);
 
             // * Retorno de la respuesta exitosa */
             return Response.ok(report).build();

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AdvertiserProfitReportResponseDTO } from '../../../models/dto/sysadmin/advertiser-profit-report/advertiser-profit-report-response-dto';
-import { advertiserProfitReportService } from '../../../services/sysadmin/reports/advertiser-profit-report-service.service';
+import { AdvertiserProfitReportService } from '../../../services/sysadmin/reports/advertiser-profit-report-service.service';
 
 @Component({
   selector: 'app-advertiser-profit-report.component',
@@ -15,10 +15,7 @@ export class AdvertiserProfitReportComponent {
   isLoading = false;
   errorMessage: string | null = null;
 
-  constructor(
-    private fb: FormBuilder,
-    private advertiserProfitReportService: advertiserProfitReportService
-  ) {
+  constructor(private fb: FormBuilder, private service: AdvertiserProfitReportService) {
     const today = new Date();
     const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
     this.reportForm = this.fb.group({
@@ -40,7 +37,7 @@ export class AdvertiserProfitReportComponent {
 
     const { fechaInicio, fechaFin } = this.reportForm.value;
 
-    this.advertiserProfitReportService.generateReport(fechaInicio, fechaFin).subscribe({
+    this.service.generateReport(fechaInicio, fechaFin).subscribe({
       next: (data: AdvertiserProfitReportResponseDTO) => {
         this.report = data;
         this.isLoading = false;
