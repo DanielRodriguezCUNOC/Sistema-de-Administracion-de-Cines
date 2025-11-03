@@ -1,5 +1,6 @@
 package com.api.gestion.cine.dto.reports.sysadmin.profit_report;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -11,13 +12,13 @@ public class CinemaCostReport {
     private String nombreCine;
     @JsonFormat(pattern = "yyyy-MM-dd")
     private List<LocalDate> fechasModificacion;
-    private int[] costos;
-    private int costoTotal;
+    private BigDecimal[] costos;
+    private BigDecimal costoTotal;
 
     public CinemaCostReport() {
     }
 
-    public CinemaCostReport(int idCine, String nombreCine, List<LocalDate> fechasModificacion, int[] costos) {
+    public CinemaCostReport(int idCine, String nombreCine, List<LocalDate> fechasModificacion, BigDecimal[] costos) {
         this.idCine = idCine;
         this.nombreCine = nombreCine;
         this.fechasModificacion = fechasModificacion;
@@ -40,11 +41,11 @@ public class CinemaCostReport {
         this.nombreCine = nombreCine;
     }
 
-    public int[] getCostos() {
+    public BigDecimal[] getCostos() {
         return costos;
     }
 
-    public void setCostos(int[] costos) {
+    public void setCostos(BigDecimal[] costos) {
         this.costos = costos;
     }
 
@@ -56,18 +57,18 @@ public class CinemaCostReport {
         this.fechasModificacion = fechasModificacion;
     }
 
-    public int getCostoTotal() {
+    public BigDecimal getCostoTotal() {
         return costoTotal;
     }
 
-    public void setCostoTotal(int costoTotal) {
+    public void setCostoTotal(BigDecimal costoTotal) {
         this.costoTotal = costoTotal;
     }
 
     public void calcularCostoTotal() {
-        int total = 0;
-        for (int costo : costos) {
-            total += costo;
+        BigDecimal total = BigDecimal.ZERO;
+        for (BigDecimal costo : costos) {
+            total = total.add(costo);
         }
         this.costoTotal = total;
     }

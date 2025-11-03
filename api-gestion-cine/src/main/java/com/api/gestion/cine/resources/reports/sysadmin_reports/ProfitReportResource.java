@@ -30,7 +30,6 @@ public class ProfitReportResource {
             // * Retorno de la respuesta exitosa */
             return Response.ok(report).build();
         } catch (Exception e) {
-            e.printStackTrace();
             // ! Retorno de la respuesta en caso de error */
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                     .entity(e.getMessage())

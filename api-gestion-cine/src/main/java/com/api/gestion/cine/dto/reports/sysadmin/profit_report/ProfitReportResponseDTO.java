@@ -62,8 +62,8 @@ public class ProfitReportResponseDTO {
     public BigDecimal totalExpenses() {
         BigDecimal totalCostCinema = BigDecimal.ZERO;
         for (CinemaCostReport report : costoCinema) {
-            for (int cost : report.getCostos()) {
-                totalCostCinema = totalCostCinema.add(BigDecimal.valueOf(cost));
+            for (BigDecimal cost : report.getCostos()) {
+                totalCostCinema = totalCostCinema.add(cost);
             }
         }
         return totalCostCinema;
