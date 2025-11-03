@@ -11,9 +11,8 @@ export class CommentedRoomReportService {
   private apiUrl = `${environment.apiBaseUrl}/admin-cinema/report/commented-room`;
 
   constructor(private http: HttpClient) {}
-  generateReport(fechaInicio: string, fechaFin: string) {
-    const url = `${this.apiUrl}/inicio/${fechaInicio}/fin/${fechaFin}`;
-
+  generateReport(fechaInicio: string, fechaFin: string, idSala: number) {
+    const url = `${this.apiUrl}/inicio/${fechaInicio}/fin/${fechaFin}/sala/${idSala}`;
     return this.http.get<CommentedRoomResponseReportDTO>(url).pipe(catchError(this.handleError));
   }
   private handleError(error: HttpErrorResponse): Observable<never> {
