@@ -1,5 +1,5 @@
 import { RoomDataDTO } from './room-data-dto';
 
-export interface MostPopularRoomResponseReport {
+export interface MostPopularRoomReportResponseDTO {
   roomList: RoomDataDTO[];
 }

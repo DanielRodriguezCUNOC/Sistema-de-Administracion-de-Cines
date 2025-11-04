@@ -18,6 +18,8 @@ import { authSpecialUserGuard } from '../guards/auth-special-user-guard';
 import { authNormalUserGuard } from '../guards/auth-normal-user-guard';
 import { AccessDeniedComponent } from '../components/access-denied/access-denied.component/access-denied.component';
 import { ProfitReportComponent } from '../components/reports/profit-report.component/profit-report.component';
+import { AdvertisementPurchasedReportComponent } from '../components/reports/advertisement-purchased-report.component/advertisement-purchased-report.component';
+import { SelectAdminReportComponent } from '../components/sysadmin/select-admin-report.component/select-admin-report.component';
 
 export const routes: Routes = [
   {
@@ -47,12 +49,12 @@ export const routes: Routes = [
     canActivateChild: [authGuard, authNormalUserGuard],
     children: [
       {
-        path: 'dashboard',
+        path: 'dashboard-normal-user',
         component: UserDashboardComponent,
       },
       {
         path: '',
-        redirectTo: 'dashboard',
+        redirectTo: 'dashboard-normal-user',
         pathMatch: 'full',
       },
     ],
@@ -65,12 +67,12 @@ export const routes: Routes = [
 
     children: [
       {
-        path: 'dashboard',
+        path: 'dashboard-special-user',
         component: UserSpecialDashboardComponent,
       },
       {
         path: '',
-        redirectTo: 'dashboard',
+        redirectTo: 'dashboard-special-user',
         pathMatch: 'full',
       },
     ],
@@ -84,12 +86,12 @@ export const routes: Routes = [
 
     children: [
       {
-        path: 'dashboard',
+        path: 'dashboard-admin-cinema',
         component: AdminCineDashboardComponent,
       },
       {
         path: '',
-        redirectTo: 'dashboard',
+        redirectTo: 'dashboard-admin-cinema',
         pathMatch: 'full',
       },
     ],
@@ -103,18 +105,30 @@ export const routes: Routes = [
 
     children: [
       {
-        path: '',
+        path: 'dashboard-sysadmin',
         component: AdminSystemDashboardComponent,
       },
       {
         path: '',
-        redirectTo: 'dashboard',
+        redirectTo: 'dashboard-sysadmin',
         pathMatch: 'full',
       },
-
       {
-        path: 'profit-report',
-        component: ProfitReportComponent,
+        path: 'dashboard-reports',
+        component: SelectAdminReportComponent,
+      },
+      {
+        path: 'reports',
+        children: [
+          {
+            path: 'profit-report',
+            component: ProfitReportComponent,
+          },
+          {
+            path: 'advertisement-purchased-report',
+            component: AdvertisementPurchasedReportComponent,
+          },
+        ],
       },
     ],
   },

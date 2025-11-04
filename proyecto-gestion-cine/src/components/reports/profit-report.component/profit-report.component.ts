@@ -40,7 +40,7 @@ export class ProfitReportComponent {
 
     const { fechaInicio, fechaFin } = this.reportForm.value;
 
-    this.profitReportService.generateProfitReport(fechaInicio, fechaFin).subscribe({
+    this.profitReportService.generateReport(fechaInicio, fechaFin).subscribe({
       next: (data: ProfitReportResponseDTO) => {
         this.report = data;
         this.isLoading = false;

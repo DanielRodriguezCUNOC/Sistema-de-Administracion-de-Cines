@@ -14,6 +14,19 @@ public class PurchasedAdvertisement {
     @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate fechaPago;
     private BigDecimal montoPago;
+    private String tipoAnuncio;
+
+    public PurchasedAdvertisement() {
+    }
+
+    public PurchasedAdvertisement(int idAnuncio, String nombreAnuncio, String tipoAnuncio, LocalDate fechaPago,
+            BigDecimal montoPago) {
+        this.idAnuncio = idAnuncio;
+        this.nombreAnuncio = nombreAnuncio;
+        this.fechaPago = fechaPago;
+        this.montoPago = montoPago;
+        this.tipoAnuncio = tipoAnuncio;
+    }
 
     public int getIdAnuncio() {
         return idAnuncio;
@@ -45,6 +58,14 @@ public class PurchasedAdvertisement {
 
     public void setMontoPago(BigDecimal montoPago) {
         this.montoPago = montoPago;
+    }
+
+    public String getTipoAnuncio() {
+        return tipoAnuncio;
+    }
+
+    public void setTipoAnuncio(String tipoAnuncio) {
+        this.tipoAnuncio = tipoAnuncio;
     }
 
 }

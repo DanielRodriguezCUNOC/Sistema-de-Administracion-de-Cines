@@ -4,4 +4,5 @@ export interface AdvertiserListDTO {
   idUsuario: number;
   nombreUsuario: string;
   purchasedAdvertisementList: AdvertisementReportDTO[];
+  totalPurchasedAmount: number;
 }

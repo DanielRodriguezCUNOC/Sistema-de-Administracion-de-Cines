@@ -12,13 +12,12 @@ export class ProfitReportService {
 
   constructor(private http: HttpClient) {}
 
-  generateProfitReport(startDate: string, endDate: string) {
+  generateReport(startDate: string, endDate: string) {
     const url = `${this.apiUrl}/inicio/${startDate}/fin/${endDate}`;
     return this.http.get<ProfitReportResponseDTO>(url).pipe(catchError(this.handleError));
   }
 
   private handleError(error: HttpErrorResponse): Observable<never> {
-    console.error('Error en el reporte de ganancias:', error);
     return throwError(() => new Error('Error al generar el reporte de ganancias'));
   }
 }

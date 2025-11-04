@@ -1,13 +1,13 @@
 package com.api.gestion.cine.dto.reports.sysadmin.most_commented_room_report;
 
-public class MostCommentedRoomReponseReportDTO {
+public class MostCommentedRoomResponseReportDTO {
 
     private RoomComment[] salasConComentarios;
 
-    public MostCommentedRoomReponseReportDTO() {
+    public MostCommentedRoomResponseReportDTO() {
     }
 
-    public MostCommentedRoomReponseReportDTO(RoomComment[] salasConComentarios) {
+    public MostCommentedRoomResponseReportDTO(RoomComment[] salasConComentarios) {
         this.salasConComentarios = salasConComentarios;
     }
 

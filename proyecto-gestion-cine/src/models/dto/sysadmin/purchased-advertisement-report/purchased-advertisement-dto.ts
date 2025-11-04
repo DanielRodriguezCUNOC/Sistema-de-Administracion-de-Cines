@@ -4,4 +4,5 @@ export interface PurchasedAdvertisementDTO {
   nombreAnuncio: string;
   fechaCompra: Date;
   montoPago: number;
+  tipoAnuncio: string;
 }
