@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { MostCommentedRoomReportResponseDTO } from '../../../models/dto/sysadmin/most-commented-room-report/most-commented-room-report-response-dto';
 import { MostCommentedRoomReportService } from '../../../services/sysadmin/reports/most-commented-room-report-service.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-most-commented-room-report.component',
-  imports: [],
+  imports: [ReactiveFormsModule],
   templateUrl: './most-commented-room-report.component.html',
   styleUrl: './most-commented-room-report.component.scss',
 })

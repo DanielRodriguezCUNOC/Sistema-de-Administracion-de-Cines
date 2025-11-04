@@ -4,7 +4,8 @@ import com.api.gestion.cine.dto.reports.cinema_admin.commented_room_report.Comme
 
 public class CommentedRoomReportService {
 
-  public CommentedRoomResponseReportDTO generateReport(String fechaInicio, String fechaFin, int idSala) {
+  public CommentedRoomResponseReportDTO generateReport(String fechaInicio, String fechaFin, String nombreSala,
+      int offset, int limit) {
 
     CommentedRoomResponseReportDTO report = new CommentedRoomResponseReportDTO();
 

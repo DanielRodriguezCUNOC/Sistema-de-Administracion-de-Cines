@@ -22,10 +22,7 @@ export class AdvertisementPurchasedReportComponent {
     'Anuncio de video y texto',
   ];
 
-  constructor(
-    private fb: FormBuilder,
-    private purchasedAdvertisementReportService: PurchasedAdvertisementReportService
-  ) {
+  constructor(private fb: FormBuilder, private service: PurchasedAdvertisementReportService) {
     const today = new Date();
     const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
     this.reportForm = this.fb.group({
@@ -49,18 +46,16 @@ export class AdvertisementPurchasedReportComponent {
 
     const { fechaInicio, fechaFin, tipoAnuncio } = this.reportForm.value;
 
-    this.purchasedAdvertisementReportService
-      .generateReport(fechaInicio, fechaFin, tipoAnuncio)
-      .subscribe({
-        next: (data: PurchasedAdvertisementResponseDTO) => {
-          this.report = data;
-          this.isLoading = false;
-        },
-        error: (error) => {
-          this.errorMessage =
-            'Error al generar el informe de anuncios comprados. Por favor, inténtelo de nuevo más tarde.';
-          this.isLoading = false;
-        },
-      });
+    this.service.generateReport(fechaInicio, fechaFin, tipoAnuncio).subscribe({
+      next: (data: PurchasedAdvertisementResponseDTO) => {
+        this.report = data;
+        this.isLoading = false;
+      },
+      error: (error) => {
+        this.errorMessage =
+          'Error al generar el informe de anuncios comprados. Por favor, inténtelo de nuevo más tarde.';
+        this.isLoading = false;
+      },
+    });
   }
 }

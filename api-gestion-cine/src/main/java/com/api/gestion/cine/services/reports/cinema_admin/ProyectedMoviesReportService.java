@@ -4,7 +4,8 @@ import com.api.gestion.cine.dto.reports.cinema_admin.proyected_movies_report.Pro
 
 public class ProyectedMoviesReportService {
 
-  public ProyectedMovieResponseReportDTO generateReport(String fechaInicio, String fechaFin) {
+  public ProyectedMovieResponseReportDTO generateReport(String fechaInicio, String fechaFin, int offset, int limit,
+      String nombreSala) {
 
     ProyectedMovieResponseReportDTO report = new ProyectedMovieResponseReportDTO();
 

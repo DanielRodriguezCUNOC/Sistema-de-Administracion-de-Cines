@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { MostPopularRoomReportService } from '../../../services/sysadmin/reports/most-popular-room-report-service.service';
 import { MostPopularRoomReportResponseDTO } from '../../../models/dto/sysadmin/most-popular-room-report/most-popular-room-report-response-dto';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-most-popular-room-report.component',
-  imports: [],
+  imports: [ReactiveFormsModule],
   templateUrl: './most-popular-room-report.component.html',
   styleUrl: './most-popular-room-report.component.scss',
 })

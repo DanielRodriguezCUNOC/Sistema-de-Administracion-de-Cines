@@ -17,12 +17,13 @@ public class AdvertiserProfitReportResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAdvertiserProfit(
             @PathParam("fechaInicio") String fechaInicio,
-            @PathParam("fechaFin") String fechaFin) {
+            @PathParam("fechaFin") String fechaFin,
+            @PathParam("nombreAnunciante") String nombreAnunciante) {
 
         try {
             AdvertiserProfitReportService service = new AdvertiserProfitReportService();
 
-            AdvertiserProfitReportResponseDTO report = service.getReport(fechaInicio, fechaFin);
+            AdvertiserProfitReportResponseDTO report = service.getReport(fechaInicio, fechaFin, nombreAnunciante);
 
             return Response.ok(report).build();
         } catch (Exception e) {

@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AdvertiserProfitReportResponseDTO } from '../../../models/dto/sysadmin/advertiser-profit-report/advertiser-profit-report-response-dto';
 import { AdvertiserProfitReportService } from '../../../services/sysadmin/reports/advertiser-profit-report-service.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-advertiser-profit-report.component',
-  imports: [],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './advertiser-profit-report.component.html',
   styleUrl: './advertiser-profit-report.component.scss',
 })
@@ -21,6 +22,7 @@ export class AdvertiserProfitReportComponent {
     this.reportForm = this.fb.group({
       fechaInicio: [this.formatDate(firstDayOfMonth), Validators.required],
       fechaFin: [this.formatDate(today), Validators.required],
+      nombreAnunciante: [''],
     });
   }
 
@@ -35,9 +37,9 @@ export class AdvertiserProfitReportComponent {
     this.isLoading = true;
     this.errorMessage = '';
 
-    const { fechaInicio, fechaFin } = this.reportForm.value;
+    const { fechaInicio, fechaFin, nombreAnunciante } = this.reportForm.value;
 
-    this.service.generateReport(fechaInicio, fechaFin).subscribe({
+    this.service.generateReport(fechaInicio, fechaFin, nombreAnunciante).subscribe({
       next: (data: AdvertiserProfitReportResponseDTO) => {
         this.report = data;
         this.isLoading = false;

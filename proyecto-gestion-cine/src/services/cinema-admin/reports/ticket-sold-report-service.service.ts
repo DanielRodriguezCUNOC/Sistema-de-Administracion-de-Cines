@@ -8,12 +8,12 @@ import { SoldTicketResponseReportDTO } from '../../../models/dto/cinema-admin/so
   providedIn: 'root',
 })
 export class TicketSoldReportService {
-  private apiUrl = `${environment.apiBaseUrl}/sysadmin/report/ticket-sold`;
+  private apiUrl = `${environment.apiBaseUrl}/admin-cinema/report/ticket-sold`;
 
   constructor(private http: HttpClient) {}
 
-  generateReport(startDate: string, endDate: string) {
-    const url = `${this.apiUrl}/inicio/${startDate}/fin/${endDate}`;
+  generateReport(startDate: string, endDate: string, nombreSala?: string) {
+    const url = `${this.apiUrl}/inicio/${startDate}/fin/${endDate}/nombreSala/${nombreSala}`;
     return this.http.get<SoldTicketResponseReportDTO>(url).pipe(catchError(this.handleError));
   }
 

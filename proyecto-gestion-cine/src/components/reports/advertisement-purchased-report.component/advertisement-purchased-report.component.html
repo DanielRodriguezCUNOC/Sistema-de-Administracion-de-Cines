@@ -66,7 +66,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let ad of report.purchasedAdvertisements">
+        @for( ad of report.purchasedAdvertisements; track ad.idAnuncio){
+        <tr>
           <td>{{ ad.idAnuncio }}</td>
           <td>{{ ad.idUsuario }}</td>
           <td>{{ ad.nombreAnuncio }}</td>
@@ -74,6 +75,7 @@
           <td>Q {{ ad.montoPago | number : '1.2-2' }}</td>
           <td>{{ ad.tipoAnuncio }}</td>
         </tr>
+        }
       </tbody>
     </table>
   </div>

@@ -14,10 +14,13 @@ import jakarta.ws.rs.core.Response;
 public class ProyectedMoviesReportResource {
 
   @GET
-  @Path("inicio/{fechaInicio}/fin/{fechaFin}")
+  @Path("inicio/{fechaInicio}/fin/{fechaFin}/offset/{offset}/limit/{limit}/nombreSala/{nombreSala}")
   @Produces(MediaType.APPLICATION_JSON)
   public Response getResponse(@PathParam("fechaInicio") String fechaInicio,
-      @PathParam("fechaFin") String fechaFin) {
+      @PathParam("fechaFin") String fechaFin,
+      @PathParam("offset") int offset,
+      @PathParam("limit") int limit,
+      @PathParam("nombreSala") String nombreSala) {
     try {
 
       // * Creación del servicio de informes de anuncios comprados */
@@ -25,7 +28,7 @@ public class ProyectedMoviesReportResource {
 
       // * Generación del informe de anuncios comprados */
       ProyectedMovieResponseReportDTO report = service.generateReport(fechaInicio,
-          fechaFin);
+          fechaFin, offset, limit, nombreSala);
 
       // * Retorno de la respuesta exitosa */
       return Response.ok(report).build();

@@ -16,8 +16,12 @@ public class CommentedRoomReportResource {
   @GET
   @Path("inicio/{fechaInicio}/fin/{fechaFin}/sala/{idSala}")
   @Produces(MediaType.APPLICATION_JSON)
-  public Response getResponse(@PathParam("fechaInicio") String fechaInicio,
-      @PathParam("fechaFin") String fechaFin, @PathParam("idSala") int idSala) {
+  public Response getResponse(
+      @PathParam("fechaInicio") String fechaInicio,
+      @PathParam("fechaFin") String fechaFin,
+      @PathParam("nombreSala") String nombreSala,
+      @PathParam("offset") int offset,
+      @PathParam("limit") int limit) {
 
     try {
 
@@ -26,7 +30,7 @@ public class CommentedRoomReportResource {
 
       // * Generación del informe de anuncios comprados */
       CommentedRoomResponseReportDTO report = service.generateReport(fechaInicio,
-          fechaFin, idSala);
+          fechaFin, nombreSala, offset, limit);
 
       // * Retorno de la respuesta exitosa */
       return Response.ok(report).build();

@@ -1,76 +1,86 @@
 import { Component } from '@angular/core';
-
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommentedRoomResponseReportDTO } from '../../../models/dto/cinema-admin/commented-room-report/commented-room-response-report-dto';
 import { CommentedRoomReportService } from '../../../services/cinema-admin/reports/comment-room-report-service.service';
-import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { RoomCommentDTO } from '../../../models/dto/sysadmin/most-commented-room-report/room-comment-dto';
 
 @Component({
-  selector: 'app-coment-room-report.component',
+  selector: 'app-coment-room-report',
+  standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './coment-room-report.component.html',
-  styleUrl: './coment-room-report.component.scss',
+  styleUrls: ['./coment-room-report.component.scss'],
 })
 export class ComentRoomReportComponent {
   reportForm: FormGroup;
-  report: CommentedRoomResponseReportDTO | null = null;
-  isLoading = false;
+  comentarios: RoomCommentDTO[] = [];
   errorMessage: string | null = null;
-  comentarios: any[] = [];
-  tieneMasComentarios: boolean = true;
-  private comentariosCargados: number = 0;
-  private comentarioPorCarga: number = 3;
-  salas: any[] = [];
+  isLoading = false;
+  isLoadingMore = false;
+  tieneMasComentarios = false;
+
+  private offset = 0;
+  private limit = 3;
 
   constructor(private fb: FormBuilder, private service: CommentedRoomReportService) {
     const today = new Date();
-    const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+    const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+
     this.reportForm = this.fb.group({
-      fechaInicio: [this.formatDate(firstDayOfMonth), Validators.required],
+      fechaInicio: [this.formatDate(firstDay), Validators.required],
       fechaFin: [this.formatDate(today), Validators.required],
-      sala: ['', Validators.required],
+      nombreSala: [''],
     });
   }
 
-  formatDate(date: Date): string {
+  private formatDate(date: Date): string {
     return date.toISOString().split('T')[0];
   }
+
   generateReport(): void {
     if (this.reportForm.invalid) {
       this.errorMessage = 'Por favor complete todos los campos requeridos.';
       return;
     }
+
+    this.errorMessage = null;
     this.isLoading = true;
-    this.errorMessage = '';
+    this.offset = 0;
+    this.comentarios = [];
 
-    const { fechaInicio, fechaFin, sala } = this.reportForm.value;
+    const { fechaInicio, fechaFin, nombreSala } = this.reportForm.value;
 
-    this.service.generateReport(fechaInicio, fechaFin, sala).subscribe({
+    this.service.getComments(fechaInicio, fechaFin, nombreSala, this.offset, this.limit).subscribe({
       next: (data: CommentedRoomResponseReportDTO) => {
-        this.report = data;
-        this.comentarios = data.salasComentadas.slice(0, this.comentarioPorCarga);
-        this.tieneMasComentarios = data.salasComentadas.length > this.comentarioPorCarga;
-        this.comentariosCargados = this.comentarioPorCarga;
+        const nuevos = data.salasComentadas || [];
+        this.comentarios = nuevos;
+        this.offset += nuevos.length;
+        this.tieneMasComentarios = nuevos.length === this.limit;
         this.isLoading = false;
       },
-      error: (error) => {
-        this.errorMessage = 'Error al generar el reporte. Por favor, inténtelo de nuevo más tarde.';
+      error: () => {
+        this.errorMessage = 'Error al generar el reporte. Por favor, inténtelo de nuevo.';
         this.isLoading = false;
       },
     });
   }
 
-  loadSalas(): void {}
-
   loadMore(): void {
-    const nextComments = this.report?.salasComentadas.slice(
-      this.comentariosCargados,
-      this.comentariosCargados + this.comentarioPorCarga
-    );
-    if (nextComments) {
-      this.comentarios.push(...nextComments);
-      this.comentariosCargados += this.comentarioPorCarga;
-      this.tieneMasComentarios =
-        this.comentariosCargados < (this.report?.salasComentadas.length || 0);
-    }
+    this.isLoadingMore = true;
+
+    const { fechaInicio, fechaFin, nombreSala } = this.reportForm.value;
+    this.service.getComments(fechaInicio, fechaFin, nombreSala, this.offset, this.limit).subscribe({
+      next: (data: CommentedRoomResponseReportDTO) => {
+        const nuevos = data.salasComentadas || [];
+        this.comentarios.push(...nuevos);
+        this.offset += nuevos.length;
+        this.tieneMasComentarios = nuevos.length === this.limit;
+        this.isLoadingMore = false;
+      },
+      error: () => {
+        this.errorMessage = 'Error al cargar más comentarios.';
+        this.isLoadingMore = false;
+      },
+    });
   }
 }
