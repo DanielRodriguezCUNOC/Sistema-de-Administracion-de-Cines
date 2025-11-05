@@ -9,7 +9,7 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-@Path("sysadmin/report/profit")
+@Path("sysadmin/report/advertiser-profit")
 public class AdvertiserProfitReportResource {
 
     @GET
