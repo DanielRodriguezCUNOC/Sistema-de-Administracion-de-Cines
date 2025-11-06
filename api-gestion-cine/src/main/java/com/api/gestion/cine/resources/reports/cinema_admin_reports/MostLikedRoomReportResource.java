@@ -16,8 +16,10 @@ public class MostLikedRoomReportResource {
   @GET
   @Path("inicio/{fechaInicio}/fin/{fechaFin}")
   @Produces(MediaType.APPLICATION_JSON)
-  public Response getResponse(@PathParam("fechaInicio") String fechaInicio,
-      @PathParam("fechaFin") String fechaFin) {
+  public Response getResponse(
+      @PathParam("fechaInicio") String fechaInicio,
+      @PathParam("fechaFin") String fechaFin,
+      @PathParam("nombreSala") String nombreSala) {
     try {
 
       // * Creación del servicio de informes de anuncios comprados */
@@ -25,7 +27,7 @@ public class MostLikedRoomReportResource {
 
       // * Generación del informe de anuncios comprados */
       MostLikedRoomResponseReportDTO report = service.generateReport(fechaInicio,
-          fechaFin);
+          fechaFin, nombreSala);
 
       // * Retorno de la respuesta exitosa */
       return Response.ok(report).build();

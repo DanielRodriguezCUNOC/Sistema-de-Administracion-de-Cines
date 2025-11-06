@@ -50,12 +50,4 @@ public class MovieProyectedRoom {
         this.cantidadPeliculasProyectadas = cantidadPeliculasProyectadas;
     }
 
-    public void calcularCantidadPeliculasProyectadas() {
-        if (titulosPeliculas != null) {
-            this.cantidadPeliculasProyectadas = titulosPeliculas.length;
-        } else {
-            this.cantidadPeliculasProyectadas = 0;
-        }
-    }
-
 }
