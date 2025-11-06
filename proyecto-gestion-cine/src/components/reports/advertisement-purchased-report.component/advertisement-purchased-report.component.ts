@@ -26,8 +26,8 @@ export class AdvertisementPurchasedReportComponent {
     const today = new Date();
     const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
     this.reportForm = this.fb.group({
-      fechaInicio: [this.formatDate(firstDayOfMonth), Validators.required],
-      fechaFin: [this.formatDate(today), Validators.required],
+      fechaInicio: [''],
+      fechaFin: [''],
       tipoAnuncio: [''],
     });
   }
@@ -46,7 +46,10 @@ export class AdvertisementPurchasedReportComponent {
 
     const { fechaInicio, fechaFin, tipoAnuncio } = this.reportForm.value;
 
-    this.service.generateReport(fechaInicio, fechaFin, tipoAnuncio).subscribe({
+    const startDate = fechaInicio || '';
+    const endDate = fechaFin || '';
+
+    this.service.generateReport(startDate, endDate, tipoAnuncio).subscribe({
       next: (data: PurchasedAdvertisementResponseDTO) => {
         this.report = data;
         this.isLoading = false;

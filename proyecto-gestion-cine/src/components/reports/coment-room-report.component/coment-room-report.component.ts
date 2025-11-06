@@ -27,8 +27,8 @@ export class ComentRoomReportComponent {
     const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
 
     this.reportForm = this.fb.group({
-      fechaInicio: [this.formatDate(firstDay), Validators.required],
-      fechaFin: [this.formatDate(today), Validators.required],
+      fechaInicio: [''],
+      fechaFin: [''],
       nombreSala: [''],
     });
   }
@@ -50,7 +50,10 @@ export class ComentRoomReportComponent {
 
     const { fechaInicio, fechaFin, nombreSala } = this.reportForm.value;
 
-    this.service.getComments(fechaInicio, fechaFin, nombreSala, this.offset, this.limit).subscribe({
+    const startDate = fechaInicio || '';
+    const endDate = fechaFin || '';
+
+    this.service.getComments(startDate, endDate, nombreSala, this.offset, this.limit).subscribe({
       next: (data: CommentedRoomResponseReportDTO) => {
         const nuevos = data.salasComentadas || [];
         this.comentarios = nuevos;

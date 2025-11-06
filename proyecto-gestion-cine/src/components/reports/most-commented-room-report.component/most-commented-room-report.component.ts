@@ -19,8 +19,8 @@ export class MostCommentedRoomReportComponent {
     const today = new Date();
     const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
     this.reportForm = this.fb.group({
-      fechaInicio: [this.formatDate(firstDayOfMonth), Validators.required],
-      fechaFin: [this.formatDate(today), Validators.required],
+      fechaInicio: [''],
+      fechaFin: [''],
     });
   }
 
@@ -37,7 +37,10 @@ export class MostCommentedRoomReportComponent {
 
     const { fechaInicio, fechaFin } = this.reportForm.value;
 
-    this.service.generateReport(fechaInicio, fechaFin).subscribe({
+    const startDate = fechaInicio || '';
+    const endDate = fechaFin || '';
+
+    this.service.generateReport(startDate, endDate).subscribe({
       next: (data: MostCommentedRoomReportResponseDTO) => {
         this.report = data;
         this.isLoading = false;

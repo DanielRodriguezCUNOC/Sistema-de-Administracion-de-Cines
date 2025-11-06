@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Cine } from '../../../models/cinema/cine';
 import { Router } from '@angular/router';
 import { CineService } from '../../../services/cine/cine.service';
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-show-cinema.component',
-  imports: [DatePipe],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './show-cinema.component.html',
   styleUrl: './show-cinema.component.scss',
 })

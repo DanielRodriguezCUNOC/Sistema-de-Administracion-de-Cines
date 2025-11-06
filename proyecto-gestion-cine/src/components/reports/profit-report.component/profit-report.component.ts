@@ -21,8 +21,8 @@ export class ProfitReportComponent {
     const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
 
     this.reportForm = this.fb.group({
-      fechaInicio: [this.formatDate(firstDayOfMonth), Validators.required],
-      fechaFin: [this.formatDate(today), Validators.required],
+      fechaInicio: [''],
+      fechaFin: [''],
     });
   }
 
@@ -40,7 +40,10 @@ export class ProfitReportComponent {
 
     const { fechaInicio, fechaFin } = this.reportForm.value;
 
-    this.profitReportService.generateReport(fechaInicio, fechaFin).subscribe({
+    const startDate = fechaInicio || '';
+    const endDate = fechaFin || '';
+
+    this.profitReportService.generateReport(startDate, endDate).subscribe({
       next: (data: ProfitReportResponseDTO) => {
         this.report = data;
         this.isLoading = false;

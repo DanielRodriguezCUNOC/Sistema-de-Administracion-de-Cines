@@ -37,7 +37,7 @@ export class LoginComponent {
       .autenticacionBackend(usuarioLoginDto.usuario, usuarioLoginDto.password)
       .subscribe({
         next: (user) => {
-          //*Redirigir al dashboard del usuario
+          //*Redirigir al dashboard del usuario segun su rol
           this.redirectDashboard(user.idRol);
         },
         error: (err) => {
@@ -67,7 +67,7 @@ export class LoginComponent {
         this.router.navigateByUrl('/admin-system');
         break;
       case 2:
-        this.router.navigateByUrl('/admin-cine');
+        this.router.navigateByUrl('/admin-cinema');
         break;
       case 3:
         this.router.navigateByUrl('/user-special');

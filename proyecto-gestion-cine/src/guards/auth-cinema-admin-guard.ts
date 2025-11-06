@@ -7,8 +7,8 @@ export const authCinemaAdminGuard: CanActivateFn = (route, state) => {
   const usuarioActual = localStorage.getItem('usuarioActual');
   if (!usuarioActual) {
     return router.createUrlTree(['/login']);
+  } else {
+    const usuario = JSON.parse(usuarioActual);
+    return usuario.idRol === 2 ? true : router.createUrlTree(['/access-denied']);
   }
-  const usuario = JSON.parse(usuarioActual);
-
-  return usuario.idRol === 2 ? true : router.createUrlTree(['/access-denied']);
 };

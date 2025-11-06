@@ -41,12 +41,13 @@
       </div>
     </form>
 
-    @if (errorMessage) {
+    <!--  @if (errorMessage) {
     <div class="alert-error mt-3">
       <i class="bi bi-exclamation-triangle"></i>
       {{ errorMessage }}
     </div>
     }
+    -->
   </div>
 
   @if (peliculasProyectadas && peliculasProyectadas.length > 0) {
@@ -103,10 +104,7 @@
         }
       </div>
     </div>
-    }
-
-    <!-- Botón para cargar más resultados -->
-    @if (hayMasPeliculas) {
+    } @if (hayMasPeliculas) {
     <div class="text-center mt-4">
       <button class="btn-load-more" (click)="loadMore()" [disabled]="isLoading">
         @if (isLoading) {
@@ -128,3 +126,9 @@
   </div>
   }
 </div>
+<app-share-popup
+  [mensaje]="errorMessage || ''"
+  [tipo]="'error'"
+  [mostrar]="!!errorMessage"
+  (cerrarEvent)="errorMessage = null"
+></app-share-popup>

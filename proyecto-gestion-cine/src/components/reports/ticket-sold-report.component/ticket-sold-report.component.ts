@@ -21,8 +21,8 @@ export class TicketSoldReportComponent {
     const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
 
     this.reportForm = this.fb.group({
-      fechaInicio: [this.formatDate(firstDayOfMonth), Validators.required],
-      fechaFin: [this.formatDate(today), Validators.required],
+      fechaInicio: [''],
+      fechaFin: [''],
       nombreSala: [''],
     });
   }
@@ -41,7 +41,10 @@ export class TicketSoldReportComponent {
 
     const { fechaInicio, fechaFin, nombreSala } = this.reportForm.value;
 
-    this.service.generateReport(fechaInicio, fechaFin, nombreSala).subscribe({
+    const startDate = fechaInicio || '';
+    const endDate = fechaFin || '';
+
+    this.service.generateReport(startDate, endDate, nombreSala).subscribe({
       next: (data: SoldTicketResponseReportDTO) => {
         this.report = data;
         this.isLoading = false;

@@ -1,12 +1,6 @@
 <div
   class="admin-cine-dashboard position-relative d-flex align-items-center justify-content-center"
 >
-  <img
-    src="/assets/images/admin-cine-bg.jpg"
-    alt="Fondo dashboard administrador"
-    class="bg-image"
-  />
-
   <div class="overlay"></div>
 
   <div class="dashboard-content container text-light">
@@ -14,7 +8,7 @@
 
     <div class="row g-4 justify-content-center">
       <div class="col-12 col-sm-6 col-lg-4">
-        <div class="dashboard-card" routerLink="/admin/peliculas-activas">
+        <div class="dashboard-card" routerLink="/admin-cinema/peliculas-activas">
           <div class="icon mb-3">
             <i class="bi bi-film"></i>
           </div>
@@ -24,7 +18,7 @@
       </div>
 
       <div class="col-12 col-sm-6 col-lg-4">
-        <div class="dashboard-card" routerLink="/admin/registro-sala">
+        <div class="dashboard-card" routerLink="/admin-cinema/registro-sala">
           <div class="icon mb-3">
             <i class="bi bi-building"></i>
           </div>
@@ -34,7 +28,7 @@
       </div>
 
       <div class="col-12 col-sm-6 col-lg-4">
-        <div class="dashboard-card" routerLink="/admin/bloqueo-anuncios">
+        <div class="dashboard-card" routerLink="/admin-cinema/bloqueo-anuncios">
           <div class="icon mb-3">
             <i class="bi bi-shield-lock"></i>
           </div>
@@ -43,12 +37,21 @@
         </div>
       </div>
       <div class="col-12 col-sm-6 col-lg-4">
-        <div class="dashboard-card" routerLink="/admin/recargar-cartera">
+        <div class="dashboard-card" routerLink="/admin-cinema/recargar-cartera">
           <div class="icon mb-3">
             <i class="bi bi-wallet2"></i>
           </div>
           <h4>Recargar Cartera</h4>
           <p>Gestiona el saldo y las recargas de la cartera del sistema.</p>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6 col-lg-4">
+        <div class="dashboard-card" routerLink="/admin-cinema/dashboard-reports">
+          <div class="icon mb-3">
+            <i class="bi bi-file-earmark-text"></i>
+          </div>
+          <h4>Reportes</h4>
+          <p>Consulta y genera reportes sobre la actividad del cine.</p>
         </div>
       </div>
     </div>

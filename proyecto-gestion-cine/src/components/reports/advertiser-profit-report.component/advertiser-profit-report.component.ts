@@ -20,8 +20,8 @@ export class AdvertiserProfitReportComponent {
     const today = new Date();
     const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
     this.reportForm = this.fb.group({
-      fechaInicio: [this.formatDate(firstDayOfMonth), Validators.required],
-      fechaFin: [this.formatDate(today), Validators.required],
+      fechaInicio: [''],
+      fechaFin: [''],
       nombreAnunciante: [''],
     });
   }
@@ -39,7 +39,10 @@ export class AdvertiserProfitReportComponent {
 
     const { fechaInicio, fechaFin, nombreAnunciante } = this.reportForm.value;
 
-    this.service.generateReport(fechaInicio, fechaFin, nombreAnunciante).subscribe({
+    const startDate = fechaInicio || '';
+    const endDate = fechaFin || '';
+
+    this.service.generateReport(startDate, endDate, nombreAnunciante).subscribe({
       next: (data: AdvertiserProfitReportResponseDTO) => {
         this.report = data;
         this.isLoading = false;

@@ -21,8 +21,6 @@ export class MasterLoginService {
     this.currentUserSubject.asObservable();
 
   constructor(private http: HttpClient) {
-    //Verificamos si hay sesiones activas
-
     this.checkLoginStatus();
   }
 

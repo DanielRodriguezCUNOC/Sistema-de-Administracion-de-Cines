@@ -20,6 +20,11 @@ import { AccessDeniedComponent } from '../components/access-denied/access-denied
 import { ProfitReportComponent } from '../components/reports/profit-report.component/profit-report.component';
 import { AdvertisementPurchasedReportComponent } from '../components/reports/advertisement-purchased-report.component/advertisement-purchased-report.component';
 import { SelectAdminReportComponent } from '../components/sysadmin/select-admin-report.component/select-admin-report.component';
+import { ComentRoomReportComponent } from '../components/reports/coment-room-report.component/coment-room-report.component';
+import { MovieShownReportComponent } from '../components/reports/movie-shown-report.component/movie-shown-report.component';
+import { MostLikedRoomReportComponent } from '../components/reports/most-liked-room-report.component/most-liked-room-report.component';
+import { TicketSoldReportComponent } from '../components/reports/ticket-sold-report.component/ticket-sold-report.component';
+import { SelectAdminCinemaReportComponent } from '../components/cinema-admin/select-admin-cinema-report.component/select-admin-cinema-report.component';
 
 export const routes: Routes = [
   {
@@ -79,7 +84,7 @@ export const routes: Routes = [
   },
 
   {
-    path: 'admin-cine',
+    path: 'admin-cinema',
     component: CinemaAdminDashboardPageComponent,
     canActivate: [authGuard],
     canActivateChild: [authGuard, authCinemaAdminGuard],
@@ -93,6 +98,31 @@ export const routes: Routes = [
         path: '',
         redirectTo: 'dashboard-admin-cinema',
         pathMatch: 'full',
+      },
+      {
+        path: 'dashboard-reports',
+        component: SelectAdminCinemaReportComponent,
+      },
+      {
+        path: 'reports',
+        children: [
+          {
+            path: 'comments-report',
+            component: ComentRoomReportComponent,
+          },
+          {
+            path: 'proyected-movies-report',
+            component: MovieShownReportComponent,
+          },
+          {
+            path: 'top-liked-rooms',
+            component: MostLikedRoomReportComponent,
+          },
+          {
+            path: 'sold-tickets-report',
+            component: TicketSoldReportComponent,
+          },
+        ],
       },
     ],
   },
