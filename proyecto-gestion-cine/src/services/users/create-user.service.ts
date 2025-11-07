@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../enviroments/enviroments';
 import { HttpClient } from '@angular/common/http';
 import { CreateUserDto } from '../../models/dto/user/create-user-dto';
-import { Observable } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CreateUserService {
-  private apiUrl = `${environment.apiBaseUrl}/usuario/create-user`;
+  private apiUrl = `${environment.apiBaseUrl}/usuario`;
 
   constructor(private http: HttpClient) {}
 
@@ -24,6 +24,18 @@ export class CreateUserService {
       formData.append('foto', userData.foto, userData.foto.name);
     }
 
-    return this.http.post(this.apiUrl, formData);
+    return this.http.post(this.apiUrl, formData).pipe(
+      catchError((error) => {
+        let errorMessage = 'Error desconocido';
+        if (error.error instanceof ErrorEvent) {
+          errorMessage = `Error: ${error.error.message}`;
+        } else {
+          errorMessage = `Código: ${error.status}, Mensaje: ${
+            error.error.message || error.message
+          }`;
+        }
+        return throwError(() => new Error(errorMessage));
+      })
+    );
   }
 }

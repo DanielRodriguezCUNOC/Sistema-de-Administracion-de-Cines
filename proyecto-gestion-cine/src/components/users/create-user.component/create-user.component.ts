@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CreateUserDto } from '../../../models/dto/user/create-user-dto';
 import { SharePopupComponent } from '../../../shared/share-popup.component/share-popup.component';
 import { CreateUserService } from '../../../services/users/create-user.service';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-create-user',
-  imports: [BrowserModule, ReactiveFormsModule, SharePopupComponent],
+  imports: [ReactiveFormsModule, SharePopupComponent, CommonModule],
   templateUrl: './create-user.component.html',
   styleUrl: './create-user.component.scss',
 })
@@ -59,7 +58,7 @@ export class CreateUserComponent implements OnInit {
           this.infoMessage = 'Usuario creado exitosamente';
         },
         error: (error) => {
-          this.infoMessage = 'Error al crear el usuario';
+          this.infoMessage = error.message;
         },
       });
     } else {

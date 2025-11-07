@@ -21,7 +21,7 @@ public class CreateUserDB {
       pstmt.setInt(1, idRol);
       pstmt.setString(2, userDTO.getNombreCompleto());
       pstmt.setString(3, userDTO.getUsuario());
-      pstmt.setString(4, userDTO.getPassword()); // Considera encriptar la contraseña
+      pstmt.setString(4, userDTO.getPassword());
       pstmt.setString(5, userDTO.getCorreo());
       pstmt.setString(6, userDTO.getTelefono());
 

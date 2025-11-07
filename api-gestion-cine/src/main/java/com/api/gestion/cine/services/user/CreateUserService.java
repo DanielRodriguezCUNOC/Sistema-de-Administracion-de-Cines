@@ -5,6 +5,7 @@ import com.api.gestion.cine.db.user.CreateUserDB;
 import com.api.gestion.cine.db.user.UserDB;
 import com.api.gestion.cine.dto.users.CreateUserDTO;
 import com.api.gestion.cine.exceptions.UserAlreadyExists;
+import com.api.gestion.cine.services.util.Encryption;
 import com.api.gestion.cine.services.util.ImageConverter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -22,6 +23,10 @@ public class CreateUserService {
 
     int idRol = userDB.getIdRol(userDTO.getTipoUsuario());
 
+    String encryptedPassword = Encryption.encryptPassword(userDTO.getPassword(), userDTO.getCorreo());
+    userDTO.setPassword(encryptedPassword);
+    userDTO.setTipoUsuario(convertirMinusculas(userDTO.getTipoUsuario()));
+
     createUserDB.createUser(userDTO, idRol);
   }
 
@@ -31,14 +36,16 @@ public class CreateUserService {
         || userDB.telefonoExiste(userDTO.getTelefono());
   }
 
-  public CreateUserDTO convertFormDataToDTO(FormDataBodyPart userDataPart, FormDataBodyPart fotoPart) throws Exception {
-    if (userDataPart == null) {
-      throw new IllegalArgumentException("Los datos del usuario son obligatorios");
-    }
+  public CreateUserDTO convertFormDataToDTO(String nombreCompleto, String tipoUsuario, String usuario, String password,
+      String correo, String telefono, FormDataBodyPart fotoPart) throws Exception {
 
-    String jsonData = userDataPart.getValue();
-    ObjectMapper mapper = new ObjectMapper();
-    CreateUserDTO userDTO = mapper.readValue(jsonData, CreateUserDTO.class);
+    CreateUserDTO userDTO = new CreateUserDTO();
+    userDTO.setNombreCompleto(nombreCompleto);
+    userDTO.setTipoUsuario(tipoUsuario);
+    userDTO.setUsuario(usuario);
+    userDTO.setPassword(password);
+    userDTO.setCorreo(correo);
+    userDTO.setTelefono(telefono);
 
     if (fotoPart != null) {
       byte[] processedImage = imageConverter.processImage(fotoPart);
@@ -47,4 +54,9 @@ public class CreateUserService {
 
     return userDTO;
   }
+
+  private String convertirMinusculas(String input) {
+    return input == null ? null : input.toLowerCase();
+  }
+
 }

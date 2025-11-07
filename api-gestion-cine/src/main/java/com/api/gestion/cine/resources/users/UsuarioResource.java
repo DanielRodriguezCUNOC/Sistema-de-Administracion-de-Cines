@@ -1,5 +1,7 @@
 package com.api.gestion.cine.resources.users;
 
+import java.io.InputStream;
+
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
@@ -17,18 +19,25 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-@Path("usuario/create-user")
+@Path("usuario")
 public class UsuarioResource {
 
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response crearUsuario(
-            @FormDataParam("userData") FormDataBodyPart userDataPart,
+            @FormDataParam("nombreCompleto") String nombreCompleto,
+            @FormDataParam("tipoUsuario") String tipoUsuario,
+            @FormDataParam("usuario") String user,
+            @FormDataParam("password") String password,
+            @FormDataParam("correo") String correo,
+            @FormDataParam("telefono") String telefono,
+            @FormDataParam("foto") InputStream fotoStream,
             @FormDataParam("foto") FormDataBodyPart fotoPart) {
         CreateUserService service = new CreateUserService();
 
         try {
-            CreateUserDTO usuario = service.convertFormDataToDTO(userDataPart, fotoPart);
+            CreateUserDTO usuario = service.convertFormDataToDTO(nombreCompleto, tipoUsuario, user, password, correo,
+                    telefono, fotoPart);
             service.createUser(usuario);
             return Response.status(Response.Status.CREATED).entity(usuario).build();
 

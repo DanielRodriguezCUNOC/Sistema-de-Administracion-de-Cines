@@ -26,6 +26,7 @@ import { MostLikedRoomReportComponent } from '../components/reports/most-liked-r
 import { TicketSoldReportComponent } from '../components/reports/ticket-sold-report.component/ticket-sold-report.component';
 import { SelectAdminCinemaReportComponent } from '../components/cinema-admin/select-admin-cinema-report.component/select-admin-cinema-report.component';
 import { CreateUserPageComponent } from '../pages/create-user-page.component/create-user-page.component';
+import { CreateUserComponent } from '../components/users/create-user.component/create-user.component';
 
 export const routes: Routes = [
   {
@@ -40,6 +41,22 @@ export const routes: Routes = [
       {
         path: 'form',
         component: LoginComponent,
+      },
+      {
+        path: '',
+        redirectTo: 'form',
+        pathMatch: 'full',
+      },
+    ],
+  },
+  {
+    path: 'register',
+    component: CreateUserPageComponent,
+
+    children: [
+      {
+        path: 'form',
+        component: CreateUserComponent,
       },
       {
         path: '',
@@ -177,5 +194,17 @@ export const routes: Routes = [
   {
     path: 'register',
     component: CreateUserPageComponent,
+
+    children: [
+      {
+        path: 'form',
+        component: CreateUserComponent,
+      },
+      {
+        path: '',
+        redirectTo: 'form',
+        pathMatch: 'full',
+      },
+    ],
   },
 ];
