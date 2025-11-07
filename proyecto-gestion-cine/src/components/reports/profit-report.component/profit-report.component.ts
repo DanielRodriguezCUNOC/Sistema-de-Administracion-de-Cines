@@ -3,10 +3,11 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ProfitReportResponseDTO } from '../../../models/dto/sysadmin/profit-report/profit-report-response-dto';
 import { ProfitReportService } from '../../../services/sysadmin/reports/profit-report-service.service';
 import { CommonModule } from '@angular/common';
+import { SharePopupComponent } from '../../../shared/share-popup.component/share-popup.component';
 
 @Component({
   selector: 'app-profit-report',
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, SharePopupComponent],
   templateUrl: './profit-report.component.html',
   styleUrl: './profit-report.component.scss',
 })
@@ -14,7 +15,7 @@ export class ProfitReportComponent {
   reportForm: FormGroup;
   report: ProfitReportResponseDTO | null = null;
   isLoading: boolean = false;
-  errorMessage: string = '';
+  errorMessage: string | null = null;
 
   constructor(private fb: FormBuilder, private profitReportService: ProfitReportService) {
     const today = new Date();

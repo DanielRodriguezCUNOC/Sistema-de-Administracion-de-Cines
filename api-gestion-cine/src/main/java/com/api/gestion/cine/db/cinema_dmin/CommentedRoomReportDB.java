@@ -57,7 +57,7 @@ public class CommentedRoomReportDB {
       }
 
       // *Parámetro de nombre de sala
-      if (nombreSala != null && !nombreSala.trim().isEmpty() && !nombreSala.equals("Todo")) {
+      if (nombreSala != null) {
         pstmt.setString(paramIndex++, nombreSala);
         pstmt.setString(paramIndex++, nombreSala);
       } else {
@@ -65,7 +65,7 @@ public class CommentedRoomReportDB {
         pstmt.setNull(paramIndex++, Types.VARCHAR);
       }
 
-      // * Parámetros de paginación
+      // * Parámetros de limitacion
       pstmt.setInt(paramIndex++, limit);
       pstmt.setInt(paramIndex++, offset);
 

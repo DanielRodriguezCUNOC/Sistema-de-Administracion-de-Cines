@@ -29,7 +29,7 @@ public class ProyectedMoviesReportService {
     }
 
     if (nombreSala == null || nombreSala.trim().isEmpty()) {
-      nombreSala = "Todo";
+      nombreSala = null;
     }
 
     try {

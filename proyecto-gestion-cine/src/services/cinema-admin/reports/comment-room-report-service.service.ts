@@ -12,12 +12,12 @@ export class CommentedRoomReportService {
 
   constructor(private http: HttpClient) {}
   getComments(
-    fechaInicio: string,
-    fechaFin: string,
-    nombreSala: string,
+    fechaInicio: string | null,
+    fechaFin: string | null,
+    nombreSala: string | null,
     offset: number,
     limit: number
-  ) {
+  ): Observable<CommentedRoomResponseReportDTO> {
     const url = `${this.apiUrl}/inicio/${fechaInicio}/fin/${fechaFin}/nombreSala/${nombreSala}/offset/${offset}/limit/${limit}`;
     return this.http.get<CommentedRoomResponseReportDTO>(url).pipe(catchError(this.handleError));
   }

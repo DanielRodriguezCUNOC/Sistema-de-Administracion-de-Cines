@@ -3,11 +3,12 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { CommentedRoomResponseReportDTO } from '../../../models/dto/cinema-admin/commented-room-report/commented-room-response-report-dto';
 import { CommentedRoomReportService } from '../../../services/cinema-admin/reports/comment-room-report-service.service';
 import { RoomCommentDTO } from '../../../models/dto/sysadmin/most-commented-room-report/room-comment-dto';
+import { SharePopupComponent } from '../../../shared/share-popup.component/share-popup.component';
 
 @Component({
   selector: 'app-coment-room-report',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, SharePopupComponent],
   templateUrl: './coment-room-report.component.html',
   styleUrls: ['./coment-room-report.component.scss'],
 })
@@ -23,9 +24,6 @@ export class ComentRoomReportComponent {
   private limit = 3;
 
   constructor(private fb: FormBuilder, private service: CommentedRoomReportService) {
-    const today = new Date();
-    const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
-
     this.reportForm = this.fb.group({
       fechaInicio: [''],
       fechaFin: [''],
@@ -33,16 +31,7 @@ export class ComentRoomReportComponent {
     });
   }
 
-  private formatDate(date: Date): string {
-    return date.toISOString().split('T')[0];
-  }
-
   generateReport(): void {
-    if (this.reportForm.invalid) {
-      this.errorMessage = 'Por favor complete todos los campos requeridos.';
-      return;
-    }
-
     this.errorMessage = null;
     this.isLoading = true;
     this.offset = 0;
@@ -50,10 +39,11 @@ export class ComentRoomReportComponent {
 
     const { fechaInicio, fechaFin, nombreSala } = this.reportForm.value;
 
-    const startDate = fechaInicio || '';
-    const endDate = fechaFin || '';
+    const startDate: string | null = fechaInicio?.toString().trim() || null;
+    const endDate: string | null = fechaFin?.toString().trim() || null;
+    const roomName: string | null = nombreSala?.toString().trim() || null;
 
-    this.service.getComments(startDate, endDate, nombreSala, this.offset, this.limit).subscribe({
+    this.service.getComments(startDate, endDate, roomName, this.offset, this.limit).subscribe({
       next: (data: CommentedRoomResponseReportDTO) => {
         const nuevos = data.salasComentadas || [];
         this.comentarios = nuevos;
@@ -72,7 +62,12 @@ export class ComentRoomReportComponent {
     this.isLoadingMore = true;
 
     const { fechaInicio, fechaFin, nombreSala } = this.reportForm.value;
-    this.service.getComments(fechaInicio, fechaFin, nombreSala, this.offset, this.limit).subscribe({
+
+    const startDate: string | null = fechaInicio?.toString().trim() || null;
+    const endDate: string | null = fechaFin?.toString().trim() || null;
+    const roomName: string | null = nombreSala?.toString().trim() || null;
+
+    this.service.getComments(startDate, endDate, roomName, this.offset, this.limit).subscribe({
       next: (data: CommentedRoomResponseReportDTO) => {
         const nuevos = data.salasComentadas || [];
         this.comentarios.push(...nuevos);

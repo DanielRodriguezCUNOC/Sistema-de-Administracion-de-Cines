@@ -13,13 +13,13 @@ export class ProyectedMovieReportService {
   constructor(private http: HttpClient) {}
 
   getMovies(
-    startDate: string,
-    endDate: string,
-    nombreSala: string,
+    fechaInicio: string | null,
+    fechaFin: string | null,
+    nombreSala: string | null,
     offset: number,
     limit: number
   ): Observable<ProyectedMoviesResponseReportDTO> {
-    const url = `${this.apiUrl}/inicio/${startDate}/fin/${endDate}/sala/${nombreSala}/offset/${offset}/limit/${limit}`;
+    const url = `${this.apiUrl}/inicio/${fechaInicio}/fin/${fechaFin}/sala/${nombreSala}/offset/${offset}/limit/${limit}`;
     return this.http.get<ProyectedMoviesResponseReportDTO>(url).pipe(catchError(this.handleError));
   }
 

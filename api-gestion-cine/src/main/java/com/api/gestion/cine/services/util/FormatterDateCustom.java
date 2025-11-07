@@ -1,14 +1,16 @@
 package com.api.gestion.cine.services.util;
 
+import java.time.LocalDate;
+
 public class FormatterDateCustom {
 
-  public static String formatDateToString(java.time.LocalDate date) {
+  public static String formatDateToString(LocalDate date) {
     java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd");
     return date.format(formatter);
   }
 
-  public static java.time.LocalDate parseStringToDate(String dateString) {
+  public static LocalDate parseStringToDate(String dateString) {
     java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    return java.time.LocalDate.parse(dateString, formatter);
+    return LocalDate.parse(dateString, formatter);
   }
 }

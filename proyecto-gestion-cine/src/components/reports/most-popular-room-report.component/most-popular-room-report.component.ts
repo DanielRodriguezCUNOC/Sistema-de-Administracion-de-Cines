@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { MostPopularRoomReportService } from '../../../services/sysadmin/reports/most-popular-room-report-service.service';
 import { MostPopularRoomReportResponseDTO } from '../../../models/dto/sysadmin/most-popular-room-report/most-popular-room-report-response-dto';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { SharePopupComponent } from '../../../shared/share-popup.component/share-popup.component';
 
 @Component({
   selector: 'app-most-popular-room-report.component',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, SharePopupComponent],
   templateUrl: './most-popular-room-report.component.html',
   styleUrl: './most-popular-room-report.component.scss',
 })
@@ -16,29 +17,20 @@ export class MostPopularRoomReportComponent {
   errorMessage: string | null = null;
 
   constructor(private fb: FormBuilder, private service: MostPopularRoomReportService) {
-    const today = new Date();
-    const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
     this.reportForm = this.fb.group({
       fechaInicio: [''],
       fechaFin: [''],
     });
   }
 
-  formatDate(date: Date): string {
-    return date.toISOString().split('T')[0];
-  }
   generateReport(): void {
-    if (this.reportForm.invalid) {
-      this.errorMessage = 'Por favor complete todos los campos requeridos.';
-      return;
-    }
     this.isLoading = true;
     this.errorMessage = '';
 
     const { fechaInicio, fechaFin } = this.reportForm.value;
 
-    const startDate = fechaInicio || '';
-    const endDate = fechaFin || '';
+    const startDate: string | null = fechaInicio?.toString().trim() || null;
+    const endDate: string | null = fechaFin?.toString().trim() || null;
 
     this.service.generateReport(startDate, endDate).subscribe({
       next: (data: MostPopularRoomReportResponseDTO) => {

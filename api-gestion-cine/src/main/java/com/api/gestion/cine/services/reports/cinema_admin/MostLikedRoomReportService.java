@@ -7,7 +7,7 @@ import com.api.gestion.cine.db.cinema_dmin.MostLikedRoomReportDB;
 import com.api.gestion.cine.dto.reports.cinema_admin.most_liked_room_report.LikedRoomData;
 import com.api.gestion.cine.dto.reports.cinema_admin.most_liked_room_report.MostLikedRoomResponseReportDTO;
 import com.api.gestion.cine.exceptions.ReportServiceException;
-import com.api.gestion.cine.services.util.FormatterDateCustom;
+import com.api.gestion.cine.services.util.ValidatorCustom;
 
 public class MostLikedRoomReportService {
 
@@ -20,14 +20,13 @@ public class MostLikedRoomReportService {
     LocalDate startDate = null;
     LocalDate endDate = null;
 
-    if (fechaInicio != null && !fechaInicio.trim().isEmpty()) {
-      startDate = FormatterDateCustom.parseStringToDate(fechaInicio);
+    if (ValidatorCustom.isValidDate(fechaInicio, fechaFin)) {
+      LocalDate[] dates = ValidatorCustom.convertDateStringToLocalDate(fechaInicio, fechaFin);
+      startDate = dates[0];
+      endDate = dates[1];
+    }
 
-    }
-    if (fechaFin != null && !fechaFin.trim().isEmpty()) {
-      endDate = FormatterDateCustom.parseStringToDate(fechaFin);
-    }
-    if (nombreSala != null && !nombreSala.trim().isEmpty()) {
+    if (ValidatorCustom.isNullOrEmpty(nombreSala)) {
       nombreSala = null;
     }
     try {

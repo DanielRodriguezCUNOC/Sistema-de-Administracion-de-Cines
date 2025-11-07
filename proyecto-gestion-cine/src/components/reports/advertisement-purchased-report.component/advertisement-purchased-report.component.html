@@ -43,13 +43,6 @@
         </div>
       </div>
     </form>
-
-    @if(errorMessage){
-    <div class="alert-error mt-3">
-      <i class="bi bi-exclamation-triangle"></i>
-      {{ errorMessage }}
-    </div>
-    }
   </div>
 
   @if(report){
@@ -66,7 +59,7 @@
         </tr>
       </thead>
       <tbody>
-        @for( ad of report.purchasedAdvertisements; track ad.idAnuncio){
+        @for( ad of report; track ad.idAnuncio){
         <tr>
           <td>{{ ad.idAnuncio }}</td>
           <td>{{ ad.idUsuario }}</td>
@@ -78,6 +71,22 @@
         }
       </tbody>
     </table>
+    <div class="text-center mt-3">
+      <button class="btn btn-outline-primary" (click)="loadMore()" [disabled]="isLoading">
+        @if(isLoading) {
+        <span>Cargando...</span>
+        } @else {
+        <span><i class="bi bi-arrow-down-circle"></i> Cargar más</span>
+        }
+      </button>
+    </div>
   </div>
   }
 </div>
+
+<app-share-popup
+  [mensaje]="errorMessage || ''"
+  [tipo]="'error'"
+  [mostrar]="!!errorMessage"
+  (cerrarEvent)="errorMessage = null"
+></app-share-popup>

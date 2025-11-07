@@ -54,7 +54,7 @@ public class MostLikedRoomReportDB {
         pstmt.setNull(paramIndex++, Types.DATE);
       }
 
-      if (nombreSala != null && !nombreSala.isEmpty()) {
+      if (nombreSala != null) {
         pstmt.setString(paramIndex++, nombreSala);
         pstmt.setString(paramIndex++, nombreSala);
       } else {

@@ -13,9 +13,9 @@ export class MostLikedRoomReportService {
   constructor(private http: HttpClient) {}
 
   generateReport(
-    startDate: string,
-    endDate: string,
-    nombreSala?: string
+    startDate: string | null,
+    endDate: string | null,
+    nombreSala?: string | null
   ): Observable<MostLikedRoomResponseReportDTO> {
     const url = `${this.apiUrl}/inicio/${startDate}/fin/${endDate}/sala/${nombreSala}`;
     return this.http.get<MostLikedRoomResponseReportDTO>(url).pipe(catchError(this.handleError));

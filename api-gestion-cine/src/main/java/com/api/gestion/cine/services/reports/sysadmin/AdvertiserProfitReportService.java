@@ -6,7 +6,7 @@ import java.util.List;
 import com.api.gestion.cine.db.sysadmin.AdvertiserProfitDB;
 import com.api.gestion.cine.dto.reports.sysadmin.advertiser_profit_report.AdvertiserList;
 import com.api.gestion.cine.dto.reports.sysadmin.advertiser_profit_report.AdvertiserProfitReportResponseDTO;
-import com.api.gestion.cine.services.util.FormatterDateCustom;
+import com.api.gestion.cine.services.util.ValidatorCustom;
 
 public class AdvertiserProfitReportService {
 
@@ -15,11 +15,18 @@ public class AdvertiserProfitReportService {
         AdvertiserProfitDB profitReportDB = new AdvertiserProfitDB();
         AdvertiserProfitReportResponseDTO report = new AdvertiserProfitReportResponseDTO();
 
-        LocalDate startDate = FormatterDateCustom.parseStringToDate(fechaInicio);
-        LocalDate endDate = FormatterDateCustom.parseStringToDate(fechaFin);
+        LocalDate startDate = null;
+        LocalDate endDate = null;
 
-        if (nombreAnunciante == null || nombreAnunciante.trim().isEmpty()) {
-            nombreAnunciante = "Todo";
+        if (ValidatorCustom.isValidDate(fechaInicio, fechaFin)) {
+            LocalDate[] dates = ValidatorCustom.convertDateStringToLocalDate(fechaInicio, fechaFin);
+            startDate = dates[0];
+            endDate = dates[1];
+
+        }
+
+        if (ValidatorCustom.isNullOrEmpty(nombreAnunciante)) {
+            nombreAnunciante = null;
         }
 
         try {

@@ -14,10 +14,10 @@ import com.api.gestion.cine.db.connection.DBConnectionSingleton;
 import com.api.gestion.cine.dto.reports.sysadmin.purchased_advertisement_report.PurchasedAdvertisement;
 import com.api.gestion.cine.exceptions.DataBaseException;
 
-public class PurchaedAdvertisementDB {
+public class PurchasedAdvertisementDB {
 
   public List<PurchasedAdvertisement> getPurchasedAdvertisements(LocalDate fechaInicio, LocalDate fechaFin,
-      String tipoAnuncio) throws Exception {
+      String tipoAnuncio, int offset, int limit) throws Exception {
 
     List<PurchasedAdvertisement> advertisements = new ArrayList<>();
 
@@ -32,32 +32,40 @@ public class PurchaedAdvertisementDB {
         "WHERE 1=1 " +
         "AND (? IS NULL OR pa.fecha_pago >= ?) " +
         "AND (? IS NULL OR pa.fecha_pago <= ?) " +
-        "AND (? = 'Todo' OR ta.tipo_anuncio = ?) " +
-        "ORDER BY pa.fecha_pago DESC";
+        "AND (? IS NULL OR ta.tipo_anuncio = ?) " +
+        "ORDER BY pa.fecha_pago DESC " +
+        "LIMIT ? OFFSET ?";
 
     try (
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
+      int paramIndex = 1;
+
+      // * Parámetros para fecha inicio
       if (fechaInicio != null) {
-        pstmt.setDate(1, Date.valueOf(fechaInicio));
-        pstmt.setDate(2, Date.valueOf(fechaInicio));
+        pstmt.setDate(paramIndex++, Date.valueOf(fechaInicio));
+        pstmt.setDate(paramIndex++, Date.valueOf(fechaInicio));
       } else {
-        pstmt.setNull(1, Types.DATE);
-        pstmt.setNull(2, Types.DATE);
+        pstmt.setNull(paramIndex++, Types.DATE);
+        pstmt.setNull(paramIndex++, Types.DATE);
       }
 
-      // Parámetros para fecha fin
+      // * Parámetros para fecha fin
       if (fechaFin != null) {
-        pstmt.setDate(3, Date.valueOf(fechaFin));
-        pstmt.setDate(4, Date.valueOf(fechaFin));
+        pstmt.setDate(paramIndex++, Date.valueOf(fechaFin));
+        pstmt.setDate(paramIndex++, Date.valueOf(fechaFin));
       } else {
-        pstmt.setNull(3, Types.DATE);
-        pstmt.setNull(4, Types.DATE);
+        pstmt.setNull(paramIndex++, Types.DATE);
+        pstmt.setNull(paramIndex++, Types.DATE);
       }
 
-      // Para los tipos de anuncio
-      pstmt.setString(5, tipoAnuncio);
-      pstmt.setString(6, tipoAnuncio);
+      // * Parámetros para tipo de anuncio
+      pstmt.setString(paramIndex++, tipoAnuncio);
+      pstmt.setString(paramIndex++, tipoAnuncio);
+
+      // * Parámetros para LIMIT y OFFSET
+      pstmt.setInt(paramIndex++, limit);
+      pstmt.setInt(paramIndex++, offset);
 
       try (ResultSet rs = pstmt.executeQuery()) {
         while (rs.next()) {

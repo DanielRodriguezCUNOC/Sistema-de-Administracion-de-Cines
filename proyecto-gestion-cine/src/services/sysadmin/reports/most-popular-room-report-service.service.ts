@@ -11,7 +11,7 @@ export class MostPopularRoomReportService {
   private apiUrl = `${environment.apiBaseUrl}/sysadmin/report/commented-room`;
 
   constructor(private http: HttpClient) {}
-  generateReport(fechaInicio: string, fechaFin: string) {
+  generateReport(fechaInicio: string | null, fechaFin: string | null) {
     const url = `${this.apiUrl}/inicio/${fechaInicio}/fin/${fechaFin}`;
 
     return this.http.get<MostPopularRoomReportResponseDTO>(url).pipe(catchError(this.handleError));

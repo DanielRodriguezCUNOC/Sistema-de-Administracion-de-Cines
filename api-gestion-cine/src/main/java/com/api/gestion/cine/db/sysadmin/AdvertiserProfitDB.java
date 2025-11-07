@@ -38,7 +38,7 @@ public class AdvertiserProfitDB {
       pstmt.setDate(1, Date.valueOf(startDate));
       pstmt.setDate(2, Date.valueOf(endDate));
 
-      if (nombreAnunciante != null && !nombreAnunciante.trim().isEmpty() && !nombreAnunciante.equals("Todo")) {
+      if (nombreAnunciante != null) {
         pstmt.setString(3, nombreAnunciante);
         pstmt.setString(4, nombreAnunciante);
       } else {

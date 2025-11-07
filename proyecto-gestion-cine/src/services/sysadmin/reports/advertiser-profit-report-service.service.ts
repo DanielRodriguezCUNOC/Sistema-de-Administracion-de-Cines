@@ -11,7 +11,11 @@ export class AdvertiserProfitReportService {
   private apiUrl = `${environment.apiBaseUrl}/sysadmin/report/advertiser-profit`;
 
   constructor(private http: HttpClient) {}
-  generateReport(fechaInicio: string, fechaFin: string, nombreAnunciante: string) {
+  generateReport(
+    fechaInicio: string | null,
+    fechaFin: string | null,
+    nombreAnunciante: string | null
+  ): Observable<AdvertiserProfitReportResponseDTO> {
     const url = `${this.apiUrl}/inicio/${fechaInicio}/fin/${fechaFin}/anunciante/${nombreAnunciante}`;
 
     return this.http.get<AdvertiserProfitReportResponseDTO>(url).pipe(catchError(this.handleError));

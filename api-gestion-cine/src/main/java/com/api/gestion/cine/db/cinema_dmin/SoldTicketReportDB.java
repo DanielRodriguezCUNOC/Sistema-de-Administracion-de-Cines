@@ -48,7 +48,7 @@ public class SoldTicketReportDB {
         stmt.setDate(index++, Date.valueOf(startDate));
         stmt.setDate(index++, Date.valueOf(endDate));
       }
-      if (nombreSala != null && !nombreSala.isEmpty()) {
+      if (nombreSala != null) {
         stmt.setString(index++, nombreSala);
       }
 

@@ -42,13 +42,6 @@
         </div>
       </div>
     </form>
-
-    @if (errorMessage) {
-    <div class="alert-error mt-3">
-      <i class="bi bi-exclamation-triangle"></i>
-      {{ errorMessage }}
-    </div>
-    }
   </div>
 
   @if (report) {
@@ -91,7 +84,6 @@
     }
   </div>
 
-  <!-- Sección adicional para mostrar detalles de valoraciones -->
   @if (report.salasMasValoradas.length > 0) {
   <div class="section-card">
     <div class="section-header">
@@ -148,3 +140,9 @@
   </div>
   } }
 </div>
+<app-share-popup
+  [mensaje]="errorMessage || ''"
+  [tipo]="'error'"
+  [mostrar]="!!errorMessage"
+  (cerrarEvent)="errorMessage = null"
+></app-share-popup>

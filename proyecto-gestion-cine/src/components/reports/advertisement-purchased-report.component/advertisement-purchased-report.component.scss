@@ -69,4 +69,26 @@
       }
     }
   }
+
+  .btn-outline-primary {
+  background-color: transparent;
+  border: 2px solid rgba(102, 126, 234, 0.8);
+  color: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+
+  &:hover {
+    background-color: rgba(102, 126, 234, 0.1);
+    color: #fff;
+  }
+
+  &:disabled {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+    color: rgba(255, 255, 255, 0.5);
+    cursor: not-allowed;
+  }
+  }
 }

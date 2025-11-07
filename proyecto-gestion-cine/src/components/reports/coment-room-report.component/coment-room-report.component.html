@@ -46,13 +46,7 @@
         </div>
       </div>
     </form>
-
-    @if (errorMessage) {
-    <div class="alert-error mt-3">
-      <i class="bi bi-exclamation-triangle"></i>
-      {{ errorMessage }}
-    </div>
-    } @if (comentarios.length > 0) {
+    @if (comentarios.length > 0) {
     <div class="comments-section mt-4">
       <h2>Comentarios</h2>
 
@@ -78,3 +72,9 @@
     }
   </div>
 </div>
+<app-share-popup
+  [mensaje]="errorMessage || ''"
+  [tipo]="'error'"
+  [mostrar]="!!errorMessage"
+  (cerrarEvent)="errorMessage = null"
+></app-share-popup>

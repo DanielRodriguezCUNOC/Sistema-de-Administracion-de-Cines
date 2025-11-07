@@ -3,10 +3,11 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { AdvertiserProfitReportResponseDTO } from '../../../models/dto/sysadmin/advertiser-profit-report/advertiser-profit-report-response-dto';
 import { AdvertiserProfitReportService } from '../../../services/sysadmin/reports/advertiser-profit-report-service.service';
 import { CommonModule } from '@angular/common';
+import { SharePopupComponent } from '../../../shared/share-popup.component/share-popup.component';
 
 @Component({
   selector: 'app-advertiser-profit-report.component',
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, SharePopupComponent],
   templateUrl: './advertiser-profit-report.component.html',
   styleUrl: './advertiser-profit-report.component.scss',
 })
@@ -17,8 +18,6 @@ export class AdvertiserProfitReportComponent {
   errorMessage: string | null = null;
 
   constructor(private fb: FormBuilder, private service: AdvertiserProfitReportService) {
-    const today = new Date();
-    const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
     this.reportForm = this.fb.group({
       fechaInicio: [''],
       fechaFin: [''],
@@ -26,9 +25,6 @@ export class AdvertiserProfitReportComponent {
     });
   }
 
-  formatDate(date: Date): string {
-    return date.toISOString().split('T')[0];
-  }
   generateReport(): void {
     if (this.reportForm.invalid) {
       this.errorMessage = 'Por favor complete todos los campos requeridos.';
@@ -39,10 +35,11 @@ export class AdvertiserProfitReportComponent {
 
     const { fechaInicio, fechaFin, nombreAnunciante } = this.reportForm.value;
 
-    const startDate = fechaInicio || '';
-    const endDate = fechaFin || '';
+    const startDate: string | null = fechaInicio?.toString().trim() || null;
+    const endDate: string | null = fechaFin?.toString().trim() || null;
+    const advertiserName: string | null = nombreAnunciante?.toString().trim() || null;
 
-    this.service.generateReport(startDate, endDate, nombreAnunciante).subscribe({
+    this.service.generateReport(startDate, endDate, advertiserName).subscribe({
       next: (data: AdvertiserProfitReportResponseDTO) => {
         this.report = data;
         this.isLoading = false;

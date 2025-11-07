@@ -12,7 +12,11 @@ export class TicketSoldReportService {
 
   constructor(private http: HttpClient) {}
 
-  generateReport(startDate: string, endDate: string, nombreSala?: string) {
+  generateReport(
+    startDate: string | null,
+    endDate: string | null,
+    nombreSala: string | null
+  ): Observable<SoldTicketResponseReportDTO> {
     const url = `${this.apiUrl}/inicio/${startDate}/fin/${endDate}/nombreSala/${nombreSala}`;
     return this.http.get<SoldTicketResponseReportDTO>(url).pipe(catchError(this.handleError));
   }

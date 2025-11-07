@@ -1,8 +1,8 @@
-<div class="share-popup" [ngClass]="tipo">
-  @if(mostrar){
+@if (mostrar) {
+<div class="share-popup" [ngClass]="tipo" role="alert" aria-live="polite">
   <div class="popup-content">
-    <span class="close" (click)="cerrar()">×</span>
+    <span class="close" (click)="cerrar()" aria-label="Cerrar">×</span>
     <p>{{ mensaje }}</p>
   </div>
-  }
 </div>
+}
