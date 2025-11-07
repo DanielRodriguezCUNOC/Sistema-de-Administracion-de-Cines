@@ -21,6 +21,20 @@ export class AdvertiserProfitReportService {
     return this.http.get<AdvertiserProfitReportResponseDTO>(url).pipe(catchError(this.handleError));
   }
   private handleError(error: HttpErrorResponse): Observable<never> {
-    return throwError(() => new Error('Error al generar el reporte de anuncios comprados'));
+    let errorMessage = 'Error desconocido al generar el reporte.';
+
+    if (error.error instanceof ErrorEvent) {
+      errorMessage = `Error del cliente: ${error.error.message}`;
+    } else {
+      if (error.error?.message) {
+        errorMessage = error.error.message;
+      } else if (error.status === 0) {
+        errorMessage = 'No se pudo conectar con el servidor.';
+      } else {
+        errorMessage = `Error ${error.status}: ${error.statusText}`;
+      }
+    }
+
+    return throwError(() => new Error(errorMessage));
   }
 }

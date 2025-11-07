@@ -31,7 +31,7 @@ public class CommentedRoomReportService {
     }
     try {
       List<RoomComment> roomComments = reportDB.getCommentedRooms(startDate, endDate, nombreSala, offset, limit);
-      report.setCommentedRooms(roomComments.toArray(new RoomComment[0]));
+      report.setCommentedRooms(roomComments);
     } catch (Exception e) {
       throw new ReportServiceException("Error al generar el informe de salas comentadas", e);
     }

@@ -15,6 +15,7 @@ export class AdvertiserProfitReportComponent {
   reportForm: FormGroup;
   report: AdvertiserProfitReportResponseDTO | null = null;
   isLoading = false;
+  infoMessage: string | null = null;
   errorMessage: string | null = null;
 
   constructor(private fb: FormBuilder, private service: AdvertiserProfitReportService) {
@@ -27,11 +28,11 @@ export class AdvertiserProfitReportComponent {
 
   generateReport(): void {
     if (this.reportForm.invalid) {
-      this.errorMessage = 'Por favor complete todos los campos requeridos.';
+      this.infoMessage = 'Por favor complete todos los campos requeridos.';
       return;
     }
     this.isLoading = true;
-    this.errorMessage = '';
+    this.infoMessage = '';
 
     const { fechaInicio, fechaFin, nombreAnunciante } = this.reportForm.value;
 
@@ -43,10 +44,10 @@ export class AdvertiserProfitReportComponent {
       next: (data: AdvertiserProfitReportResponseDTO) => {
         this.report = data;
         this.isLoading = false;
+        this.infoMessage = 'Informe generado con éxito.';
       },
       error: (error) => {
-        this.errorMessage =
-          'Error al generar el informe de anuncios comprados. Por favor, inténtelo de nuevo más tarde.';
+        this.errorMessage = error.message || 'Error al generar el informe.';
         this.isLoading = false;
       },
     });

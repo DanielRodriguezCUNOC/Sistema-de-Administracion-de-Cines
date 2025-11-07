@@ -4,22 +4,43 @@ import java.time.LocalDate;
 
 public class ValidatorCustom {
 
-  private final static String DATE_PATTERN = "^\\d{4}/\\d{2}/\\d{2}$";
+  private final static String DATE_PATTERN = "^\\d{4}-\\d{2}-\\d{2}$"; // YYYY-MM-DD (más estándar para APIs REST)
 
+  /**
+   * Verifica si las fechas son válidas solo si están presentes.
+   * Permite que ambas sean opcionales.
+   */
   public static boolean isValidDate(String startDate, String endDate) {
+    if (isNullOrEmpty(startDate) && isNullOrEmpty(endDate)) {
+      return true; // ambas son opcionales
+    }
 
-    return startDate.matches(DATE_PATTERN) && endDate.matches(DATE_PATTERN);
+    if (!isNullOrEmpty(startDate) && !startDate.matches(DATE_PATTERN)) {
+      return false;
+    }
+
+    if (!isNullOrEmpty(endDate) && !endDate.matches(DATE_PATTERN)) {
+      return false;
+    }
+
+    return true;
   }
 
+  /**
+   * Convierte cadenas a LocalDate si existen.
+   * Retorna arreglo [startDate, endDate].
+   */
   public static LocalDate[] convertDateStringToLocalDate(String startDate, String endDate) {
-
     LocalDate[] dates = new LocalDate[2];
-    if (startDate != null && !startDate.trim().isEmpty()) {
+
+    if (!isNullOrEmpty(startDate)) {
       dates[0] = FormatterDateCustom.parseStringToDate(startDate);
     }
-    if (endDate != null && !endDate.trim().isEmpty()) {
+
+    if (!isNullOrEmpty(endDate)) {
       dates[1] = FormatterDateCustom.parseStringToDate(endDate);
     }
+
     return dates;
   }
 

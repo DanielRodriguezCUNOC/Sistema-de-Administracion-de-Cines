@@ -38,7 +38,7 @@ public class PurchasedAdvertisementReportService {
       throw new ReportServiceException("Error al obtener anuncios comprados", e);
     }
 
-    report.setPurchasedAdvertisements(purchasedAdvertisements.toArray(new PurchasedAdvertisement[0]));
+    report.setPurchasedAdvertisements(purchasedAdvertisements);
 
     return report;
   }

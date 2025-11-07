@@ -1,17 +1,18 @@
 package com.api.gestion.cine.dto.reports.sysadmin.advertiser_profit_report;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import com.api.gestion.cine.dto.reports.sysadmin.purchased_advertisement_report.PurchasedAdvertisement;
 
 public class AdvertiserProfitReportResponseDTO {
-    private AdvertiserList[] advertiserList;
+    private List<AdvertiserList> advertiserList;
     private BigDecimal totalProfit;
 
     public AdvertiserProfitReportResponseDTO() {
     }
 
-    public AdvertiserProfitReportResponseDTO(AdvertiserList[] advertiserList, BigDecimal totalProfit) {
+    public AdvertiserProfitReportResponseDTO(List<AdvertiserList> advertiserList, BigDecimal totalProfit) {
         this.advertiserList = advertiserList;
         this.totalProfit = totalProfit;
     }
@@ -24,11 +25,11 @@ public class AdvertiserProfitReportResponseDTO {
         this.totalProfit = totalProfit;
     }
 
-    public AdvertiserList[] getAdvertiserList() {
+    public List<AdvertiserList> getAdvertiserList() {
         return advertiserList;
     }
 
-    public void setAdvertiserList(AdvertiserList[] advertiserList) {
+    public void setAdvertiserList(List<AdvertiserList> advertiserList) {
         this.advertiserList = advertiserList;
     }
 

@@ -9,7 +9,7 @@ import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/
 })
 export class SharePopupComponent {
   @Input() mensaje: string = '';
-  @Input() tipo: 'error' | 'exito' | 'info' = 'info';
+  @Input() tipo: 'error' | 'success' | 'info' = 'info';
   @Input() mostrar: boolean = false;
   @Input() duracion: number = 2500;
 

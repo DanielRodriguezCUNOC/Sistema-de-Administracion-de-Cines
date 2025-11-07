@@ -1,6 +1,7 @@
 package com.api.gestion.cine.resources.reports.sysadmin_reports;
 
 import com.api.gestion.cine.dto.reports.sysadmin.advertiser_profit_report.AdvertiserProfitReportResponseDTO;
+import com.api.gestion.cine.exceptions.NotFoundDataDBException;
 import com.api.gestion.cine.services.reports.sysadmin.AdvertiserProfitReportService;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -13,7 +14,7 @@ import jakarta.ws.rs.core.Response;
 public class AdvertiserProfitReportResource {
 
     @GET
-    @Path("inicio/{fechaInicio}/fin/{fechaFin}")
+    @Path("inicio/{fechaInicio}/fin/{fechaFin}/anunciante/{nombreAnunciante}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAdvertiserProfit(
             @PathParam("fechaInicio") String fechaInicio,
@@ -26,6 +27,10 @@ public class AdvertiserProfitReportResource {
             AdvertiserProfitReportResponseDTO report = service.getReport(fechaInicio, fechaFin, nombreAnunciante);
 
             return Response.ok(report).build();
+        } catch (IllegalArgumentException e) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        } catch (NotFoundDataDBException n) {
+            return Response.status(Response.Status.NOT_FOUND).entity(n.getMessage()).build();
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }

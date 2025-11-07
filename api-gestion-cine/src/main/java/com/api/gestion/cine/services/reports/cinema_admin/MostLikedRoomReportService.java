@@ -31,7 +31,7 @@ public class MostLikedRoomReportService {
     }
     try {
       List<LikedRoomData> likedRooms = reportDB.getMostLikedRoom(startDate, endDate, nombreSala);
-      reportDTO.setLikedRooms(likedRooms.toArray(new LikedRoomData[0]));
+      reportDTO.setLikedRooms(likedRooms);
     } catch (Exception e) {
       throw new ReportServiceException("Error al generar el informe de salas más gustadas", e);
     }

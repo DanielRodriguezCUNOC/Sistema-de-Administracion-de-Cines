@@ -25,6 +25,7 @@ import { MovieShownReportComponent } from '../components/reports/movie-shown-rep
 import { MostLikedRoomReportComponent } from '../components/reports/most-liked-room-report.component/most-liked-room-report.component';
 import { TicketSoldReportComponent } from '../components/reports/ticket-sold-report.component/ticket-sold-report.component';
 import { SelectAdminCinemaReportComponent } from '../components/cinema-admin/select-admin-cinema-report.component/select-admin-cinema-report.component';
+import { CreateUserPageComponent } from '../pages/create-user-page.component/create-user-page.component';
 
 export const routes: Routes = [
   {
@@ -172,5 +173,9 @@ export const routes: Routes = [
   {
     path: 'access-denied',
     component: AccessDeniedComponent,
+  },
+  {
+    path: 'register',
+    component: CreateUserPageComponent,
   },
 ];

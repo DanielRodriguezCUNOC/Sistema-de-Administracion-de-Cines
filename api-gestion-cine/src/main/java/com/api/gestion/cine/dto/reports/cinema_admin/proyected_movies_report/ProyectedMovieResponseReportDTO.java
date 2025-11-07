@@ -1,21 +1,23 @@
 package com.api.gestion.cine.dto.reports.cinema_admin.proyected_movies_report;
 
+import java.util.List;
+
 public class ProyectedMovieResponseReportDTO {
 
-    private MovieProyectedRoom[] salasProyectadas;
+    private List<MovieProyectedRoom> salasProyectadas;
 
     public ProyectedMovieResponseReportDTO() {
     }
 
-    public ProyectedMovieResponseReportDTO(MovieProyectedRoom[] salasProyectadas) {
+    public ProyectedMovieResponseReportDTO(List<MovieProyectedRoom> salasProyectadas) {
         this.salasProyectadas = salasProyectadas;
     }
 
-    public MovieProyectedRoom[] getSalasProyectadas() {
+    public List<MovieProyectedRoom> getSalasProyectadas() {
         return salasProyectadas;
     }
 
-    public void setSalasProyectadas(MovieProyectedRoom[] salasProyectadas) {
+    public void setSalasProyectadas(List<MovieProyectedRoom> salasProyectadas) {
         this.salasProyectadas = salasProyectadas;
     }
 

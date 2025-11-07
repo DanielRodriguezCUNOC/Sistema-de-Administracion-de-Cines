@@ -36,7 +36,7 @@ public class ProyectedMoviesReportService {
       List<MovieProyectedRoom> proyectedRooms = reportDB.getProyectedMovies(startDate, endDate, offset, limit,
           nombreSala);
 
-      response.setSalasProyectadas(proyectedRooms.toArray(new MovieProyectedRoom[0]));
+      response.setSalasProyectadas(proyectedRooms);
 
     } catch (Exception e) {
       throw new ReportServiceException("Error al generar el informe de películas proyectadas", e);

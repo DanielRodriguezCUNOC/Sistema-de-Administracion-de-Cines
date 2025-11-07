@@ -27,7 +27,7 @@ public class MostCommentedRoomReportService {
 
     try {
       List<RoomComment> roomComments = reportDB.getMostCommentedRooms(startDate, endDate);
-      report.setSalasConComentarios(roomComments.toArray(new RoomComment[0]));
+      report.setSalasConComentarios(roomComments);
     } catch (Exception e) {
       throw new ReportServiceException("Error al generar el informe de salas más comentadas", e);
     }

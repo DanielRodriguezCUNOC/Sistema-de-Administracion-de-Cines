@@ -42,10 +42,10 @@ public class ProfitReportService {
 
                         // * Asignamos los datos al reporte */
 
-                        report.setCostoCinema(cinemaCosts.toArray(new CinemaCostReport[0]));
+                        report.setCostoCinema(cinemaCosts);
 
-                        report.setAdvertisementPaymentAmount(adPayments.toArray(new AdvertisementProfitReport[0]));
-                        report.setAmountAdBlock(adBlockPayments.toArray(new AdvertisementProfitReport[0]));
+                        report.setAdvertisementPaymentAmount(adPayments);
+                        report.setAmountAdBlock(adBlockPayments);
 
                         // * Asignar valores totales */
                         report.assignValues();

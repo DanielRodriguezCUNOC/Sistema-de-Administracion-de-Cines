@@ -12,10 +12,6 @@ export class UserService {
 
   constructor(private httpClient: HttpClient) {}
 
-  public createNewUser(user: User): Observable<void> {
-    return this.httpClient.post<void>(`${this.restConstants.getApiURL()}users`, user);
-  }
-
   public getUser(): Observable<User> {
     return this.httpClient.get<User>(`${this.restConstants.getApiURL()}users`);
   }

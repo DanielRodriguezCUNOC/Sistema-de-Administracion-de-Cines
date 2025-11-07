@@ -53,6 +53,13 @@
             <version>${restapi}</version>
         </dependency>
 
+         <!-- multipart files -->
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-multipart</artifactId>
+            <version>${restapi}</version>
+        </dependency>
+
         <!-- Librerías adicionales -->
         <dependency>
             <groupId>org.apache.commons</groupId>

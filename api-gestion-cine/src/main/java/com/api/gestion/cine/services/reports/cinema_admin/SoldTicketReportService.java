@@ -33,7 +33,7 @@ public class SoldTicketReportService {
 
     try {
       List<SoldTicketData> soldTickets = reportDB.getSoldTicket(startDate, endDate, nombreSala);
-      reportDTO.setData(soldTickets.toArray(new SoldTicketData[0]));
+      reportDTO.setData(soldTickets);
 
       // * calcular el total general */
 
