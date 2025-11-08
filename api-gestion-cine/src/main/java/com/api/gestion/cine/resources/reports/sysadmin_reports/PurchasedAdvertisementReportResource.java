@@ -16,7 +16,8 @@ public class PurchasedAdvertisementReportResource {
   @GET
   @Path("inicio/{fechaInicio}/fin/{fechaFin}/tipo-anuncio/{tipoAnuncio}/offset/{offset}/limit/{limit}")
   @Produces(MediaType.APPLICATION_JSON)
-  public Response getResponse(@PathParam("fechaInicio") String fechaInicio,
+  public Response getResponse(
+      @PathParam("fechaInicio") String fechaInicio,
       @PathParam("fechaFin") String fechaFin,
       @PathParam("tipoAnuncio") String tipoAnuncio,
       @PathParam("offset") int offset,

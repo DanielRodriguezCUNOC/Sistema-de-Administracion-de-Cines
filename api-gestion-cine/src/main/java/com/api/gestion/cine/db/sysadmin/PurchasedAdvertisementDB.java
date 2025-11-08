@@ -26,9 +26,8 @@ public class PurchasedAdvertisementDB {
 
     Connection conn = DBConnectionSingleton.getInstance().getConnection();
 
-    // Construimos dinámicamente la consulta según los filtros
     StringBuilder sql = new StringBuilder(
-        "SELECT a.id_anuncio, a.nombre_anuncio, ta.tipo_anuncio, " +
+        "SELECT DISTINCT a.id_anuncio, a.nombre_anuncio, ta.tipo_anuncio, " +
             "pa.fecha_pago, pa.monto_pago " +
             "FROM anuncio a " +
             "INNER JOIN pago_anuncio pa ON a.id_anuncio = pa.id_anuncio " +
@@ -36,7 +35,7 @@ public class PurchasedAdvertisementDB {
             "INNER JOIN tipo_anuncio ta ON ca.id_tipo_anuncio = ta.id_tipo_anuncio " +
             "WHERE 1=1 ");
 
-    // * Agregamos los filtros solo si los valores están presentes
+    // ✅ Aplicamos filtros solo si los valores están presentes
     if (fechaInicio != null) {
       sql.append("AND pa.fecha_pago >= ? ");
     }
@@ -47,12 +46,13 @@ public class PurchasedAdvertisementDB {
       sql.append("AND ta.tipo_anuncio = ? ");
     }
 
+    // ✅ Orden por fecha de pago descendente + paginación coherente
     sql.append("ORDER BY pa.fecha_pago DESC LIMIT ? OFFSET ?");
 
     try (PreparedStatement pstmt = conn.prepareStatement(sql.toString())) {
       int paramIndex = 1;
 
-      // * Asignar parámetros en el mismo orden que se agregaron
+      // ✅ Asignación dinámica de parámetros
       if (fechaInicio != null) {
         pstmt.setDate(paramIndex++, Date.valueOf(fechaInicio));
       }
@@ -80,7 +80,6 @@ public class PurchasedAdvertisementDB {
     } catch (SQLException e) {
       throw new DataBaseException("Error al obtener anuncios comprados", e);
     }
-
     return advertisements;
   }
 

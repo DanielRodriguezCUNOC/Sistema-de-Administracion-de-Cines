@@ -50,10 +50,9 @@ export class AdvertisementPurchasedReportComponent {
 
     this.service.generateReport(startDate, endDate, adType, this.offset, this.limit).subscribe({
       next: (data: PurchasedAdvertisementResponseDTO) => {
-        const nuevosAnuncios = data.purchasedAdvertisements || [];
-        this.report = nuevosAnuncios;
-        this.offset += nuevosAnuncios.length;
-        this.hayMasAnuncios = nuevosAnuncios.length === this.limit;
+        this.report = data.purchasedAdvertisements || [];
+        this.offset += this.report.length;
+        this.hayMasAnuncios = this.report.length === this.limit;
         this.infoMessage = 'Informe generado exitosamente';
         this.popupTipo = 'success';
         this.popupMostrar = true;
@@ -79,10 +78,9 @@ export class AdvertisementPurchasedReportComponent {
 
     this.service.generateReport(startDate, endDate, adType, this.offset, this.limit).subscribe({
       next: (data: PurchasedAdvertisementResponseDTO) => {
-        const nuevosAnuncios = data.purchasedAdvertisements || [];
-        this.report.push(...nuevosAnuncios);
-        this.offset += nuevosAnuncios.length;
-        this.hayMasAnuncios = nuevosAnuncios.length === this.limit;
+        this.report.push(...(data.purchasedAdvertisements || []));
+        this.offset += this.report.length;
+        this.hayMasAnuncios = this.report.length === this.limit;
         this.isLoading = false;
       },
       error: () => {

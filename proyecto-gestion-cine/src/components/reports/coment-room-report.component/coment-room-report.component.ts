@@ -4,11 +4,12 @@ import { CommentedRoomResponseReportDTO } from '../../../models/dto/cinema-admin
 import { CommentedRoomReportService } from '../../../services/cinema-admin/reports/comment-room-report-service.service';
 import { RoomCommentDTO } from '../../../models/dto/sysadmin/most-commented-room-report/room-comment-dto';
 import { SharePopupComponent } from '../../../shared/share-popup.component/share-popup.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-coment-room-report',
   standalone: true,
-  imports: [ReactiveFormsModule, SharePopupComponent],
+  imports: [ReactiveFormsModule, SharePopupComponent, CommonModule],
   templateUrl: './coment-room-report.component.html',
   styleUrls: ['./coment-room-report.component.scss'],
 })
@@ -47,10 +48,9 @@ export class ComentRoomReportComponent {
 
     this.service.getComments(startDate, endDate, roomName, this.offset, this.limit).subscribe({
       next: (data: CommentedRoomResponseReportDTO) => {
-        const nuevos = data.salasComentadas || [];
-        this.comentarios = nuevos;
-        this.offset += nuevos.length;
-        this.tieneMasComentarios = nuevos.length === this.limit;
+        this.comentarios = data.commentedRooms || [];
+        this.offset += this.comentarios.length;
+        this.tieneMasComentarios = this.comentarios.length === this.limit;
         this.infoMessage = 'Informe generado exitosamente';
         this.popupTipo = 'success';
         this.popupMostrar = true;
@@ -76,7 +76,7 @@ export class ComentRoomReportComponent {
 
     this.service.getComments(startDate, endDate, roomName, this.offset, this.limit).subscribe({
       next: (data: CommentedRoomResponseReportDTO) => {
-        const nuevos = data.salasComentadas || [];
+        const nuevos = data.commentedRooms || [];
         this.comentarios.push(...nuevos);
         this.offset += nuevos.length;
         this.tieneMasComentarios = nuevos.length === this.limit;

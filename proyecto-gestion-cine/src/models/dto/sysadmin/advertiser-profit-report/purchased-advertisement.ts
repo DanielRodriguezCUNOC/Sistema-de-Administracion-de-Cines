@@ -1,6 +1,5 @@
-export interface PurchasedAdvertisementDTO {
+export interface PurchasedAdvertisement {
   idAnuncio: number;
-  idUsuario: number;
   nombreAnuncio: string;
   fechaPago: Date;
   montoPago: number;

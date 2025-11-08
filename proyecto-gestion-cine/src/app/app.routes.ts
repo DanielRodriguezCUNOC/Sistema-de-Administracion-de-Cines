@@ -27,6 +27,9 @@ import { TicketSoldReportComponent } from '../components/reports/ticket-sold-rep
 import { SelectAdminCinemaReportComponent } from '../components/cinema-admin/select-admin-cinema-report.component/select-admin-cinema-report.component';
 import { CreateUserPageComponent } from '../pages/create-user-page.component/create-user-page.component';
 import { CreateUserComponent } from '../components/users/create-user.component/create-user.component';
+import { MostCommentedRoomReportComponent } from '../components/reports/most-commented-room-report.component/most-commented-room-report.component';
+import { MostPopularRoomReportComponent } from '../components/reports/most-popular-room-report.component/most-popular-room-report.component';
+import { AdvertiserProfitReportComponent } from '../components/reports/advertiser-profit-report.component/advertiser-profit-report.component';
 
 export const routes: Routes = [
   {
@@ -175,6 +178,18 @@ export const routes: Routes = [
           {
             path: 'advertisement-purchased-report',
             component: AdvertisementPurchasedReportComponent,
+          },
+          {
+            path: 'most-commented-room-report',
+            component: MostCommentedRoomReportComponent,
+          },
+          {
+            path: 'most-popular-room-report',
+            component: MostPopularRoomReportComponent,
+          },
+          {
+            path: 'advertiser-profit-report',
+            component: AdvertiserProfitReportComponent,
           },
         ],
       },

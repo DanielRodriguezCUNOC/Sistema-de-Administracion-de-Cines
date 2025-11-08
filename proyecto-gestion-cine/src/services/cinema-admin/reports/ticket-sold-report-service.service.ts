@@ -18,10 +18,6 @@ export class TicketSoldReportService {
     nombreSala: string | null
   ): Observable<SoldTicketResponseReportDTO> {
     const url = `${this.apiUrl}/inicio/${startDate}/fin/${endDate}/nombreSala/${nombreSala}`;
-    return this.http.get<SoldTicketResponseReportDTO>(url).pipe(catchError(this.handleError));
-  }
-
-  private handleError(error: HttpErrorResponse): Observable<never> {
-    return throwError(() => new Error('Error al generar el reporte de boletos vendidos'));
+    return this.http.get<SoldTicketResponseReportDTO>(url);
   }
 }

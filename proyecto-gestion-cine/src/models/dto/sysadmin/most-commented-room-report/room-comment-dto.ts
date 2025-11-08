@@ -3,5 +3,6 @@ export interface RoomCommentDTO {
   nombreSala: string;
   nombreUsuario: string;
   comentario: string;
+  fechaPublicacion: Date;
   totalComentarios: number;
 }

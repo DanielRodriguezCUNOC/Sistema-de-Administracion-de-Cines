@@ -19,11 +19,7 @@ export class ProyectedMovieReportService {
     offset: number,
     limit: number
   ): Observable<ProyectedMoviesResponseReportDTO> {
-    const url = `${this.apiUrl}/inicio/${fechaInicio}/fin/${fechaFin}/sala/${nombreSala}/offset/${offset}/limit/${limit}`;
-    return this.http.get<ProyectedMoviesResponseReportDTO>(url).pipe(catchError(this.handleError));
-  }
-
-  private handleError(error: HttpErrorResponse): Observable<never> {
-    return throwError(() => new Error('Error al generar el reporte de películas proyectadas'));
+    const url = `${this.apiUrl}/inicio/${fechaInicio}/fin/${fechaFin}/nombreSala/${nombreSala}/offset/${offset}/limit/${limit}`;
+    return this.http.get<ProyectedMoviesResponseReportDTO>(url);
   }
 }

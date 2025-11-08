@@ -20,9 +20,6 @@ export class ProfitReportComponent {
   popupMostrar = false;
 
   constructor(private fb: FormBuilder, private profitReportService: ProfitReportService) {
-    const today = new Date();
-    const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-
     this.reportForm = this.fb.group({
       fechaInicio: [''],
       fechaFin: [''],
@@ -34,10 +31,6 @@ export class ProfitReportComponent {
   }
 
   generateReport(): void {
-    if (this.reportForm.invalid) {
-      this.infoMessage = 'Por favor complete todos los campos requeridos.';
-      return;
-    }
     this.isLoading = true;
     this.infoMessage = '';
 

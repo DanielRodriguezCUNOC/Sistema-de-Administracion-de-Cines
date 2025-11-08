@@ -16,6 +16,7 @@ public class PurchasedAdvertisementReportService {
 
     PurchasedAdvertisementDB purchasesAdDB = new PurchasedAdvertisementDB();
     PurchasedAdvertisementResponseReportDTO report = new PurchasedAdvertisementResponseReportDTO();
+
     LocalDate startDate = null;
     LocalDate endDate = null;
 

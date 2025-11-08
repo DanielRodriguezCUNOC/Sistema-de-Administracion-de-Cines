@@ -51,9 +51,8 @@
       <thead>
         <tr>
           <th>ID Anuncio</th>
-          <th>ID Usuario</th>
           <th>Nombre Anuncio</th>
-          <th>Fecha Compra</th>
+          <th>Fecha Pago</th>
           <th>Monto Pago</th>
           <th>Tipo Anuncio</th>
         </tr>
@@ -62,9 +61,8 @@
         @for( ad of report; track ad.idAnuncio){
         <tr>
           <td>{{ ad.idAnuncio }}</td>
-          <td>{{ ad.idUsuario }}</td>
           <td>{{ ad.nombreAnuncio }}</td>
-          <td>{{ ad.fechaCompra | date : 'dd/MM/yyyy' }}</td>
+          <td>{{ ad.fechaPago | date : 'dd/MM/yyyy' }}</td>
           <td>Q {{ ad.montoPago | number : '1.2-2' }}</td>
           <td>{{ ad.tipoAnuncio }}</td>
         </tr>

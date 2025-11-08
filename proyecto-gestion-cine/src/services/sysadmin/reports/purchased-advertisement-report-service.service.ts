@@ -1,8 +1,8 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable, catchError, throwError } from 'rxjs';
 import { environment } from '../../../enviroments/enviroments';
 import { PurchasedAdvertisementResponseDTO } from '../../../models/dto/sysadmin/purchased-advertisement-report/purchased-advertisement-response-dto';
-import { catchError, Observable, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -21,10 +21,6 @@ export class PurchasedAdvertisementReportService {
   ): Observable<PurchasedAdvertisementResponseDTO> {
     const url = `${this.apiUrl}/inicio/${fechaInicio}/fin/${fechaFin}/tipo-anuncio/${tipoAnuncio}/offset/${offset}/limit/${limit}`;
 
-    return this.http.get<PurchasedAdvertisementResponseDTO>(url).pipe(catchError(this.handleError));
-  }
-
-  private handleError(error: HttpErrorResponse): Observable<never> {
-    return throwError(() => new Error('Error al generar el reporte de anuncios comprados'));
+    return this.http.get<PurchasedAdvertisementResponseDTO>(url);
   }
 }

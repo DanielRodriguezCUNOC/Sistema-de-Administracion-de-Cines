@@ -4,15 +4,15 @@ import java.time.LocalDate;
 
 public class ValidatorCustom {
 
-  private final static String DATE_PATTERN = "^\\d{4}-\\d{2}-\\d{2}$"; // YYYY-MM-DD (más estándar para APIs REST)
+  private final static String DATE_PATTERN = "^\\d{4}-\\d{2}-\\d{2}$";
 
-  /**
+  /*
    * Verifica si las fechas son válidas solo si están presentes.
    * Permite que ambas sean opcionales.
    */
   public static boolean isValidDate(String startDate, String endDate) {
     if (isNullOrEmpty(startDate) && isNullOrEmpty(endDate)) {
-      return true; // ambas son opcionales
+      return true;
     }
 
     if (!isNullOrEmpty(startDate) && !startDate.matches(DATE_PATTERN)) {
@@ -26,7 +26,7 @@ public class ValidatorCustom {
     return true;
   }
 
-  /**
+  /*
    * Convierte cadenas a LocalDate si existen.
    * Retorna arreglo [startDate, endDate].
    */
@@ -45,6 +45,7 @@ public class ValidatorCustom {
   }
 
   public static boolean isNullOrEmpty(String value) {
-    return value == null || value.trim().isEmpty();
+    return value == null || value.trim().isEmpty() || "null".equalsIgnoreCase(value.trim());
   }
+
 }

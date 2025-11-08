@@ -14,7 +14,7 @@ import jakarta.ws.rs.core.Response;
 public class CommentedRoomReportResource {
 
   @GET
-  @Path("inicio/{fechaInicio}/fin/{fechaFin}/sala/{idSala}")
+  @Path("inicio/{fechaInicio}/fin/{fechaFin}/nombreSala/{nombreSala}/offset/{offset}/limit/{limit}")
   @Produces(MediaType.APPLICATION_JSON)
   public Response getResponse(
       @PathParam("fechaInicio") String fechaInicio,

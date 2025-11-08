@@ -19,9 +19,6 @@ export class CommentedRoomReportService {
     limit: number
   ): Observable<CommentedRoomResponseReportDTO> {
     const url = `${this.apiUrl}/inicio/${fechaInicio}/fin/${fechaFin}/nombreSala/${nombreSala}/offset/${offset}/limit/${limit}`;
-    return this.http.get<CommentedRoomResponseReportDTO>(url).pipe(catchError(this.handleError));
-  }
-  private handleError(error: HttpErrorResponse): Observable<never> {
-    return throwError(() => new Error('Error al generar el reporte de salas comentadas'));
+    return this.http.get<CommentedRoomResponseReportDTO>(url);
   }
 }
