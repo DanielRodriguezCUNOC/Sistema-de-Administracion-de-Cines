@@ -5,18 +5,18 @@ import java.util.List;
 
 public class SoldTicketResponseReportDTO {
 
-    private List<SoldTicketData> data;
+    private List<SoldTicketData> boletosVendidos;
     private BigDecimal totalDinero;
 
     public SoldTicketResponseReportDTO() {
     }
 
-    public List<SoldTicketData> getData() {
-        return data;
+    public List<SoldTicketData> getBoletosVendidos() {
+        return boletosVendidos;
     }
 
-    public void setData(List<SoldTicketData> data) {
-        this.data = data;
+    public void setBoletosVendidos(List<SoldTicketData> boletosVendidos) {
+        this.boletosVendidos = boletosVendidos;
     }
 
     public BigDecimal getTotalDinero() {

@@ -18,8 +18,8 @@ public class ProyectedMoviesReportResource {
   @Produces(MediaType.APPLICATION_JSON)
   public Response getResponse(
       @PathParam("fechaInicio") String fechaInicio,
-      @PathParam("nombreSala") String nombreSala,
       @PathParam("fechaFin") String fechaFin,
+      @PathParam("nombreSala") String nombreSala,
       @PathParam("offset") int offset,
       @PathParam("limit") int limit) {
     try {

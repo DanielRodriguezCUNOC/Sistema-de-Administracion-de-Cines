@@ -1,20 +1,22 @@
 package com.api.gestion.cine.dto.reports.cinema_admin.sold_ticket_report;
 
+import java.util.List;
+
 public class SoldTicketData {
 
-    private int idBoleto;
+    private int idSala;
     private String nombreSala;
-    private UserData[] usuarios;
+    private List<UserData> usuarios;
 
     public SoldTicketData() {
     }
 
-    public int getIdBoleto() {
-        return idBoleto;
+    public int getIdSala() {
+        return idSala;
     }
 
-    public void setIdBoleto(int idBoleto) {
-        this.idBoleto = idBoleto;
+    public void setIdSala(int idSala) {
+        this.idSala = idSala;
     }
 
     public String getNombreSala() {
@@ -25,11 +27,11 @@ public class SoldTicketData {
         this.nombreSala = nombreSala;
     }
 
-    public UserData[] getUsuarios() {
+    public List<UserData> getUsuarios() {
         return usuarios;
     }
 
-    public void setUsuarios(UserData[] usuarios) {
+    public void setUsuarios(List<UserData> usuarios) {
         this.usuarios = usuarios;
     }
 

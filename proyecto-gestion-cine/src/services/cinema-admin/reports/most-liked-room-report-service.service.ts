@@ -8,7 +8,7 @@ import { MostLikedRoomResponseReportDTO } from '../../../models/dto/cinema-admin
   providedIn: 'root',
 })
 export class MostLikedRoomReportService {
-  private apiUrl = `${environment.apiBaseUrl}/cinema-admin/report/liked-room`;
+  private apiUrl = `${environment.apiBaseUrl}/admin-cinema/report/liked-room`;
 
   constructor(private http: HttpClient) {}
 

@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Arrays;
+import java.util.Collections;
 
 import com.api.gestion.cine.db.connection.DBConnectionSingleton;
 import com.api.gestion.cine.dto.reports.cinema_admin.proyected_movies_report.MovieProyectedRoom;
@@ -20,9 +22,12 @@ public class ProyectedMovieReportDB {
 
     List<MovieProyectedRoom> proyectedRooms = new ArrayList<>();
 
+    Connection conn = DBConnectionSingleton.getInstance().getConnection();
+
     StringBuilder sql = new StringBuilder(
         "SELECT s.id_sala, s.nombre_sala, " +
-            "GROUP_CONCAT(DISTINCT p.titulo ORDER BY pp.fecha_proyeccion DESC SEPARATOR ', ') AS titulos_peliculas, " +
+            "GROUP_CONCAT(DISTINCT p.titulo_pelicula ORDER BY pp.fecha_proyeccion DESC SEPARATOR ', ') AS titulos_peliculas, "
+            +
             "COUNT(DISTINCT pp.id_pelicula) AS cantidad_peliculas_proyectadas " +
             "FROM sala s " +
             "INNER JOIN pelicula_proyectada pp ON s.id_sala = pp.id_sala " +
@@ -43,8 +48,7 @@ public class ProyectedMovieReportDB {
         .append("ORDER BY cantidad_peliculas_proyectadas DESC, s.nombre_sala ")
         .append("LIMIT ? OFFSET ?");
 
-    try (Connection conn = DBConnectionSingleton.getInstance().getConnection();
-        PreparedStatement stmt = conn.prepareStatement(sql.toString())) {
+    try (PreparedStatement stmt = conn.prepareStatement(sql.toString())) {
 
       int paramIndex = 1;
 
@@ -63,18 +67,27 @@ public class ProyectedMovieReportDB {
 
       try (ResultSet rs = stmt.executeQuery()) {
         while (rs.next()) {
+
           MovieProyectedRoom room = new MovieProyectedRoom();
+
+          // * Seteo de atributos de la sala */
           room.setIdSala(rs.getInt("id_sala"));
+
           room.setNombreSala(rs.getString("nombre_sala"));
 
           String titulosConcat = rs.getString("titulos_peliculas");
+
           if (titulosConcat != null && !titulosConcat.isEmpty()) {
             String[] titulosArray = titulosConcat.split("\\s*,\\s*");
-            room.setTitulosPeliculas(titulosArray);
+
+            // * Asignación de la lista de títulos de películas */
+            room.setTitulosPeliculas(Arrays.asList(titulosArray));
+
           } else {
-            room.setTitulosPeliculas(new String[0]);
+            room.setTitulosPeliculas(Collections.emptyList());
           }
 
+          // * Seteo de la cantidad de películas proyectadas */
           room.setCantidadPeliculasProyectadas(rs.getInt("cantidad_peliculas_proyectadas"));
           proyectedRooms.add(room);
         }

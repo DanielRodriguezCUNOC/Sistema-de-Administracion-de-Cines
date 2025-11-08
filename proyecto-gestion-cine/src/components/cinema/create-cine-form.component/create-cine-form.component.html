@@ -10,7 +10,7 @@
         cineForm.controls['nombreCine'].dirty && cineForm.controls['nombreCine'].invalid
       "
     />
-    @if (submitted && f['nombreCine'].invalid) {
+    @if (cineForm.controls['nombreCine'].invalid) {
     <div class="invalid-feedback">
       @if (f['nombreCine'].errors?.['required']) {
       <div>El nombre es obligatorio.</div>
@@ -28,9 +28,9 @@
       id="fechaCreacion"
       formControlName="fechaCreacion"
       class="form-control"
-      [class.is-invalid]="submitted && cineForm.controls['fechaCreacion'].invalid"
+      [class.is-invalid]="cineForm.controls['fechaCreacion'].invalid"
     />
-    @if (submitted && cineForm.controls['fechaCreacion'].invalid) {
+    @if (cineForm.controls['fechaCreacion'].invalid) {
     <div class="invalid-feedback">
       @if (cineForm.controls['fechaCreacion'].errors?.['required']) {
       <div>La fecha es obligatoria.</div>
@@ -47,9 +47,9 @@
       id="costo_ocultacion_anuncios"
       formControlName="costoOcultacionAnuncios"
       class="form-control"
-      [class.is-invalid]="submitted && cineForm.controls['costoOcultacionAnuncios'].invalid"
+      [class.is-invalid]="cineForm.controls['costoOcultacionAnuncios'].invalid"
     />
-    @if (submitted && cineForm.controls['costoOcultacionAnuncios'].invalid) {
+    @if (cineForm.controls['costoOcultacionAnuncios'].invalid) {
     <div class="invalid-feedback">
       @if (cineForm.controls['costoOcultacionAnuncios'].errors?.['required']) {
       <div>Este valor es obligatorio.</div>
@@ -63,3 +63,10 @@
   <button type="submit" class="btn btn-primary">Guardar Cine</button>
   <button type="button" class="btn btn-secondary ms-2" (click)="onReset()">Limpiar</button>
 </form>
+
+<app-share-popup
+  [mensaje]="infoMessage || ''"
+  [tipo]="popupTipo"
+  [mostrar]="popupMostrar"
+  (cerrarEvent)="popupMostrar = false"
+></app-share-popup>

@@ -1,16 +1,18 @@
 package com.api.gestion.cine.dto.reports.cinema_admin.proyected_movies_report;
 
+import java.util.List;
+
 public class MovieProyectedRoom {
 
     private int idSala;
     private String nombreSala;
-    private String titulosPeliculas[];
+    private List<String> titulosPeliculas;
     private int cantidadPeliculasProyectadas;
 
     public MovieProyectedRoom() {
     }
 
-    public MovieProyectedRoom(int idSala, String nombreSala, String[] titulosPeliculas,
+    public MovieProyectedRoom(int idSala, String nombreSala, List<String> titulosPeliculas,
             int cantidadPeliculasProyectadas) {
         this.idSala = idSala;
         this.nombreSala = nombreSala;
@@ -34,11 +36,11 @@ public class MovieProyectedRoom {
         this.nombreSala = nombreSala;
     }
 
-    public String[] getTitulosPeliculas() {
+    public List<String> getTitulosPeliculas() {
         return titulosPeliculas;
     }
 
-    public void setTitulosPeliculas(String[] titulosPeliculas) {
+    public void setTitulosPeliculas(List<String> titulosPeliculas) {
         this.titulosPeliculas = titulosPeliculas;
     }
 

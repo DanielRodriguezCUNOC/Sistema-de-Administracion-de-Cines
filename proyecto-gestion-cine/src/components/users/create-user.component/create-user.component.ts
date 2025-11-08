@@ -14,7 +14,6 @@ import { CommonModule, NgFor, NgIf } from '@angular/common';
 })
 export class CreateUserComponent implements OnInit {
   nuevoRegistroUsuario!: FormGroup;
-  nuevoRegistro!: Event;
   selectedFile: File | null = null;
   infoMessage: string | null = null;
   popupTipo: 'error' | 'success' | 'info' = 'info';

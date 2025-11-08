@@ -8,7 +8,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class ProyectedMovieReportService {
-  private apiUrl = `${environment.apiBaseUrl}/cinema-admin/report/proyected-movies`;
+  private apiUrl = `${environment.apiBaseUrl}/admin-cinema/report/proyected-movies`;
 
   constructor(private http: HttpClient) {}
 

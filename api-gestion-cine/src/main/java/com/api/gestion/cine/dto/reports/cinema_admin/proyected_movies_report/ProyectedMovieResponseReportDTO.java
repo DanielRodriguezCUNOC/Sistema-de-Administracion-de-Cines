@@ -4,21 +4,21 @@ import java.util.List;
 
 public class ProyectedMovieResponseReportDTO {
 
-    private List<MovieProyectedRoom> salasProyectadas;
+    private List<MovieProyectedRoom> peliculasProyectadas;
 
     public ProyectedMovieResponseReportDTO() {
     }
 
-    public ProyectedMovieResponseReportDTO(List<MovieProyectedRoom> salasProyectadas) {
-        this.salasProyectadas = salasProyectadas;
+    public ProyectedMovieResponseReportDTO(List<MovieProyectedRoom> peliculasProyectadas) {
+        this.peliculasProyectadas = peliculasProyectadas;
     }
 
-    public List<MovieProyectedRoom> getSalasProyectadas() {
-        return salasProyectadas;
+    public List<MovieProyectedRoom> getPeliculasProyectadas() {
+        return peliculasProyectadas;
     }
 
-    public void setSalasProyectadas(List<MovieProyectedRoom> salasProyectadas) {
-        this.salasProyectadas = salasProyectadas;
+    public void setPeliculasProyectadas(List<MovieProyectedRoom> peliculasProyectadas) {
+        this.peliculasProyectadas = peliculasProyectadas;
     }
 
 }

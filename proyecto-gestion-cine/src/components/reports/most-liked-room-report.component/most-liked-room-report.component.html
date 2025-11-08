@@ -53,7 +53,7 @@
       </h2>
     </div>
 
-    @if (report.salasMasValoradas.length === 0) {
+    @if (report.likedRooms.length === 0) {
     <div class="alert-error">
       <i class="bi bi-info-circle"></i>
       No hay salas valoradas para el intervalo seleccionado.
@@ -70,12 +70,12 @@
           </tr>
         </thead>
         <tbody>
-          @for (sala of report.salasMasValoradas; track sala.idSala) {
+          @for (sala of report.likedRooms; track sala.idSala) {
           <tr>
             <td>{{ sala.idSala }}</td>
             <td class="fw-bold">{{ sala.nombreSala }}</td>
             <td>{{ sala.cantidadValoraciones }}</td>
-            <td>{{ sala.promedioValoraciones | number : '1.0-2' }}</td>
+            <td>{{ sala.promedioValoracion | number : '1.0-2' }}</td>
           </tr>
           }
         </tbody>
@@ -84,7 +84,7 @@
     }
   </div>
 
-  @if (report.salasMasValoradas.length > 0) {
+  @if (report.likedRooms.length > 0) {
   <div class="section-card">
     <div class="section-header">
       <h2>
@@ -93,14 +93,14 @@
       </h2>
     </div>
 
-    @for (sala of report.salasMasValoradas; track sala.idSala) {
+    @for (sala of report.likedRooms; track sala.idSala) {
     <div class="sala-details">
       <div class="sala-header">
         <h3 class="sala-title">
           <i class="bi bi-easel"></i>
           {{ sala.nombreSala }}
         </h3>
-        <span class="badge-rating"> {{ sala.promedioValoraciones | number : '1.1-1' }} ★ </span>
+        <span class="badge-rating"> {{ sala.promedioValoracion | number : '1.1-1' }} ★ </span>
       </div>
 
       @if (sala.valoraciones && sala.valoraciones.length > 0) {

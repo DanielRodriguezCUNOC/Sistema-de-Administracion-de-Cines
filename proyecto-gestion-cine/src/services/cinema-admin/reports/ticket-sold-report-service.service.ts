@@ -8,7 +8,7 @@ import { SoldTicketResponseReportDTO } from '../../../models/dto/cinema-admin/so
   providedIn: 'root',
 })
 export class TicketSoldReportService {
-  private apiUrl = `${environment.apiBaseUrl}/admin-cinema/report/ticket-sold`;
+  private apiUrl = `${environment.apiBaseUrl}/admin-cinema/report/sold-ticket`;
 
   constructor(private http: HttpClient) {}
 

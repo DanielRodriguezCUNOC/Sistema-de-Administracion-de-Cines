@@ -16,6 +16,8 @@ public class CommentedRoomReportDB {
 
     List<RoomComment> roomComments = new ArrayList<>();
 
+    Connection conn = DBConnectionSingleton.getInstance().getConnection();
+
     StringBuilder sql = new StringBuilder(
         "SELECT s.id_sala, s.nombre_sala, u.nombre_completo AS nombre_usuario, " +
             "cs.comentario, cs.fecha_publicacion, " +
@@ -35,8 +37,7 @@ public class CommentedRoomReportDB {
 
     sql.append("ORDER BY cs.fecha_publicacion DESC LIMIT ? OFFSET ?");
 
-    try (Connection conn = DBConnectionSingleton.getInstance().getConnection();
-        PreparedStatement pstmt = conn.prepareStatement(sql.toString())) {
+    try (PreparedStatement pstmt = conn.prepareStatement(sql.toString())) {
 
       int paramIndex = 1;
 
@@ -71,7 +72,10 @@ public class CommentedRoomReportDB {
   }
 
   public int getTotalCommentedRooms(LocalDate startDate, LocalDate endDate, String nombreSala) throws Exception {
+
     int total = 0;
+
+    Connection conn = DBConnectionSingleton.getInstance().getConnection();
 
     StringBuilder sql = new StringBuilder(
         "SELECT COUNT(DISTINCT s.id_sala) AS total " +
@@ -88,8 +92,7 @@ public class CommentedRoomReportDB {
       sql.append("AND s.nombre_sala LIKE ? ");
     }
 
-    try (Connection conn = DBConnectionSingleton.getInstance().getConnection();
-        PreparedStatement pstmt = conn.prepareStatement(sql.toString())) {
+    try (PreparedStatement pstmt = conn.prepareStatement(sql.toString())) {
 
       int paramIndex = 1;
 

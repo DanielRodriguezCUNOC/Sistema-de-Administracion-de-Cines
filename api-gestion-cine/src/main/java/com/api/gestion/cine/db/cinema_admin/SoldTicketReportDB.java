@@ -24,7 +24,7 @@ public class SoldTicketReportDB {
     StringBuilder sql = new StringBuilder(
         "SELECT s.id_sala, s.nombre_sala, " +
             "u.id_usuario, u.nombre_completo, " +
-            "p.id_pago_boleto, p.cantidad_boleto, p.monto_pago, p.fecha_pago " +
+            "p.cantidad_boleto, p.monto_pago, p.fecha_pago " +
             "FROM pago_boleto p " +
             "INNER JOIN sala s ON p.id_sala = s.id_sala " +
             "INNER JOIN usuario u ON p.id_usuario = u.id_usuario " +
@@ -40,8 +40,7 @@ public class SoldTicketReportDB {
 
     sql.append("ORDER BY s.id_sala, u.id_usuario");
 
-    try (
-        PreparedStatement stmt = conn.prepareStatement(sql.toString())) {
+    try (PreparedStatement stmt = conn.prepareStatement(sql.toString())) {
 
       int index = 1;
       if (startDate != null)
@@ -62,7 +61,7 @@ public class SoldTicketReportDB {
 
           if (idSala != salaActual) {
             if (salaData != null) {
-              salaData.setUsuarios(usuarios.toArray(new UserData[0]));
+              salaData.setUsuarios(usuarios);
               listaSalas.add(salaData);
             }
 
@@ -71,6 +70,8 @@ public class SoldTicketReportDB {
             usuarios = new ArrayList<>();
 
             salaData.setNombreSala(rs.getString("nombre_sala"));
+            salaData.setIdSala(idSala);
+
           }
 
           // * Crear usuario asociado al pago
@@ -84,7 +85,7 @@ public class SoldTicketReportDB {
           usuarios.add(user);
         }
         if (salaData != null) {
-          salaData.setUsuarios(usuarios.toArray(new UserData[0]));
+          salaData.setUsuarios(usuarios);
           listaSalas.add(salaData);
         }
       }

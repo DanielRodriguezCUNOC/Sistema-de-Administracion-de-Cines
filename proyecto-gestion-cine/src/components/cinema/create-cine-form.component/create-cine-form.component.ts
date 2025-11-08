@@ -1,23 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { SharePopupComponent } from '../../../shared/share-popup.component/share-popup.component';
+import { CineService } from '../../../services/cine/cine.service';
+import { Cine } from '../../../models/cinema/cine';
 
 @Component({
   selector: 'app-create-cine-form',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, SharePopupComponent],
   templateUrl: './create-cine-form.component.html',
   styleUrls: ['./create-cine-form.component.scss'],
 })
 export class CreateCineFormComponent implements OnInit {
   cineForm!: FormGroup;
-  submitted = false;
+  infoMessage: string | null = null;
+  popupTipo: 'error' | 'success' | 'info' = 'info';
+  popupMostrar = false;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private service: CineService) {}
 
   ngOnInit(): void {
     this.cineForm = this.fb.group({
@@ -28,17 +27,30 @@ export class CreateCineFormComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.submitted = true;
     if (this.cineForm.valid) {
-      console.log('Formulario de cine válido:', this.cineForm.value);
-    } else {
-      console.log('Formulario de cine inválido');
-      return;
+      const cineData = this.cineForm.value;
+      const cineDto: CineDTO = {
+        nombreCine: cineData.nombreCine,
+        fechaCreacion: cineData.fechaCreacion,
+        costoOcultacionAnuncios: cineData.costoOcultacionAnuncios,
+      };
+      this.service.crearCine(cineDto).subscribe({
+        next: (response) => {
+          this.cineForm.reset();
+          this.infoMessage = 'Cine creado exitosamente';
+          this.popupTipo = 'success';
+          this.popupMostrar = true;
+        },
+        error: (error) => {
+          this.infoMessage = `Error al crear el cine: ${error.message}`;
+          this.popupTipo = 'error';
+          this.popupMostrar = true;
+        },
+      });
     }
   }
 
   onReset(): void {
-    this.submitted = false;
     this.cineForm.reset();
   }
 

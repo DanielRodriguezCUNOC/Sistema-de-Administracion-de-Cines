@@ -39,6 +39,7 @@ export class TicketSoldReportComponent {
 
     this.service.generateReport(startDate, endDate, roomName).subscribe({
       next: (data: SoldTicketResponseReportDTO) => {
+        console.log(data);
         this.report = data;
         this.infoMessage = 'Informe generado exitosamente';
         this.popupTipo = 'success';

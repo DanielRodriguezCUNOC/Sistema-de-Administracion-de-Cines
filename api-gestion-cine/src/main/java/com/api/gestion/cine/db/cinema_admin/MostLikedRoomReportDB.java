@@ -17,6 +17,7 @@ public class MostLikedRoomReportDB {
       throws Exception {
 
     List<LikedRoomData> likedRooms = new ArrayList<>();
+    Connection conn = DBConnectionSingleton.getInstance().getConnection();
 
     StringBuilder sql = new StringBuilder(
         "SELECT s.id_sala, s.nombre_sala, " +
@@ -37,8 +38,7 @@ public class MostLikedRoomReportDB {
         .append("ORDER BY promedio_valoracion DESC, cantidad_valoraciones DESC ")
         .append("LIMIT 5");
 
-    try (Connection conn = DBConnectionSingleton.getInstance().getConnection();
-        PreparedStatement pstmt = conn.prepareStatement(sql.toString())) {
+    try (PreparedStatement pstmt = conn.prepareStatement(sql.toString())) {
 
       int paramIndex = 1;
       if (startDate != null)
@@ -75,7 +75,10 @@ public class MostLikedRoomReportDB {
   }
 
   private List<LikedData> getValoracionesBySala(int idSala, LocalDate startDate, LocalDate endDate) throws Exception {
+
     List<LikedData> valoraciones = new ArrayList<>();
+
+    Connection conn = DBConnectionSingleton.getInstance().getConnection();
 
     StringBuilder sql = new StringBuilder(
         "SELECT u.nombre_completo, vs.valoracion, vs.fecha_valoracion " +
@@ -89,8 +92,7 @@ public class MostLikedRoomReportDB {
       sql.append("AND vs.fecha_valoracion <= ? ");
     sql.append("ORDER BY vs.fecha_valoracion DESC");
 
-    try (Connection conn = DBConnectionSingleton.getInstance().getConnection();
-        PreparedStatement pstmt = conn.prepareStatement(sql.toString())) {
+    try (PreparedStatement pstmt = conn.prepareStatement(sql.toString())) {
 
       int paramIndex = 1;
       pstmt.setInt(paramIndex++, idSala);

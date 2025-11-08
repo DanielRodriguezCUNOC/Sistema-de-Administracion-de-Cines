@@ -13,7 +13,7 @@ import { SharePopupComponent } from '../../../shared/share-popup.component/share
 })
 export class MovieShownReportComponent {
   reportForm: FormGroup;
-  peliculasProyectadas: MovieProyectedRoomDTO[] = [];
+  report: MovieProyectedRoomDTO[] = [];
   infoMessage: string | null = null;
   popupTipo: 'error' | 'success' | 'info' = 'info';
   popupMostrar = false;
@@ -34,7 +34,7 @@ export class MovieShownReportComponent {
     this.infoMessage = null;
     this.isLoading = true;
     this.offset = 0;
-    this.peliculasProyectadas = [];
+    this.report = [];
 
     const { fechaInicio, fechaFin, nombreSala } = this.reportForm.value;
 
@@ -44,10 +44,9 @@ export class MovieShownReportComponent {
 
     this.service.getMovies(startDate, endDate, roomName, this.offset, this.limit).subscribe({
       next: (data: ProyectedMoviesResponseReportDTO) => {
-        const nuevasPeliculas = data.peliculasProyectadas || [];
-        this.peliculasProyectadas = nuevasPeliculas;
-        this.offset += nuevasPeliculas.length;
-        this.hayMasPeliculas = nuevasPeliculas.length === this.limit;
+        this.report = data.peliculasProyectadas || [];
+        this.offset += this.report.length;
+        this.hayMasPeliculas = this.report.length === this.limit;
         this.infoMessage = 'Informe generado exitosamente';
         this.popupTipo = 'success';
         this.popupMostrar = true;
@@ -73,7 +72,7 @@ export class MovieShownReportComponent {
     this.service.getMovies(startDate, endDate, roomName, this.offset, this.limit).subscribe({
       next: (data: ProyectedMoviesResponseReportDTO) => {
         const nuevasPeliculas = data.peliculasProyectadas || [];
-        this.peliculasProyectadas.push(...nuevasPeliculas);
+        this.report.push(...nuevasPeliculas);
         this.offset += nuevasPeliculas.length;
         this.hayMasPeliculas = nuevasPeliculas.length === this.limit;
         this.isLoading = false;
