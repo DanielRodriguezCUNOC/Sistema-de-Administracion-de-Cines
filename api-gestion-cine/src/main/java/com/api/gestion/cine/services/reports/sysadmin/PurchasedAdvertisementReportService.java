@@ -34,6 +34,7 @@ public class PurchasedAdvertisementReportService {
     try {
       purchasedAdvertisements = purchasesAdDB.getPurchasedAdvertisements(startDate, endDate, tipoAnuncio, offset,
           limit);
+
     } catch (Exception e) {
       throw new ReportServiceException("Error al obtener anuncios comprados", e);
     }

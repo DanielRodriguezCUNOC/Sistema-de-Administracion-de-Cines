@@ -1,17 +1,20 @@
 package com.api.gestion.cine.dto.reports.cinema_admin.most_liked_room_report;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 public class LikedRoomData {
 
     private int idSala;
     private String nombreSala;
     private int cantidadValoraciones;
-    private int promedioValoracion;
+    private BigDecimal promedioValoracion;
     private LikedData[] valoraciones;
 
     public LikedRoomData() {
     }
 
-    public LikedRoomData(int idSala, String nombreSala, int cantidadValoraciones, int promedioValoracion,
+    public LikedRoomData(int idSala, String nombreSala, int cantidadValoraciones, BigDecimal promedioValoracion,
             LikedData[] valoraciones) {
         this.idSala = idSala;
         this.nombreSala = nombreSala;
@@ -44,11 +47,11 @@ public class LikedRoomData {
         this.cantidadValoraciones = cantidadValoraciones;
     }
 
-    public int getPromedioValoracion() {
+    public BigDecimal getPromedioValoracion() {
         return promedioValoracion;
     }
 
-    public void setPromedioValoracion(int promedioValoracion) {
+    public void setPromedioValoracion(BigDecimal promedioValoracion) {
         this.promedioValoracion = promedioValoracion;
     }
 
@@ -62,7 +65,7 @@ public class LikedRoomData {
 
     public void obtenerPromedioValoracion() {
         if (valoraciones == null || valoraciones.length == 0) {
-            this.promedioValoracion = 0;
+            this.promedioValoracion = BigDecimal.ZERO;
             return;
         }
 
@@ -70,7 +73,8 @@ public class LikedRoomData {
         for (LikedData likedData : valoraciones) {
             suma += likedData.getValoracion();
         }
-        this.promedioValoracion = suma / valoraciones.length;
+        this.promedioValoracion = BigDecimal.valueOf(suma).divide(BigDecimal.valueOf(valoraciones.length), 2,
+                RoundingMode.HALF_UP);
     }
 
     public void calcularCantidadValoraciones() {

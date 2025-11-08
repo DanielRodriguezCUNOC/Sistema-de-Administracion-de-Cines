@@ -4,10 +4,10 @@ import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import com.api.gestion.cine.db.user.CreateUserDB;
 import com.api.gestion.cine.db.user.UserDB;
 import com.api.gestion.cine.dto.users.CreateUserDTO;
+import com.api.gestion.cine.exceptions.ImageFormatException;
 import com.api.gestion.cine.exceptions.UserAlreadyExists;
 import com.api.gestion.cine.services.util.Encryption;
 import com.api.gestion.cine.services.util.ImageConverter;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class CreateUserService {
 
@@ -25,7 +25,6 @@ public class CreateUserService {
 
     String encryptedPassword = Encryption.encryptPassword(userDTO.getPassword(), userDTO.getCorreo());
     userDTO.setPassword(encryptedPassword);
-    userDTO.setTipoUsuario(convertirMinusculas(userDTO.getTipoUsuario()));
 
     createUserDB.createUser(userDTO, idRol);
   }
@@ -48,15 +47,16 @@ public class CreateUserService {
     userDTO.setTelefono(telefono);
 
     if (fotoPart != null) {
-      byte[] processedImage = imageConverter.processImage(fotoPart);
-      userDTO.setFoto(processedImage);
+      try {
+        byte[] processedImage = imageConverter.processImage(fotoPart);
+        userDTO.setFoto(processedImage);
+      } catch (ImageFormatException e) {
+        throw new IllegalArgumentException("Formato de imagen no válido. Se aceptan JPG, PNG y GIF.");
+      } catch (Exception e) {
+        throw new Exception("Error al procesar la imagen de perfil.");
+      }
     }
-
     return userDTO;
-  }
-
-  private String convertirMinusculas(String input) {
-    return input == null ? null : input.toLowerCase();
   }
 
 }

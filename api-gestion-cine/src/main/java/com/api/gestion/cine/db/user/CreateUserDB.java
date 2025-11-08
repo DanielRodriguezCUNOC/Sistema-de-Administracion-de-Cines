@@ -9,6 +9,7 @@ import com.api.gestion.cine.dto.users.CreateUserDTO;
 public class CreateUserDB {
 
   public void createUser(CreateUserDTO userDTO, int idRol) throws Exception {
+    System.out.println("Ingresando al método de creación de usuario en la base de datos");
 
     Connection conn = DBConnectionSingleton.getInstance().getConnection();
 
@@ -24,17 +25,14 @@ public class CreateUserDB {
       pstmt.setString(4, userDTO.getPassword());
       pstmt.setString(5, userDTO.getCorreo());
       pstmt.setString(6, userDTO.getTelefono());
-
-      if (userDTO.getFoto() != null) {
-        pstmt.setBytes(7, userDTO.getFoto());
-      } else {
-        pstmt.setNull(7, java.sql.Types.BLOB);
-      }
+      pstmt.setBytes(7, userDTO.getFoto());
 
       int affectedRows = pstmt.executeUpdate();
       if (affectedRows == 0) {
+        System.out.println("No se pudo insertar el usuario");
         throw new Exception("No se pudo insertar el usuario");
       }
+      System.out.println("Usuario insertado correctamente en la base de datos");
 
       conn.commit();
 
@@ -43,7 +41,7 @@ public class CreateUserDB {
         try {
           conn.rollback();
         } catch (Exception ex) {
-
+          System.out.println("Error al hacer rollback: " + ex.getMessage());
         }
       }
       throw e;
@@ -52,7 +50,7 @@ public class CreateUserDB {
         try {
           conn.close();
         } catch (Exception ex) {
-
+          System.out.println("Error al cerrar la conexión: " + ex.getMessage());
         }
       }
     }

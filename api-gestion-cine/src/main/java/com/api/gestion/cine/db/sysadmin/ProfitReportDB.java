@@ -95,7 +95,7 @@ public class ProfitReportDB {
           report.setId(rs.getInt("id"));
           report.setNombre(rs.getString("nombre"));
           report.setFechaPago(rs.getDate("fecha_pago").toLocalDate());
-          report.setMontoPago(rs.getInt("amount"));
+          report.setMontoPago(rs.getBigDecimal("montoPago"));
           reports.add(report);
         }
       }
@@ -128,7 +128,7 @@ public class ProfitReportDB {
           report.setId(rs.getInt("id"));
           report.setNombre(rs.getString("nombre"));
           report.setFechaPago(rs.getDate("fecha_pago").toLocalDate());
-          report.setMontoPago(rs.getInt("amount"));
+          report.setMontoPago(rs.getBigDecimal("amount"));
           reports.add(report);
         }
       }

@@ -20,6 +20,7 @@ public class AdvertiserProfitDB {
       throws Exception {
 
     List<AdvertiserList> advertisers = new ArrayList<>();
+    Connection conn = DBConnectionSingleton.getInstance().getConnection();
 
     StringBuilder sql = new StringBuilder(
         "SELECT DISTINCT u.id_usuario, u.nombre_completo " +
@@ -27,7 +28,7 @@ public class AdvertiserProfitDB {
             "INNER JOIN pago_anuncio pa ON u.id_usuario = pa.id_usuario " +
             "WHERE 1=1 ");
 
-    // Agregar dinámicamente filtros
+    // * Agregar dinámicamente filtros
     if (startDate != null) {
       sql.append("AND pa.fecha_pago >= ? ");
     }
@@ -35,12 +36,12 @@ public class AdvertiserProfitDB {
       sql.append("AND pa.fecha_pago <= ? ");
     }
     if (nombreAnunciante != null && !nombreAnunciante.trim().isEmpty()) {
-      sql.append("AND u.nombre_completo LIKE ? ");
+      sql.append("AND LOWER(u.nombre_completo) LIKE LOWER(?) ");
     }
 
     sql.append("ORDER BY u.nombre_completo");
 
-    try (Connection conn = DBConnectionSingleton.getInstance().getConnection();
+    try (
         PreparedStatement pstmt = conn.prepareStatement(sql.toString())) {
 
       int paramIndex = 1;
@@ -60,16 +61,14 @@ public class AdvertiserProfitDB {
           int userId = rs.getInt("id_usuario");
           String userName = rs.getString("nombre_completo");
 
-          // Traer los anuncios de ese anunciante
+          // * Traer los anuncios de ese anunciante
           List<PurchasedAdvertisement> ads = getAdsByAdvertiser(userId, startDate, endDate);
 
           if (!ads.isEmpty()) {
             AdvertiserList advertiser = new AdvertiserList();
             advertiser.setIdUsuario(userId);
             advertiser.setNombreUsuario(userName);
-            advertiser.setPurchasedAdvertisement(ads.toArray(new PurchasedAdvertisement[0]));
-            advertiser.calculateTotalPurchasedAmount();
-
+            advertiser.setPurchasedAdvertisement(ads);
             advertisers.add(advertiser);
           }
         }

@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.api.gestion.cine.db.cinema_dmin.SoldTicketReportDB;
+import com.api.gestion.cine.db.cinema_admin.SoldTicketReportDB;
 import com.api.gestion.cine.dto.reports.cinema_admin.sold_ticket_report.SoldTicketData;
 import com.api.gestion.cine.dto.reports.cinema_admin.sold_ticket_report.SoldTicketResponseReportDTO;
 import com.api.gestion.cine.dto.reports.cinema_admin.sold_ticket_report.UserData;

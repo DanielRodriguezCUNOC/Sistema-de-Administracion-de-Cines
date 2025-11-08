@@ -47,6 +47,7 @@ public class AdvertiserProfitReportService {
 
             report.setAdvertiserList(advertisers);
             report.calculateTotalProfit();
+            report.getAdvertiserList().forEach(AdvertiserList::calculateTotalPurchasedAmount);
 
             if (report.getAdvertiserList() == null || report.getAdvertiserList().isEmpty()) {
                 throw new NotFoundDataDBException("No se encontraron datos para los parámetros proporcionados.");

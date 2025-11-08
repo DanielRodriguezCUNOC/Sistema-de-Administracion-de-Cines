@@ -8,7 +8,6 @@ public class ProfitReportResponseDTO {
     private List<CinemaCostReport> costoCinema;
     private List<AdvertisementProfitReport> advertisementPaymentAmount;
     private List<AdvertisementProfitReport> amountAdBlock;
-
     private BigDecimal totalProfit;
     private BigDecimal totalRevenue;
     private BigDecimal totalExpenses;
@@ -74,11 +73,10 @@ public class ProfitReportResponseDTO {
         BigDecimal totalAdvertisementPaymentAmount = BigDecimal.ZERO;
         BigDecimal totalAmountAdBlock = BigDecimal.ZERO;
         for (AdvertisementProfitReport report : advertisementPaymentAmount) {
-            totalAdvertisementPaymentAmount = totalAdvertisementPaymentAmount
-                    .add(BigDecimal.valueOf(report.getAmount()));
+            totalAdvertisementPaymentAmount = totalAdvertisementPaymentAmount.add(report.getAmount());
         }
         for (AdvertisementProfitReport report : amountAdBlock) {
-            totalAmountAdBlock = totalAmountAdBlock.add(BigDecimal.valueOf(report.getAmount()));
+            totalAmountAdBlock = totalAmountAdBlock.add(report.getAmount());
         }
         return totalAdvertisementPaymentAmount.add(totalAmountAdBlock);
     }

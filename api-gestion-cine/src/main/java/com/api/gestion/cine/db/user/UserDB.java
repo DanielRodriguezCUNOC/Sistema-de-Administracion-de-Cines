@@ -42,7 +42,7 @@ public class UserDB {
 
   public int getIdRol(String tipoUsuario) throws Exception {
     Connection conn = DBConnectionSingleton.getInstance().getConnection();
-    String sql = "SELECT id_rol FROM rol WHERE tipo_rol = ?";
+    String sql = "SELECT id_rol FROM rol WHERE rol = ?";
     try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
       pstmt.setString(1, tipoUsuario);
       ResultSet rs = pstmt.executeQuery();

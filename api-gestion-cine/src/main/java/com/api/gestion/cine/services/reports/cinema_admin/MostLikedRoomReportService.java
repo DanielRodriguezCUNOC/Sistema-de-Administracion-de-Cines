@@ -3,7 +3,7 @@ package com.api.gestion.cine.services.reports.cinema_admin;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.api.gestion.cine.db.cinema_dmin.MostLikedRoomReportDB;
+import com.api.gestion.cine.db.cinema_admin.MostLikedRoomReportDB;
 import com.api.gestion.cine.dto.reports.cinema_admin.most_liked_room_report.LikedRoomData;
 import com.api.gestion.cine.dto.reports.cinema_admin.most_liked_room_report.MostLikedRoomResponseReportDTO;
 import com.api.gestion.cine.exceptions.ReportServiceException;

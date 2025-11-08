@@ -44,10 +44,8 @@ public class MostCommentedRoomDB {
 
     try (PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-      // Parámetros para el CTE (primer filtro de fechas)
       setDateParameters(stmt, startDate, endDate, 1);
 
-      // Parámetros para el SELECT principal (segundo filtro de fechas)
       setDateParameters(stmt, startDate, endDate, 5);
 
       try (ResultSet rs = stmt.executeQuery()) {
