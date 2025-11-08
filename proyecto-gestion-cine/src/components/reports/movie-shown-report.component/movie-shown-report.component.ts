@@ -14,7 +14,9 @@ import { SharePopupComponent } from '../../../shared/share-popup.component/share
 export class MovieShownReportComponent {
   reportForm: FormGroup;
   peliculasProyectadas: MovieProyectedRoomDTO[] = [];
-  errorMessage: string | null = null;
+  infoMessage: string | null = null;
+  popupTipo: 'error' | 'success' | 'info' = 'info';
+  popupMostrar = false;
   isLoading = false;
   hayMasPeliculas = false;
   private offset = 0;
@@ -29,7 +31,7 @@ export class MovieShownReportComponent {
   }
 
   generateReport(): void {
-    this.errorMessage = null;
+    this.infoMessage = null;
     this.isLoading = true;
     this.offset = 0;
     this.peliculasProyectadas = [];
@@ -46,10 +48,15 @@ export class MovieShownReportComponent {
         this.peliculasProyectadas = nuevasPeliculas;
         this.offset += nuevasPeliculas.length;
         this.hayMasPeliculas = nuevasPeliculas.length === this.limit;
+        this.infoMessage = 'Informe generado exitosamente';
+        this.popupTipo = 'success';
+        this.popupMostrar = true;
         this.isLoading = false;
       },
-      error: () => {
-        this.errorMessage = 'Error al generar el reporte. Por favor, inténtelo de nuevo.';
+      error: (error: Error) => {
+        this.infoMessage = `Error al generar el reporte: ${error.message}`;
+        this.popupTipo = 'error';
+        this.popupMostrar = true;
         this.isLoading = false;
       },
     });
@@ -72,7 +79,7 @@ export class MovieShownReportComponent {
         this.isLoading = false;
       },
       error: () => {
-        this.errorMessage = 'Error al cargar más películas.';
+        this.infoMessage = 'Error al cargar más películas.';
         this.isLoading = false;
       },
     });

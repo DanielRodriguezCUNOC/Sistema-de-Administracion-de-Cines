@@ -16,7 +16,8 @@ export class AdvertiserProfitReportComponent {
   report: AdvertiserProfitReportResponseDTO | null = null;
   isLoading = false;
   infoMessage: string | null = null;
-  errorMessage: string | null = null;
+  popupTipo: 'error' | 'success' | 'info' = 'info';
+  popupMostrar = false;
 
   constructor(private fb: FormBuilder, private service: AdvertiserProfitReportService) {
     this.reportForm = this.fb.group({
@@ -27,12 +28,8 @@ export class AdvertiserProfitReportComponent {
   }
 
   generateReport(): void {
-    if (this.reportForm.invalid) {
-      this.infoMessage = 'Por favor complete todos los campos requeridos.';
-      return;
-    }
     this.isLoading = true;
-    this.infoMessage = '';
+    this.infoMessage = null;
 
     const { fechaInicio, fechaFin, nombreAnunciante } = this.reportForm.value;
 
@@ -45,9 +42,13 @@ export class AdvertiserProfitReportComponent {
         this.report = data;
         this.isLoading = false;
         this.infoMessage = 'Informe generado con éxito.';
+        this.popupTipo = 'success';
+        this.popupMostrar = true;
       },
-      error: (error) => {
-        this.errorMessage = error.message || 'Error al generar el informe.';
+      error: (error: Error) => {
+        this.infoMessage = `Error al generar el informe de ganancias del anunciante: ${error.message}`;
+        this.popupTipo = 'error';
+        this.popupMostrar = true;
         this.isLoading = false;
       },
     });

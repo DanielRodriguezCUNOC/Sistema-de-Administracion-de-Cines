@@ -15,7 +15,9 @@ export class TicketSoldReportComponent {
   reportForm: FormGroup;
   report: SoldTicketResponseReportDTO | null = null;
   isLoading: boolean = false;
-  errorMessage: string | null = null;
+  infoMessage: string | null = null;
+  popupTipo: 'error' | 'success' | 'info' = 'info';
+  popupMostrar = false;
 
   constructor(private fb: FormBuilder, private service: TicketSoldReportService) {
     this.reportForm = this.fb.group({
@@ -27,7 +29,7 @@ export class TicketSoldReportComponent {
 
   generateReport(): void {
     this.isLoading = true;
-    this.errorMessage = '';
+    this.infoMessage = '';
 
     const { fechaInicio, fechaFin, nombreSala } = this.reportForm.value;
 
@@ -38,10 +40,15 @@ export class TicketSoldReportComponent {
     this.service.generateReport(startDate, endDate, roomName).subscribe({
       next: (data: SoldTicketResponseReportDTO) => {
         this.report = data;
+        this.infoMessage = 'Informe generado exitosamente';
+        this.popupTipo = 'success';
+        this.popupMostrar = true;
         this.isLoading = false;
       },
-      error: (error) => {
-        this.errorMessage = 'Error al generar el informe. Por favor, inténtelo de nuevo más tarde.';
+      error: (error: Error) => {
+        this.infoMessage = `Error al generar el informe: ${error.message}`;
+        this.popupTipo = 'error';
+        this.popupMostrar = true;
         this.isLoading = false;
       },
     });

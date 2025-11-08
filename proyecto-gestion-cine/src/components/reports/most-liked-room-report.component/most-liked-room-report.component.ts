@@ -15,7 +15,9 @@ export class MostLikedRoomReportComponent {
   reportForm: FormGroup;
   report: MostLikedRoomResponseReportDTO | null = null;
   isLoading: boolean = false;
-  errorMessage: string | null = null;
+  infoMessage: string | null = null;
+  popupTipo: 'error' | 'success' | 'info' = 'info';
+  popupMostrar = false;
 
   constructor(private fb: FormBuilder, private service: MostLikedRoomReportService) {
     this.reportForm = this.fb.group({
@@ -30,12 +32,8 @@ export class MostLikedRoomReportComponent {
   }
 
   generateReport(): void {
-    if (this.reportForm.invalid) {
-      this.errorMessage = 'Por favor complete todos los campos requeridos.';
-      return;
-    }
     this.isLoading = true;
-    this.errorMessage = '';
+    this.infoMessage = null;
 
     const { fechaInicio, fechaFin, nombreSala } = this.reportForm.value;
 
@@ -46,10 +44,15 @@ export class MostLikedRoomReportComponent {
     this.service.generateReport(startDate, endDate, roomName).subscribe({
       next: (data: MostLikedRoomResponseReportDTO) => {
         this.report = data;
+        this.infoMessage = 'Informe generado exitosamente';
+        this.popupTipo = 'success';
+        this.popupMostrar = true;
         this.isLoading = false;
       },
-      error: (error) => {
-        this.errorMessage = 'Error al generar el informe. Por favor, inténtelo de nuevo más tarde.';
+      error: (error: Error) => {
+        this.infoMessage = `Error al generar el informe de salas más gustadas: ${error.message}`;
+        this.popupTipo = 'error';
+        this.popupMostrar = true;
         this.isLoading = false;
       },
     });

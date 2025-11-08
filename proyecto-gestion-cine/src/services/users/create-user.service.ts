@@ -24,18 +24,6 @@ export class CreateUserService {
       formData.append('foto', userData.foto, userData.foto.name);
     }
 
-    return this.http.post(this.apiUrl, formData).pipe(
-      catchError((error) => {
-        let errorMessage = 'Error desconocido';
-        if (error.error instanceof ErrorEvent) {
-          errorMessage = `Error: ${error.error.message}`;
-        } else {
-          errorMessage = `Código: ${error.status}, Mensaje: ${
-            error.error.message || error.message
-          }`;
-        }
-        return throwError(() => new Error(errorMessage));
-      })
-    );
+    return this.http.post(this.apiUrl, formData);
   }
 }

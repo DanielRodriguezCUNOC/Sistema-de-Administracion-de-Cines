@@ -15,7 +15,9 @@ export class ProfitReportComponent {
   reportForm: FormGroup;
   report: ProfitReportResponseDTO | null = null;
   isLoading: boolean = false;
-  errorMessage: string | null = null;
+  infoMessage: string | null = null;
+  popupTipo: 'error' | 'success' | 'info' = 'info';
+  popupMostrar = false;
 
   constructor(private fb: FormBuilder, private profitReportService: ProfitReportService) {
     const today = new Date();
@@ -33,11 +35,11 @@ export class ProfitReportComponent {
 
   generateReport(): void {
     if (this.reportForm.invalid) {
-      this.errorMessage = 'Por favor complete todos los campos requeridos.';
+      this.infoMessage = 'Por favor complete todos los campos requeridos.';
       return;
     }
     this.isLoading = true;
-    this.errorMessage = '';
+    this.infoMessage = '';
 
     const { fechaInicio, fechaFin } = this.reportForm.value;
 
@@ -47,11 +49,15 @@ export class ProfitReportComponent {
     this.profitReportService.generateReport(startDate, endDate).subscribe({
       next: (data: ProfitReportResponseDTO) => {
         this.report = data;
+        this.infoMessage = 'Informe generado exitosamente';
+        this.popupTipo = 'success';
+        this.popupMostrar = true;
         this.isLoading = false;
       },
-      error: (error) => {
-        this.errorMessage =
-          'Error al generar el informe de ganancias. Por favor, inténtelo de nuevo más tarde.';
+      error: (error: Error) => {
+        this.infoMessage = `Error al generar el informe de ganancias: ${error.message}`;
+        this.popupTipo = 'error';
+        this.popupMostrar = true;
         this.isLoading = false;
       },
     });

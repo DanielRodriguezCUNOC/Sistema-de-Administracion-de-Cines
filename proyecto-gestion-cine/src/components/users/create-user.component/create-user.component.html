@@ -72,9 +72,10 @@
         id="tipoUsuario"
         formControlName="tipoUsuario"
       >
-        <option value="" selected>Selecciona un tipo de usuario</option>
-        <option value="Usuario Normal">Usuario Normal</option>
-        <option value="Anunciante">Anunciante</option>
+        <option value="" disabled>Selecciona un tipo de usuario</option>
+        @for(tipoUsuario of tiposUsuarios; track tipoUsuario){
+        <option [value]="tipoUsuario">{{ tipoUsuario }}</option>
+        }
       </select>
     </div>
 
@@ -97,7 +98,7 @@
 </form>
 <app-share-popup
   [mensaje]="infoMessage || ''"
-  [tipo]="'info'"
-  [mostrar]="!!infoMessage"
-  (cerrarEvent)="infoMessage = null"
+  [tipo]="popupTipo"
+  [mostrar]="popupMostrar"
+  (cerrarEvent)="popupMostrar = false"
 ></app-share-popup>

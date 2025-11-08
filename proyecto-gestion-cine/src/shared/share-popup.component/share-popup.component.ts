@@ -11,7 +11,7 @@ export class SharePopupComponent {
   @Input() mensaje: string = '';
   @Input() tipo: 'error' | 'success' | 'info' = 'info';
   @Input() mostrar: boolean = false;
-  @Input() duracion: number = 2500;
+  @Input() duracion: number = 5500;
 
   @Output() cerrarEvent = new EventEmitter<void>();
 

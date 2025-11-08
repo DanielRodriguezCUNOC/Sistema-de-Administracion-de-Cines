@@ -15,7 +15,9 @@ import { SharePopupComponent } from '../../../shared/share-popup.component/share
 export class ComentRoomReportComponent {
   reportForm: FormGroup;
   comentarios: RoomCommentDTO[] = [];
-  errorMessage: string | null = null;
+  infoMessage: string | null = null;
+  popupTipo: 'error' | 'success' | 'info' = 'info';
+  popupMostrar = false;
   isLoading = false;
   isLoadingMore = false;
   tieneMasComentarios = false;
@@ -32,7 +34,7 @@ export class ComentRoomReportComponent {
   }
 
   generateReport(): void {
-    this.errorMessage = null;
+    this.infoMessage = null;
     this.isLoading = true;
     this.offset = 0;
     this.comentarios = [];
@@ -49,10 +51,15 @@ export class ComentRoomReportComponent {
         this.comentarios = nuevos;
         this.offset += nuevos.length;
         this.tieneMasComentarios = nuevos.length === this.limit;
+        this.infoMessage = 'Informe generado exitosamente';
+        this.popupTipo = 'success';
+        this.popupMostrar = true;
         this.isLoading = false;
       },
-      error: () => {
-        this.errorMessage = 'Error al generar el reporte. Por favor, inténtelo de nuevo.';
+      error: (error: Error) => {
+        this.infoMessage = `Error al generar el reporte: ${error.message}`;
+        this.popupTipo = 'error';
+        this.popupMostrar = true;
         this.isLoading = false;
       },
     });
@@ -75,8 +82,10 @@ export class ComentRoomReportComponent {
         this.tieneMasComentarios = nuevos.length === this.limit;
         this.isLoadingMore = false;
       },
-      error: () => {
-        this.errorMessage = 'Error al cargar más comentarios.';
+      error: (err: Error) => {
+        this.infoMessage = `Error al cargar más comentarios: ${err.message}`;
+        this.popupTipo = 'error';
+        this.popupMostrar = true;
         this.isLoadingMore = false;
       },
     });

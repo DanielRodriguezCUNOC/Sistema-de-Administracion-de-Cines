@@ -17,13 +17,16 @@ export class CreateUserComponent implements OnInit {
   nuevoRegistro!: Event;
   selectedFile: File | null = null;
   infoMessage: string | null = null;
+  popupTipo: 'error' | 'success' | 'info' = 'info';
+  popupMostrar = false;
+  tiposUsuarios: string[] = ['Usuario Normal', 'Usuario Especial'];
 
   constructor(private formBuilder: FormBuilder, private service: CreateUserService) {}
 
   ngOnInit(): void {
     this.nuevoRegistroUsuario = this.formBuilder.group({
       nombre: [null, [Validators.required]],
-      tipoUsuario: [null, [Validators.required]],
+      tipoUsuario: ['', [Validators.required]],
       email: [null, [Validators.required]],
       usuario: [null, [Validators.required]],
       password: [null, [Validators.required]],
@@ -56,9 +59,13 @@ export class CreateUserComponent implements OnInit {
         next: (response) => {
           this.nuevoRegistroUsuario.reset();
           this.infoMessage = 'Usuario creado exitosamente';
+          this.popupTipo = 'success';
+          this.popupMostrar = true;
         },
-        error: (error) => {
-          this.infoMessage = error.message;
+        error: (error: Error) => {
+          this.infoMessage = `Error al crear el usuario: ${error.message}`;
+          this.popupTipo = 'error';
+          this.popupMostrar = true;
         },
       });
     } else {

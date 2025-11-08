@@ -16,7 +16,7 @@ export class AdvertisementPurchasedReportComponent {
   reportForm: FormGroup;
   report: PurchasedAdvertisementDTO[] = [];
   isLoading = false;
-  errorMessage: string | null = null;
+  infoMessage: string | null = null;
   tiposAnuncios: string[] = [
     'Anuncio de texto',
     'Anuncio de texto e imagen',
@@ -25,6 +25,8 @@ export class AdvertisementPurchasedReportComponent {
   private offset = 0;
   private limit = 2;
   hayMasAnuncios = false;
+  popupTipo: 'error' | 'success' | 'info' = 'info';
+  popupMostrar = false;
 
   constructor(private fb: FormBuilder, private service: PurchasedAdvertisementReportService) {
     this.reportForm = this.fb.group({
@@ -35,10 +37,10 @@ export class AdvertisementPurchasedReportComponent {
   }
 
   generateReport(): void {
-    this.errorMessage = null;
+    this.infoMessage = null;
     this.isLoading = true;
-    this.offset = 0; // Reiniciar el offset al generar un nuevo reporte
-    this.report = []; // Limpiar el reporte anterior
+    this.offset = 0;
+    this.report = [];
 
     const { fechaInicio, fechaFin, tipoAnuncio } = this.reportForm.value;
 
@@ -52,11 +54,15 @@ export class AdvertisementPurchasedReportComponent {
         this.report = nuevosAnuncios;
         this.offset += nuevosAnuncios.length;
         this.hayMasAnuncios = nuevosAnuncios.length === this.limit;
+        this.infoMessage = 'Informe generado exitosamente';
+        this.popupTipo = 'success';
+        this.popupMostrar = true;
         this.isLoading = false;
       },
-      error: () => {
-        this.errorMessage =
-          'Error al generar el informe de anuncios comprados. Por favor, inténtelo de nuevo más tarde.';
+      error: (error: Error) => {
+        this.infoMessage = `Error al generar el informe: ${error.message}`;
+        this.popupTipo = 'error';
+        this.popupMostrar = true;
         this.isLoading = false;
       },
     });
@@ -80,7 +86,7 @@ export class AdvertisementPurchasedReportComponent {
         this.isLoading = false;
       },
       error: () => {
-        this.errorMessage =
+        this.infoMessage =
           'Error al cargar más anuncios comprados. Por favor, inténtelo de nuevo más tarde.';
         this.isLoading = false;
       },

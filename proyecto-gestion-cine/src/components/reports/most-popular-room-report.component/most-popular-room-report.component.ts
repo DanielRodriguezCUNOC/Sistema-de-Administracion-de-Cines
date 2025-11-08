@@ -14,7 +14,9 @@ export class MostPopularRoomReportComponent {
   reportForm: FormGroup;
   report: MostPopularRoomReportResponseDTO | null = null;
   isLoading = false;
-  errorMessage: string | null = null;
+  infoMessage: string | null = null;
+  popupTipo: 'error' | 'success' | 'info' = 'info';
+  popupMostrar = false;
 
   constructor(private fb: FormBuilder, private service: MostPopularRoomReportService) {
     this.reportForm = this.fb.group({
@@ -25,7 +27,7 @@ export class MostPopularRoomReportComponent {
 
   generateReport(): void {
     this.isLoading = true;
-    this.errorMessage = '';
+    this.infoMessage = '';
 
     const { fechaInicio, fechaFin } = this.reportForm.value;
 
@@ -35,11 +37,15 @@ export class MostPopularRoomReportComponent {
     this.service.generateReport(startDate, endDate).subscribe({
       next: (data: MostPopularRoomReportResponseDTO) => {
         this.report = data;
+        this.infoMessage = 'Informe generado exitosamente';
+        this.popupTipo = 'success';
+        this.popupMostrar = true;
         this.isLoading = false;
       },
-      error: (error) => {
-        this.errorMessage =
-          'Error al generar el informe de anuncios comprados. Por favor, inténtelo de nuevo más tarde.';
+      error: (error: Error) => {
+        this.infoMessage = `Error al generar el informe de salas más populares: ${error.message}`;
+        this.popupTipo = 'error';
+        this.popupMostrar = true;
         this.isLoading = false;
       },
     });

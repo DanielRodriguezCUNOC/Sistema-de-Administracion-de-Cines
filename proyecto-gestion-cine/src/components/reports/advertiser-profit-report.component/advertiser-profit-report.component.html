@@ -153,19 +153,9 @@
   </div>
   } }
 </div>
-@if(errorMessage){
-<app-share-popup
-  [mensaje]="errorMessage || ''"
-  [tipo]="'error'"
-  [mostrar]="!!errorMessage"
-  (cerrarEvent)="errorMessage = null"
-></app-share-popup>
-
-}@else if(infoMessage){
 <app-share-popup
   [mensaje]="infoMessage || ''"
-  [tipo]="'success'"
-  [mostrar]="!!infoMessage"
+  [tipo]="popupTipo"
+  [mostrar]="popupMostrar"
   (cerrarEvent)="infoMessage = null"
 ></app-share-popup>
-}
