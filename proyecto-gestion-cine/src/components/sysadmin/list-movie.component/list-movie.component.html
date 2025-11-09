@@ -1,0 +1,59 @@
+<div class="movies-container">
+  <div class="movies-header">
+    <h2 class="movies-title">Lista de Películas</h2>
+    <p class="movies-count">{{ peliculas.length }} película(s) encontrada(s)</p>
+  </div>
+
+  <div class="movies-grid">
+    @for (pelicula of peliculas; track pelicula.idPelicula) {
+    <div class="movie-card">
+      <div class="movie-header">
+        <h3 class="movie-title">{{ pelicula.tituloPelicula }}</h3>
+        <span class="movie-rating">{{ pelicula.clasificacion }}</span>
+      </div>
+
+      <div class="movie-details">
+        <div class="movie-info">
+          <div class="info-item">
+            <i class="bi bi-person"></i>
+            <span><strong>Director:</strong> {{ pelicula.director }}</span>
+          </div>
+          <div class="info-item">
+            <i class="bi bi-clock"></i>
+            <span><strong>Duración:</strong> {{ pelicula.duracion }} minutos</span>
+          </div>
+          <div class="info-item">
+            <i class="bi bi-calendar"></i>
+            <span><strong>Estreno:</strong> {{ pelicula.fechaEstreno | date : 'dd/MM/yyyy' }}</span>
+          </div>
+          <div class="info-item">
+            <i class="bi bi-currency-dollar"></i>
+            <span><strong>Precio:</strong> {{ pelicula.precioPelicula | currency }}</span>
+          </div>
+        </div>
+
+        <div class="movie-synopsis">
+          <h4>Sinopsis</h4>
+          <p class="synopsis-text">{{ pelicula.sinopsis }}</p>
+        </div>
+      </div>
+
+      <div class="movie-actions">
+        <button class="btn-edit" (click)="editarPelicula(pelicula.idPelicula)">
+          <i class="bi bi-pencil"></i>
+          Editar
+        </button>
+        <button class="btn-deactivate" (click)="desactivarPelicula(pelicula.idPelicula)">
+          <i class="bi bi-power"></i>
+          Desactivar
+        </button>
+      </div>
+    </div>
+    } @empty {
+    <div class="no-movies">
+      <i class="bi bi-film"></i>
+      <p>No se encontraron películas</p>
+    </div>
+    }
+  </div>
+</div>

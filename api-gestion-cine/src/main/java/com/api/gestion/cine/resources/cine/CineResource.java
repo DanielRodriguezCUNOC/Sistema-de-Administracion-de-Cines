@@ -1,10 +1,6 @@
 package com.api.gestion.cine.resources.cine;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.List;
-
-import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import com.api.gestion.cine.dto.cine.CreateCinemaDTO;
 import com.api.gestion.cine.dto.cine.ListadoCineDTO;
@@ -42,13 +38,10 @@ public class CineResource {
   @PUT
   @Path("/{idCine}")
   @Consumes(MediaType.APPLICATION_JSON)
-  public Response updateCinema(@PathParam("idCine") int idCine,
-      @FormDataParam("nombreCine") String nombreCine,
-      @FormDataParam("fechaCreacion") LocalDate fechaCreacion,
-      @FormDataParam("costoOcultacionAnuncio") BigDecimal costoOcultacionAnuncio) {
+  public Response updateCinema(@PathParam("idCine") int idCine, String nombreCine) {
     CineService cineService = new CineService();
     try {
-      cineService.actualizarCinema(idCine, nombreCine, fechaCreacion, costoOcultacionAnuncio);
+      cineService.actualizarCinema(idCine, nombreCine);
       return Response.ok().build();
     } catch (Exception e) {
       return Response.status(Response.Status.INTERNAL_SERVER_ERROR)

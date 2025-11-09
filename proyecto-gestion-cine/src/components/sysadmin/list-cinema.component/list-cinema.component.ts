@@ -47,6 +47,6 @@ export class ListCinemaComponent implements OnInit {
   }
 
   editarCine(idCine: number): void {
-    this.router.navigate(['/update-cinema', idCine]);
+    this.router.navigate(['admin-system/update-cinema', idCine]);
   }
 }

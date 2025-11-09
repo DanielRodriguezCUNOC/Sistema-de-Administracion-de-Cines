@@ -9,6 +9,7 @@ import java.util.List;
 
 import com.api.gestion.cine.db.connection.DBConnectionSingleton;
 import com.api.gestion.cine.dto.movie.CreateMovieDTO;
+import com.api.gestion.cine.dto.movie.ListMovieDTO;
 import com.api.gestion.cine.exceptions.DataBaseException;
 import com.api.gestion.cine.model.movie.MovieModel;
 
@@ -115,6 +116,48 @@ public class PeliculaDB {
       throw new DataBaseException("Error al obtener las películas por categoría.", e);
     }
     return peliculas;
+  }
+
+  public List<ListMovieDTO> obtenerTodasLasPeliculas() throws Exception {
+    List<ListMovieDTO> peliculas = new ArrayList<>();
+    Connection conn = DBConnectionSingleton.getInstance().getConnection();
+    String sql = "SELECT * FROM pelicula";
+    try (PreparedStatement pstmt = conn.prepareStatement(sql);
+        ResultSet rs = pstmt.executeQuery()) {
+      while (rs.next()) {
+        ListMovieDTO pelicula = new ListMovieDTO();
+        pelicula.setIdPelicula(rs.getInt("id_pelicula"));
+        pelicula.setIdUsuario(rs.getInt("id_usuario"));
+        pelicula.setTituloPelicula(rs.getString("titulo_pelicula"));
+        pelicula.setSinopsis(rs.getString("sinopsis"));
+        pelicula.setDuracion(rs.getInt("duracion"));
+        pelicula.setReparto(rs.getString("reparto"));
+        pelicula.setDirector(rs.getString("director"));
+        pelicula.setClasificacion(rs.getString("clasificacion"));
+        pelicula.setFechaEstreno(rs.getDate("fecha_estreno").toLocalDate());
+        pelicula.setPrecioPelicula(rs.getBigDecimal("precio_pelicula"));
+        peliculas.add(pelicula);
+      }
+    } catch (SQLException e) {
+      throw new DataBaseException("Error al obtener todas las películas de la base de datos.", e);
+    }
+    return peliculas;
+  }
+
+  public void eliminarPelicula(int idPelicula) throws Exception {
+    Connection conn = DBConnectionSingleton.getInstance().getConnection();
+    String sql = "UPDATE pelicula SET estado = 0 WHERE id_pelicula = ?";
+
+    try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+      pstmt.setInt(1, idPelicula);
+
+      int rowsDeleted = pstmt.executeUpdate();
+      if (rowsDeleted == 0) {
+        throw new DataBaseException("No se encontró la película con el ID proporcionado.");
+      }
+    } catch (SQLException e) {
+      throw new DataBaseException("Error al eliminar la película de la base de datos.", e);
+    }
   }
 
 }

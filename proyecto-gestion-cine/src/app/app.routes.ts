@@ -34,6 +34,7 @@ import { CreateCineFormComponent } from '../components/cinema/create-cine-form.c
 import { CreateMovieFormComponent } from '../components/movies/create-movie-form.component/create-movie-form.component';
 import { ListCinemaComponent } from '../components/sysadmin/list-cinema.component/list-cinema.component';
 import { UpdateCinemaComponent } from '../components/sysadmin/update-cinema.component/update-cinema.component';
+import { ListMovieComponent } from '../components/sysadmin/list-movie.component/list-movie.component';
 
 export const routes: Routes = [
   {
@@ -212,6 +213,10 @@ export const routes: Routes = [
       {
         path: 'update-cinema/:idCine',
         component: UpdateCinemaComponent,
+      },
+      {
+        path: 'list-movie',
+        component: ListMovieComponent,
       },
     ],
   },

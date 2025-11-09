@@ -33,16 +33,13 @@ public class CineDB {
     }
   }
 
-  public void actualizarCinema(int idCine, String nombreCine, LocalDate fechaCreacion,
-      BigDecimal costoOcultacionAnuncio) throws Exception {
+  public void actualizarCinema(int idCine, String nombreCine) throws Exception {
     Connection conn = DBConnectionSingleton.getInstance().getConnection();
-    String sql = "UPDATE cine SET nombre_cine = ?, fecha_creacion = ?, costo_ocultacion_anuncio = ? WHERE id_cine = ?";
+    String sql = "UPDATE cine SET nombre_cine = ? WHERE id_cine = ?";
 
     try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
       pstmt.setString(1, nombreCine);
-      pstmt.setDate(2, Date.valueOf(fechaCreacion));
-      pstmt.setBigDecimal(3, costoOcultacionAnuncio);
-      pstmt.setInt(4, idCine);
+      pstmt.setInt(2, idCine);
 
       int affectedRows = pstmt.executeUpdate();
       if (affectedRows == 0) {
@@ -98,7 +95,7 @@ public class CineDB {
 
   public void desactivarCine(int idCine) throws Exception {
     Connection conn = DBConnectionSingleton.getInstance().getConnection();
-    String sql = "UPDATE cine SET activo = 0 WHERE id_cine = ?";
+    String sql = "UPDATE cine SET estado = 0 WHERE id_cine = ?";
     try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
       pstmt.setInt(1, idCine);
       int affectedRows = pstmt.executeUpdate();

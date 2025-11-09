@@ -4,6 +4,7 @@ import { Pelicula } from '../../models/movies/pelicula';
 import { CreateMovieDto } from '../../models/dto/movie/create-movie-dto';
 import { environment } from '../../enviroments/enviroments';
 import { Injectable } from '@angular/core';
+import { ListMovieDto } from '../../models/dto/movie/list-movie-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -34,7 +35,11 @@ export class PeliculaService {
     return this.httpClient.post<any>(this.apiUrl, formData);
   }
 
-  public getPeliculas(): Observable<Pelicula[]> {
-    return this.httpClient.get<Pelicula[]>(`${this.apiUrl}/peliculas`);
+  public getPeliculas(): Observable<ListMovieDto[]> {
+    return this.httpClient.get<ListMovieDto[]>(`${this.apiUrl}/peliculas`);
+  }
+
+  public desactivarPelicula(idPelicula: number): Observable<void> {
+    return this.httpClient.delete<void>(`${this.apiUrl}/${idPelicula}`);
   }
 }

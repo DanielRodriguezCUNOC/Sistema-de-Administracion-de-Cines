@@ -1,0 +1,161 @@
+.movies-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.movies-header {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.movies-title {
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.movies-count {
+  color: #666;
+  font-size: 14px;
+}
+
+.movies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 20px;
+}
+
+.movie-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  padding: 20px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.movie-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+
+.movie-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.movie-title {
+  color: #2c3e50;
+  margin: 0;
+  font-size: 1.25rem;
+  flex: 1;
+}
+
+.movie-rating {
+  background: #e74c3c;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.movie-details {
+  margin-bottom: 20px;
+}
+
+.movie-info {
+  margin-bottom: 16px;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+
+.info-item i {
+  margin-right: 8px;
+  color: #7f8c8d;
+  width: 16px;
+}
+
+.movie-synopsis h4 {
+  color: #34495e;
+  margin-bottom: 8px;
+  font-size: 1rem;
+}
+
+.synopsis-text {
+  color: #555;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.movie-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.btn-edit, .btn-deactivate {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+}
+
+.btn-edit {
+  background: #3498db;
+  color: white;
+}
+
+.btn-edit:hover {
+  background: #2980b9;
+}
+
+.btn-deactivate {
+  background: #e74c3c;
+  color: white;
+}
+
+.btn-deactivate:hover {
+  background: #c0392b;
+}
+
+.no-movies {
+  text-align: center;
+  padding: 60px 20px;
+  color: #7f8c8d;
+  grid-column: 1 / -1;
+}
+
+.no-movies i {
+  font-size: 3rem;
+  margin-bottom: 16px;
+  display: block;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .movies-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .movie-header {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .movie-actions {
+    flex-direction: column;
+  }
+}

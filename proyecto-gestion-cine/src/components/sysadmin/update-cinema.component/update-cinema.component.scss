@@ -1,54 +1,66 @@
-.update-cinema {
-  padding: 2rem;
-  background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
-  border-radius: 1.5rem;
-  color: #fff;
+h2 {
+  text-align: center;
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+}
 
-  h2 {
-    text-align: center;
-    margin-bottom: 2rem;
+form {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  background: rgba(20, 20, 40, 0.85);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+div {
+  margin-bottom: 1.5rem;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 0.5rem;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  transition: border-color 0.3s;
+
+  &:focus {
+    outline: none;
+    border-color: rgba(102, 126, 234, 0.8);
+  }
+}
+
+.error {
+  color: #ff4d4d; // Color rojo para el mensaje de error
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}
+
+button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background: linear-gradient(135deg, #764ba2, #667eea);
   }
 
-  form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-
-    div {
-      display: flex;
-      flex-direction: column;
-
-      label {
-        margin-bottom: 0.5rem;
-        color: rgba(255, 255, 255, 0.9);
-      }
-
-      input {
-        padding: 0.75rem;
-        border: 1px solid rgba(255, 255, 255, 0.5);
-        border-radius: 8px;
-        background: rgba(255, 255, 255, 0.1);
-        color: #fff;
-
-        &:focus {
-          outline: none;
-          border-color: rgba(102, 126, 234, 0.8);
-        }
-      }
-    }
-
-    button {
-      padding: 0.75rem;
-      border: none;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      color: white;
-      cursor: pointer;
-      transition: background-color 0.3s;
-
-      &:hover {
-        background: linear-gradient(135deg, #764ba2, #667eea);
-      }
-    }
+  &:disabled {
+    background: rgba(102, 126, 234, 0.5);
+    cursor: not-allowed;
   }
 }

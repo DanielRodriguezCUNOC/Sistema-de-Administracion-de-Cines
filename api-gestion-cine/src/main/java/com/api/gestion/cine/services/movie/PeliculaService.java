@@ -8,6 +8,7 @@ import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import com.api.gestion.cine.db.categoria.CategoriaDB;
 import com.api.gestion.cine.db.movie.PeliculaDB;
 import com.api.gestion.cine.dto.movie.CreateMovieDTO;
+import com.api.gestion.cine.dto.movie.ListMovieDTO;
 import com.api.gestion.cine.exceptions.DataBaseException;
 import com.api.gestion.cine.exceptions.ImageFormatException;
 
@@ -88,6 +89,59 @@ public class PeliculaService {
     } catch (Exception e) {
       throw new ImageFormatException("Error al procesar el poster de la película.");
     }
+  }
+
+  public List<ListMovieDTO> obtenerTodasLasPeliculas() throws DataBaseException {
+    PeliculaDB peliculaDB = new PeliculaDB();
+    try {
+      return peliculaDB.obtenerTodasLasPeliculas();
+    } catch (Exception e) {
+      throw new DataBaseException("Error al obtener las películas de la base de datos.", e);
+    }
+  }
+
+  public void eliminarPelicula(String idPelicula) throws DataBaseException {
+    PeliculaDB peliculaDB = new PeliculaDB();
+    try {
+      int idPeliculaInt = Integer.parseInt(idPelicula);
+      peliculaDB.eliminarPelicula(idPeliculaInt);
+    } catch (NumberFormatException e) {
+      throw new IllegalArgumentException("ID de película inválido: debe ser un número entero.", e);
+    } catch (Exception e) {
+      throw new DataBaseException("Error al eliminar la película de la base de datos.", e);
+    }
+  }
+
+  public void actualizarPelicula(String idPelicula, String tituloPelicula, String sinopsis, String duracion,
+      String reparto, String director, String clasificacion, String fechaEstreno,
+      String precioPelicula, FormDataBodyPart posterPart, List<String> categorias)
+      throws ImageFormatException, DataBaseException {
+
+    CreateMovieDTO peliculaActualizada = new CreateMovieDTO();
+
+    peliculaActualizada.setTituloPelicula(tituloPelicula);
+    peliculaActualizada.setSinopsis(sinopsis);
+    try {
+      int duracionInt = Integer.parseInt(duracion);
+      peliculaActualizada.setDuracion(duracionInt);
+    } catch (NumberFormatException e) {
+      throw new IllegalArgumentException("Duración inválida: debe ser un número entero.", e);
+    }
+    peliculaActualizada.setReparto(reparto);
+    peliculaActualizada.setDirector(director);
+    peliculaActualizada.setClasificacion(clasificacion);
+    peliculaActualizada.setFechaEstreno(ValidatorCustom.parseStringToDate(fechaEstreno));
+    try {
+      if (precioPelicula == null || precioPelicula.isBlank()) {
+        throw new IllegalArgumentException("Precio inválido: no puede ser nulo o vacío.");
+      }
+      BigDecimal precio = new BigDecimal(precioPelicula.trim());
+      peliculaActualizada.setPrecioPelicula(precio);
+    } catch (NumberFormatException e) {
+      throw new IllegalArgumentException("Precio inválido: debe ser un número decimal válido.", e);
+    }
+    peliculaActualizada.setPoster(procesarPoster(posterPart));
+    peliculaActualizada.setCategorias(categorias);
   }
 
 }
