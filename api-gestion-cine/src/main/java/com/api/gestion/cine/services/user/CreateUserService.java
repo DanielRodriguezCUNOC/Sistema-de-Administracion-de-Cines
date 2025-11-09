@@ -5,20 +5,20 @@ import com.api.gestion.cine.db.user.CreateUserDB;
 import com.api.gestion.cine.db.user.UserDB;
 import com.api.gestion.cine.dto.users.CreateUserDTO;
 import com.api.gestion.cine.exceptions.ImageFormatException;
-import com.api.gestion.cine.exceptions.UserAlreadyExists;
+import com.api.gestion.cine.exceptions.ObjectAlreadyExistsInDB;
 import com.api.gestion.cine.services.util.Encryption;
 import com.api.gestion.cine.services.util.ImageConverter;
 
 public class CreateUserService {
 
-  private final UserDB userDB = new UserDB();
-  private final CreateUserDB createUserDB = new CreateUserDB();
-  private final ImageConverter imageConverter = new ImageConverter();
+  private UserDB userDB = new UserDB();
+  private CreateUserDB createUserDB = new CreateUserDB();
+  private ImageConverter imageConverter = new ImageConverter();
 
   public void createUser(CreateUserDTO userDTO) throws Exception {
 
     if (isUserExisting(userDTO)) {
-      throw new UserAlreadyExists("El usuario, correo o teléfono ya existen");
+      throw new ObjectAlreadyExistsInDB("El usuario, correo o teléfono ya existen");
     }
 
     int idRol = userDB.getIdRol(userDTO.getTipoUsuario());

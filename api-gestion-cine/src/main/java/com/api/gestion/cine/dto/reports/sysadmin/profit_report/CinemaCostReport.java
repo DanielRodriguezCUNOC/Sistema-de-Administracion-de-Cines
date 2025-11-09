@@ -5,12 +5,15 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 
 public class CinemaCostReport {
 
     private int idCine;
     private String nombreCine;
     @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonSerialize(using = LocalDateSerializer.class)
     private List<LocalDate> fechasModificacion;
     private BigDecimal[] costos;
     private BigDecimal costoTotal;

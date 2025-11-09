@@ -1,8 +1,10 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map, Observable, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Cine } from '../../models/cinema/cine';
 import { environment } from '../../enviroments/enviroments';
+import { CreateCineDto } from '../../models/dto/cine/create-cine-dto';
+import { ListadoCineDTO } from '../../models/dto/cine/listado-cine-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -20,11 +22,11 @@ export class CineService {
 
   //* Obtener la lista de cines */
 
-  obtenerCines(): Observable<Cine[]> {
-    return this.http.get<Cine[]>(this.apiUrl);
+  obtenerCines(): Observable<ListadoCineDTO> {
+    return this.http.get<ListadoCineDTO>(this.apiUrl);
   }
 
-  /**
+  /*
    * Obtener un cine por ID
    */
   obtenerCinePorId(idCine: number): Observable<Cine> {
@@ -32,19 +34,14 @@ export class CineService {
     return this.http.get<Cine>(url);
   }
 
-  /**
+  /*
    * Crear un nuevo cine
    */
-  crearCine(cine: Cine): Observable<any> {
-    const formData = new FormData();
-    formData.append('nombreCine', cine.nombreCine);
-    formData.append('fechaCreacion', cine.fechaCreacion.toISOString());
-    formData.append('costoOcultacionAnuncios', cine.costoOcultacionAnuncios.toString());
-
-    return this.http.post(this.apiUrl, formData);
+  crearCine(cine: CreateCineDto): Observable<any> {
+    return this.http.post(this.apiUrl, cine, this.httpOptions);
   }
 
-  /**
+  /*
    * Actualizar un cine existente
    */
   actualizarCine(idCine: number, cine: Cine): Observable<Cine> {
@@ -52,7 +49,7 @@ export class CineService {
     return this.http.put<Cine>(url, cine, this.httpOptions);
   }
 
-  /**
+  /*
    * Eliminar un cine
    */
   eliminarCine(idCine: number): Observable<void> {
@@ -60,7 +57,7 @@ export class CineService {
     return this.http.delete<void>(url);
   }
 
-  /**
+  /*
    * Buscar cines por nombre
    */
   buscarCinesPorNombre(nombre: string): Observable<Cine[]> {

@@ -48,4 +48,8 @@ public class ValidatorCustom {
     return value == null || value.trim().isEmpty() || "null".equalsIgnoreCase(value.trim());
   }
 
+  public static LocalDate parseStringToDate(String dateStr) {
+    return FormatterDateCustom.parseStringToDate(dateStr);
+  }
+
 }

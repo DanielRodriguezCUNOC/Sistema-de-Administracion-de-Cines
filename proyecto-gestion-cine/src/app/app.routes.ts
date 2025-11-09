@@ -30,6 +30,7 @@ import { CreateUserComponent } from '../components/users/create-user.component/c
 import { MostCommentedRoomReportComponent } from '../components/reports/most-commented-room-report.component/most-commented-room-report.component';
 import { MostPopularRoomReportComponent } from '../components/reports/most-popular-room-report.component/most-popular-room-report.component';
 import { AdvertiserProfitReportComponent } from '../components/reports/advertiser-profit-report.component/advertiser-profit-report.component';
+import { CreateCineFormComponent } from '../components/cinema/create-cine-form.component/create-cine-form.component';
 
 export const routes: Routes = [
   {
@@ -192,6 +193,10 @@ export const routes: Routes = [
             component: AdvertiserProfitReportComponent,
           },
         ],
+      },
+      {
+        path: 'registrar-cine',
+        component: CreateCineFormComponent,
       },
     ],
   },

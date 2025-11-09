@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { SharePopupComponent } from '../../../shared/share-popup.component/share-popup.component';
 import { CineService } from '../../../services/cine/cine.service';
 import { Cine } from '../../../models/cinema/cine';
+import { CreateCineDto } from '../../../models/dto/cine/create-cine-dto';
 
 @Component({
   selector: 'app-create-cine-form',
@@ -22,17 +23,17 @@ export class CreateCineFormComponent implements OnInit {
     this.cineForm = this.fb.group({
       nombreCine: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       fechaCreacion: ['', [Validators.required]],
-      costoOcultacionAnuncios: ['', [Validators.required, Validators.min(0)]],
+      costoOcultacionAnuncio: ['', [Validators.required, Validators.min(0)]],
     });
   }
 
   onSubmit(): void {
     if (this.cineForm.valid) {
       const cineData = this.cineForm.value;
-      const cineDto: CineDTO = {
+      const cineDto: CreateCineDto = {
         nombreCine: cineData.nombreCine,
         fechaCreacion: cineData.fechaCreacion,
-        costoOcultacionAnuncios: cineData.costoOcultacionAnuncios,
+        costoOcultacionAnuncio: cineData.costoOcultacionAnuncio,
       };
       this.service.crearCine(cineDto).subscribe({
         next: (response) => {

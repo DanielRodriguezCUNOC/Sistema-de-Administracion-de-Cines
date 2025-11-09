@@ -1,5 +1,4 @@
-export interface Cine {
-  idCine: number;
+export interface CreateCineDto {
   nombreCine: string;
   fechaCreacion: Date;
   costoOcultacionAnuncio: number;

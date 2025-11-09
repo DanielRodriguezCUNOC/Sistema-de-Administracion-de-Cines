@@ -1,6 +1,4 @@
-export interface Pelicula {
-  idPelicula: number;
-  idUsuario: number;
+export interface CreateMovieDto {
   tituloPelicula: string;
   sinopsis: string;
   duracion: number;
@@ -10,4 +8,5 @@ export interface Pelicula {
   fechaEstreno: string;
   precioPelicula: number;
   poster?: File;
+  categorias?: string[];
 }

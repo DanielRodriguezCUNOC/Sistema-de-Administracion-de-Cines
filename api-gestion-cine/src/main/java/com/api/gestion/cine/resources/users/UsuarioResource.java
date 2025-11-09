@@ -6,7 +6,7 @@ import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import com.api.gestion.cine.dto.users.CreateUserDTO;
-import com.api.gestion.cine.exceptions.UserAlreadyExists;
+import com.api.gestion.cine.exceptions.ObjectAlreadyExistsInDB;
 import com.api.gestion.cine.model.user.UsuarioModel;
 import com.api.gestion.cine.services.user.CreateUserService;
 
@@ -41,7 +41,7 @@ public class UsuarioResource {
             service.createUser(usuario);
             return Response.status(Response.Status.CREATED).entity(usuario).build();
 
-        } catch (UserAlreadyExists e) {
+        } catch (ObjectAlreadyExistsInDB e) {
             return Response.status(Response.Status.CONFLICT)
                     .entity(e.getMessage())
                     .build();

@@ -72,7 +72,7 @@
           </span>
         </div>
       </div>
-      <button class="btn-enter" (click)="ingresarCine(cine.idCine)">
+      <button class="btn-enter" (routerLink)="(['/cinema', cine.idCine])" routerLinkActive="active">
         <span>Ingresar</span>
         <svg
           xmlns="http://www.w3.org/2000/svg"

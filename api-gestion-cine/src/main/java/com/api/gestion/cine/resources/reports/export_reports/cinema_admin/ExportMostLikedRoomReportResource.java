@@ -1,0 +1,56 @@
+package com.api.gestion.cine.resources.reports.export_reports.cinema_admin;
+
+import com.api.gestion.cine.dto.reports.cinema_admin.most_liked_room_report.MostLikedRoomResponseReportDTO;
+import com.api.gestion.cine.services.reports.cinema_admin.MostLikedRoomReportService;
+import com.api.gestion.cine.services.reports.export_reports.cinema_admin.ExportMostLikedRoomReportService;
+import com.api.gestion.cine.services.util.NameFileGenerator;
+
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.StreamingOutput;
+
+@Path("reports/export/cinema-admin/most-liked-rooms")
+public class ExportMostLikedRoomReportResource {
+
+  @GET
+  @Path("inicio/{fechaInicio}/fin/{fechaFin}/sala/{nombreSala}")
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response getResponse(
+      @PathParam("fechaInicio") String fechaInicio,
+      @PathParam("fechaFin") String fechaFin,
+      @PathParam("nombreSala") String nombreSala) {
+
+    MostLikedRoomReportService reportService = new MostLikedRoomReportService();
+    try {
+
+      // * Creación del servicio para exportar el informe */
+      ExportMostLikedRoomReportService service = new ExportMostLikedRoomReportService();
+
+      MostLikedRoomResponseReportDTO reportDTO = reportService.generateReport(fechaInicio, fechaFin, nombreSala);
+
+      // * Generación del reporte */
+
+      byte[] pdfData = service.getReport(reportDTO);
+
+      StreamingOutput stream = output -> {
+        output.write(pdfData);
+        output.flush();
+      };
+      NameFileGenerator nameFileGenerator = new NameFileGenerator();
+      String fileName = nameFileGenerator.generateFileName("Most_Liked_Room_Report", "pdf");
+
+      // * Retorno de la respuesta exitosa */
+      return Response.ok(stream, MediaType.APPLICATION_OCTET_STREAM)
+          .header("Content-Disposition", "attachment; filename=\"" + fileName + "\"")
+          .header("Access-Control-Expose-Headers", "Content-Disposition")
+          .build();
+    } catch (Exception e) {
+      // ! Retorno de la respuesta en caso de error */
+      return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+    }
+  }
+}

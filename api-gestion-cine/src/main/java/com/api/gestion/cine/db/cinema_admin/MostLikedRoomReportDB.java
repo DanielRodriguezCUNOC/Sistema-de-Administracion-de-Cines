@@ -62,7 +62,7 @@ public class MostLikedRoomReportDB {
           room.setNombreSala(nombreSalaResult);
           room.setCantidadValoraciones(cantidadValoraciones);
           room.setPromedioValoracion(promedioValoracion);
-          room.setValoraciones(valoraciones.toArray(new LikedData[0]));
+          room.setValoraciones(valoraciones);
 
           likedRooms.add(room);
         }

@@ -17,8 +17,6 @@ public class CreateUserDB {
         "VALUES (?, ?, ?, ?, ?, ?, ?)";
     try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-      conn.setAutoCommit(false);
-
       pstmt.setInt(1, idRol);
       pstmt.setString(2, userDTO.getNombreCompleto());
       pstmt.setString(3, userDTO.getUsuario());
@@ -29,30 +27,12 @@ public class CreateUserDB {
 
       int affectedRows = pstmt.executeUpdate();
       if (affectedRows == 0) {
-        System.out.println("No se pudo insertar el usuario");
         throw new Exception("No se pudo insertar el usuario");
       }
-      System.out.println("Usuario insertado correctamente en la base de datos");
-
-      conn.commit();
 
     } catch (Exception e) {
-      if (conn != null) {
-        try {
-          conn.rollback();
-        } catch (Exception ex) {
-          System.out.println("Error al hacer rollback: " + ex.getMessage());
-        }
-      }
-      throw e;
-    } finally {
-      if (conn != null) {
-        try {
-          conn.close();
-        } catch (Exception ex) {
-          System.out.println("Error al cerrar la conexión: " + ex.getMessage());
-        }
-      }
+
+      throw new Exception("Error al crear el usuario: ", e);
     }
   }
 

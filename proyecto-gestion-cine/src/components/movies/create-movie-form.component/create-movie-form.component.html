@@ -189,6 +189,25 @@
       [class.is-invalid]="submitted && f['poster'].invalid"
     />
 
+    <div class="mb-3">
+      <label for="categorias" class="form-label">Categorias</label>
+      <input
+        id="categorias"
+        type="text"
+        class="form-control"
+        placeholder="Separadas por comas"
+        formControlName="categorias"
+        [class.is-invalid]="submitted && f['categorias'].invalid"
+      />
+      @if(submitted && f['categorias'].invalid){
+      <div class="invalid-feedback">
+        @if(f['categorias'].errors?.['required']){
+        <div>Las categorias son obligatorias.</div>
+        }
+      </div>
+      }
+    </div>
+    (change)="onFileChange($event)" [class.is-invalid]="submitted && f['poster'].invalid" />
     @if(submitted && f['poster'].invalid){
     <div class="invalid-feedback">
       @if(f['poster'].errors?.['required']){
@@ -203,3 +222,10 @@
     <button type="button" class="btn btn-secondary ms-2" (click)="onReset()">Limpiar</button>
   </div>
 </form>
+
+<app-share-popup
+  [mensaje]="infoMessage || ''"
+  [tipo]="popupTipo"
+  [mostrar]="popupMostrar"
+  (cerrarEvent)="popupMostrar = false"
+></app-share-popup>
