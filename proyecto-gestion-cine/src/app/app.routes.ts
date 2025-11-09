@@ -77,7 +77,7 @@ export const routes: Routes = [
     path: 'user',
     component: UserDashboardPageComponent,
     canActivate: [authGuard],
-    canActivateChild: [authGuard, authNormalUserGuard],
+    canActivateChild: [authNormalUserGuard],
     children: [
       {
         path: 'dashboard-normal-user',
@@ -87,6 +87,10 @@ export const routes: Routes = [
         path: '',
         redirectTo: 'dashboard-normal-user',
         pathMatch: 'full',
+      },
+      {
+        path: 'show-cinemas',
+        component: ShowCinemaComponent,
       },
     ],
   },
@@ -219,12 +223,6 @@ export const routes: Routes = [
         component: ListMovieComponent,
       },
     ],
-  },
-
-  {
-    path: 'show-cinemas',
-    component: ShowCinemaComponent,
-    canActivate: [authGuard],
   },
 
   {

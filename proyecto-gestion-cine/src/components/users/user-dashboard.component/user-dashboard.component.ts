@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-user-dashboard.component',
-  imports: [],
+  imports: [RouterLink, RouterLinkActive],
   templateUrl: './user-dashboard.component.html',
   styleUrl: './user-dashboard.component.scss',
 })
-export class UserDashboardComponent {
-  userName = 'Daniel Rodriguez';
-}
+export class UserDashboardComponent {}
