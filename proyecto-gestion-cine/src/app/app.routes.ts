@@ -31,6 +31,9 @@ import { MostCommentedRoomReportComponent } from '../components/reports/most-com
 import { MostPopularRoomReportComponent } from '../components/reports/most-popular-room-report.component/most-popular-room-report.component';
 import { AdvertiserProfitReportComponent } from '../components/reports/advertiser-profit-report.component/advertiser-profit-report.component';
 import { CreateCineFormComponent } from '../components/cinema/create-cine-form.component/create-cine-form.component';
+import { CreateMovieFormComponent } from '../components/movies/create-movie-form.component/create-movie-form.component';
+import { ListCinemaComponent } from '../components/sysadmin/list-cinema.component/list-cinema.component';
+import { UpdateCinemaComponent } from '../components/sysadmin/update-cinema.component/update-cinema.component';
 
 export const routes: Routes = [
   {
@@ -197,6 +200,18 @@ export const routes: Routes = [
       {
         path: 'registrar-cine',
         component: CreateCineFormComponent,
+      },
+      {
+        path: 'registrar-pelicula',
+        component: CreateMovieFormComponent,
+      },
+      {
+        path: 'list-cinema',
+        component: ListCinemaComponent,
+      },
+      {
+        path: 'update-cinema/:idCine',
+        component: UpdateCinemaComponent,
       },
     ],
   },

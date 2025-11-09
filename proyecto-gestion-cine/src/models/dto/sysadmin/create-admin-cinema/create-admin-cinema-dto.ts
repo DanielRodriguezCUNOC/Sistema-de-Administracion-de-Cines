@@ -1,4 +1,5 @@
-export interface CreateUserDto {
+export interface CreateAdminCinemaDto {
+  idRol: number;
   nombreCompleto: string;
   tipoUsuario: string;
   usuario: string;

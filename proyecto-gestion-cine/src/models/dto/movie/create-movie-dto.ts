@@ -1,8 +1,9 @@
 export interface CreateMovieDto {
+  idUsuario: number;
   tituloPelicula: string;
   sinopsis: string;
   duracion: number;
-  cast: string;
+  reparto: string;
   director: string;
   clasificacion: string;
   fechaEstreno: string;

@@ -16,21 +16,39 @@ import com.api.gestion.cine.services.util.ValidatorCustom;
 
 public class PeliculaService {
 
-  public void crearPelicula(int idUsuario, String tituloPelicula, String sinopsis, int duracion,
+  public void crearPelicula(String idUsuario, String tituloPelicula, String sinopsis, String duracion,
       String reparto, String director, String clasificacion, String fechaEstreno,
-      BigDecimal precioPelicula, FormDataBodyPart posterPart, List<String> categorias)
+      String precioPelicula, FormDataBodyPart posterPart, List<String> categorias)
       throws ImageFormatException, DataBaseException {
 
     CreateMovieDTO nuevaPelicula = new CreateMovieDTO();
-    nuevaPelicula.setIdUsuario(idUsuario);
+    try {
+      int idUsuarioInt = Integer.parseInt(idUsuario);
+      nuevaPelicula.setIdUsuario(idUsuarioInt);
+    } catch (NumberFormatException e) {
+      throw new IllegalArgumentException("ID de usuario inválido: debe ser un número entero.", e);
+    }
     nuevaPelicula.setTituloPelicula(tituloPelicula);
     nuevaPelicula.setSinopsis(sinopsis);
-    nuevaPelicula.setDuracion(duracion);
+    try {
+      int duracionInt = Integer.parseInt(duracion);
+      nuevaPelicula.setDuracion(duracionInt);
+    } catch (NumberFormatException e) {
+      throw new IllegalArgumentException("Duración inválida: debe ser un número entero.", e);
+    }
     nuevaPelicula.setReparto(reparto);
     nuevaPelicula.setDirector(director);
     nuevaPelicula.setClasificacion(clasificacion);
     nuevaPelicula.setFechaEstreno(ValidatorCustom.parseStringToDate(fechaEstreno));
-    nuevaPelicula.setPrecioPelicula(precioPelicula);
+    try {
+      if (precioPelicula == null || precioPelicula.isBlank()) {
+        throw new IllegalArgumentException("Precio inválido: no puede ser nulo o vacío.");
+      }
+      BigDecimal precio = new BigDecimal(precioPelicula.trim());
+      nuevaPelicula.setPrecioPelicula(precio);
+    } catch (NumberFormatException e) {
+      throw new IllegalArgumentException("Precio inválido: debe ser un número decimal válido.", e);
+    }
     nuevaPelicula.setPoster(procesarPoster(posterPart));
     nuevaPelicula.setCategorias(categorias);
 

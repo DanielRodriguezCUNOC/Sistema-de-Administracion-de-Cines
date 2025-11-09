@@ -25,17 +25,14 @@ export class CreateMovieFormComponent implements OnInit {
     this.movieForm = this.fb.group({
       tituloPelicula: ['', [Validators.required, Validators.maxLength(50)]],
       sinopsis: ['', [Validators.required, Validators.maxLength(500)]],
-      duracion: [
-        '',
-        [Validators.required, Validators.maxLength(5), Validators.pattern(/^\d{2}:\d{2}$/)],
-      ],
+      duracion: ['', [Validators.required, Validators.min(1), Validators.max(999)]], // Cambiado a número
       clasificacion: ['', [Validators.required, Validators.maxLength(5)]],
       fechaEstreno: ['', [Validators.required]],
-      cast: ['', [Validators.required, Validators.maxLength(300)]],
+      reparto: ['', [Validators.required, Validators.maxLength(300)]],
       director: ['', [Validators.required, Validators.maxLength(150)]],
       precioPelicula: ['', [Validators.required, Validators.min(0)]],
       poster: [null, [Validators.required]],
-      categorias: [[], [Validators.required]],
+      categorias: ['', [Validators.required]],
     });
   }
 
@@ -58,18 +55,27 @@ export class CreateMovieFormComponent implements OnInit {
       return;
     }
 
+    const categoriasArray = this.movieForm.value.categorias
+      .split(',')
+      .map((cat: string) => cat.trim())
+      .filter((cat: string) => cat.length > 0);
+
     const pelicula: CreateMovieDto = {
       tituloPelicula: this.movieForm.value.tituloPelicula,
       sinopsis: this.movieForm.value.sinopsis,
       duracion: this.movieForm.value.duracion,
       clasificacion: this.movieForm.value.clasificacion,
       fechaEstreno: this.movieForm.value.fechaEstreno,
-      cast: this.movieForm.value.cast,
+      reparto: this.movieForm.value.reparto,
       director: this.movieForm.value.director,
       precioPelicula: this.movieForm.value.precioPelicula,
       poster: this.posterFile || undefined,
-      categorias: this.movieForm.value.categorias,
+      categorias: categoriasArray,
+      idUsuario: localStorage.getItem('usuarioActual')
+        ? JSON.parse(localStorage.getItem('usuarioActual')!).idUsuario
+        : 0,
     };
+    console.log('ID Usuario:', pelicula.idUsuario);
     this.service.createNewPelicula(pelicula).subscribe({
       next: () => {
         this.popupTipo = 'success';

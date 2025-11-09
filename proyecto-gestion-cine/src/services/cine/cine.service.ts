@@ -52,8 +52,8 @@ export class CineService {
   /*
    * Eliminar un cine
    */
-  eliminarCine(idCine: number): Observable<void> {
-    const url = `${this.apiUrl}/eliminar-cine/${idCine}`;
+  desactivarCine(idCine: number): Observable<void> {
+    const url = `${this.apiUrl}/desactivar-cine/${idCine}`;
     return this.http.delete<void>(url);
   }
 
@@ -61,7 +61,7 @@ export class CineService {
    * Buscar cines por nombre
    */
   buscarCinesPorNombre(nombre: string): Observable<Cine[]> {
-    const url = `${this.apiUrl}/buscar-cine/{nombre}`;
+    const url = `${this.apiUrl}/buscar/${nombre}`;
     return this.http.get<Cine[]>(url);
   }
 }

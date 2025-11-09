@@ -35,7 +35,7 @@ public class CategoriaDB {
 
   public boolean insertarPeliculaPorCategoria(int idPelicula, int idCategoria) throws Exception {
     Connection conn = DBConnectionSingleton.getInstance().getConnection();
-    String sql = "INSERT INTO pelicula_categoria (id_pelicula, id_categoria) VALUES (?, ?)";
+    String sql = "INSERT INTO categoria_pelicula (id_pelicula, id_categoria) VALUES (?, ?)";
 
     try (PreparedStatement stmt = conn.prepareStatement(sql)) {
       stmt.setInt(1, idPelicula);

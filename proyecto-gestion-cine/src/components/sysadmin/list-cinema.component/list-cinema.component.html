@@ -1,0 +1,33 @@
+<div class="cinema-list">
+  <h2>Lista de Cines</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (cine of cines?.cines; track cine.idCine) {
+      <tr>
+        <td>{{ cine.idCine }}</td>
+        <td>{{ cine.nombreCine }}</td>
+        <td>
+          <button (click)="toggleCine(cine.idCine)" class="btn-outline-primary">
+            Desactivar-Activar
+          </button>
+          <button (click)="editarCine(cine.idCine)" class="btn-outline-primary">Editar</button>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>
+
+<app-share-popup
+  [mensaje]="infoMessage || ''"
+  [tipo]="popupTipo"
+  [mostrar]="popupMostrar"
+  (cerrarEvent)="popupMostrar = false"
+></app-share-popup>

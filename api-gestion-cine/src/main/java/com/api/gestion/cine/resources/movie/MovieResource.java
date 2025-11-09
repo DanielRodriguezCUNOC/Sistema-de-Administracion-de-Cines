@@ -19,15 +19,15 @@ public class MovieResource {
   @POST
   @Consumes(MediaType.MULTIPART_FORM_DATA)
   public Response crearPelicula(
-      @FormDataParam("idUsuario") int idUsuario,
+      @FormDataParam("idUsuario") String idUsuario,
       @FormDataParam("tituloPelicula") String tituloPelicula,
       @FormDataParam("sinopsis") String sinopsis,
-      @FormDataParam("duracion") int duracion,
+      @FormDataParam("duracion") String duracion,
       @FormDataParam("reparto") String reparto,
       @FormDataParam("director") String director,
       @FormDataParam("clasificacion") String clasificacion,
       @FormDataParam("fechaEstreno") String fechaEstreno,
-      @FormDataParam("precioPelicula") java.math.BigDecimal precioPelicula,
+      @FormDataParam("precioPelicula") String precioPelicula,
       @FormDataParam("poster") FormDataBodyPart posterPart,
       @FormDataParam("categorias") List<String> categorias) {
 

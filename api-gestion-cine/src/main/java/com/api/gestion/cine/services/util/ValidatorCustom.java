@@ -49,7 +49,9 @@ public class ValidatorCustom {
   }
 
   public static LocalDate parseStringToDate(String dateStr) {
-    return FormatterDateCustom.parseStringToDate(dateStr);
+    return dateStr != null && dateStr.matches(DATE_PATTERN)
+        ? LocalDate.parse(dateStr)
+        : null;
   }
 
 }

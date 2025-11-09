@@ -51,7 +51,7 @@ export class CreateUserComponent implements OnInit {
         correo: formData.email,
         telefono: formData.telefono,
         tipoUsuario: formData.tipoUsuario,
-        foto: this.selectedFile || undefined,
+        foto: this.selectedFile,
       };
 
       this.service.createUser(userDto).subscribe({

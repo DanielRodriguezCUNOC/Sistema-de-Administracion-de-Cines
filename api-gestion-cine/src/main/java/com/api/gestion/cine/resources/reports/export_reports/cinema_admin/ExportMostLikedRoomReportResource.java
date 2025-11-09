@@ -9,7 +9,6 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.StreamingOutput;
 
@@ -18,39 +17,48 @@ public class ExportMostLikedRoomReportResource {
 
   @GET
   @Path("inicio/{fechaInicio}/fin/{fechaFin}/sala/{nombreSala}")
-  @Produces(MediaType.APPLICATION_JSON)
+  @Produces("application/pdf") // ✅ importante
   public Response getResponse(
       @PathParam("fechaInicio") String fechaInicio,
       @PathParam("fechaFin") String fechaFin,
       @PathParam("nombreSala") String nombreSala) {
 
     MostLikedRoomReportService reportService = new MostLikedRoomReportService();
+
     try {
-
-      // * Creación del servicio para exportar el informe */
-      ExportMostLikedRoomReportService service = new ExportMostLikedRoomReportService();
-
+      // Servicio que genera el DTO
       MostLikedRoomResponseReportDTO reportDTO = reportService.generateReport(fechaInicio, fechaFin, nombreSala);
 
-      // * Generación del reporte */
-
+      // Servicio que genera el PDF
+      ExportMostLikedRoomReportService service = new ExportMostLikedRoomReportService();
       byte[] pdfData = service.getReport(reportDTO);
+
+      if (pdfData == null || pdfData.length == 0) {
+        return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+            .entity("No se generó ningún PDF.").build();
+      }
 
       StreamingOutput stream = output -> {
         output.write(pdfData);
         output.flush();
       };
+
       NameFileGenerator nameFileGenerator = new NameFileGenerator();
       String fileName = nameFileGenerator.generateFileName("Most_Liked_Room_Report", "pdf");
 
-      // * Retorno de la respuesta exitosa */
-      return Response.ok(stream, MediaType.APPLICATION_OCTET_STREAM)
+      System.out.println(" Informe PDF generado correctamente.");
+
+      return Response.ok(stream)
+          .type("application/pdf")
           .header("Content-Disposition", "attachment; filename=\"" + fileName + "\"")
           .header("Access-Control-Expose-Headers", "Content-Disposition")
           .build();
+
     } catch (Exception e) {
-      // ! Retorno de la respuesta en caso de error */
-      return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+      e.printStackTrace();
+      return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+          .entity("Error generando el reporte: " + e.getMessage())
+          .build();
     }
   }
 }
