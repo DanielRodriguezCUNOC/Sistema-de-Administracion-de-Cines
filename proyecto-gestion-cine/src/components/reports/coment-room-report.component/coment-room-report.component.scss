@@ -47,6 +47,31 @@
       margin-bottom: 1rem;
     }
 
+    .comment-item {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      transition: background 0.3s;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      p {
+        margin: 0;
+
+        strong {
+          color: #ffdd57; 
+        }
+
+        .text-muted {
+          //color: #fffefe;
+          font-size: 1rem; 
+        }
+      }
+    }
+
     button {
       margin-top: 1rem;
       background: #667eea;
@@ -56,5 +81,8 @@
       padding: 0.5rem 1rem;
       cursor: pointer;
     }
+  }
+  small {
+    color: #ccc;
   }
 }

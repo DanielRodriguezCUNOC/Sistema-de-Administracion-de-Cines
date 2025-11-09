@@ -14,7 +14,7 @@ import jakarta.ws.rs.core.Response;
 public class MostLikedRoomReportResource {
 
   @GET
-  @Path("inicio/{fechaInicio}/fin/{fechaFin}")
+  @Path("inicio/{fechaInicio}/fin/{fechaFin}/nombreSala/{nombreSala}")
   @Produces(MediaType.APPLICATION_JSON)
   public Response getResponse(
       @PathParam("fechaInicio") String fechaInicio,

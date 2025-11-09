@@ -7,7 +7,7 @@ import com.api.gestion.cine.db.sysadmin.MostCommentedRoomDB;
 import com.api.gestion.cine.dto.reports.sysadmin.most_commented_room_report.MostCommentedRoomResponseReportDTO;
 import com.api.gestion.cine.dto.reports.sysadmin.most_commented_room_report.RoomComment;
 import com.api.gestion.cine.exceptions.ReportServiceException;
-import com.api.gestion.cine.services.util.FormatterDateCustom;
+import com.api.gestion.cine.services.util.ValidatorCustom;
 
 public class MostCommentedRoomReportService {
 
@@ -19,17 +19,15 @@ public class MostCommentedRoomReportService {
     LocalDate startDate = null;
     LocalDate endDate = null;
 
-    if (fechaInicio != null && !fechaInicio.trim().isEmpty()) {
-      startDate = FormatterDateCustom.parseStringToDate(fechaInicio);
-    }
-
-    if (fechaFin != null && !fechaFin.trim().isEmpty()) {
-      endDate = FormatterDateCustom.parseStringToDate(fechaFin);
+    if (ValidatorCustom.isValidDate(fechaInicio, fechaFin)) {
+      LocalDate[] dates = ValidatorCustom.convertDateStringToLocalDate(fechaInicio, fechaFin);
+      startDate = dates[0];
+      endDate = dates[1];
     }
 
     try {
       List<RoomComment> roomComments = reportDB.getMostCommentedRooms(startDate, endDate);
-      report.setSalasConComentarios(roomComments.toArray(new RoomComment[0]));
+      report.setSalasConComentarios(roomComments);
     } catch (Exception e) {
       throw new ReportServiceException("Error al generar el informe de salas más comentadas", e);
     }

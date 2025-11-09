@@ -1,8 +1,7 @@
-import { AdvertisementReportDTO } from '../profit-report/advertisement-report-dto';
-
+import { PurchasedAdvertisement } from './purchased-advertisement';
 export interface AdvertiserListDTO {
   idUsuario: number;
   nombreUsuario: string;
-  purchasedAdvertisementList: AdvertisementReportDTO[];
+  purchasedAdvertisement: PurchasedAdvertisement[];
   totalPurchasedAmount: number;
 }

@@ -34,13 +34,6 @@
         </div>
       </div>
     </form>
-
-    @if (errorMessage) {
-    <div class="alert-error mt-3">
-      <i class="bi bi-exclamation-triangle"></i>
-      {{ errorMessage }}
-    </div>
-    }
   </div>
 
   @if (report) {
@@ -184,3 +177,9 @@
   </div>
   }
 </div>
+<app-share-popup
+  [mensaje]="infoMessage || ''"
+  [tipo]="popupTipo"
+  [mostrar]="popupMostrar"
+  (cerrarEvent)="infoMessage = null"
+></app-share-popup>

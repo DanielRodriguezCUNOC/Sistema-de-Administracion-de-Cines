@@ -1,38 +1,37 @@
-<div class="ticket-sold-report-container">
-  <div class="report-header">
-    <h1 class="report-title">
+<div class="ticket-sold-report">
+  <header class="report-header">
+    <h1>
       <i class="bi bi-ticket-perforated"></i>
       Reporte de Boletos Vendidos
     </h1>
-    <p class="report-subtitle">
+    <p>
       Reporte de boletos vendidos en un intervalo de tiempo. Incluye el listado de usuarios que
       compraron boletos para cada sala y el total de dinero recaudado.
     </p>
-  </div>
+  </header>
 
-  <div class="filters-card">
+  <section class="filters">
     <form [formGroup]="reportForm" (ngSubmit)="generateReport()">
-      <div class="row g-3 align-items-end">
-        <div class="col-md-5">
-          <label for="fechaInicio" class="form-label">Fecha Inicio</label>
-          <input type="date" id="fechaInicio" class="form-control" formControlName="fechaInicio" />
+      <div class="form-grid">
+        <div class="form-field">
+          <label for="fechaInicio">Fecha Inicio</label>
+          <input type="date" id="fechaInicio" formControlName="fechaInicio" />
         </div>
-        <div class="col-md-5">
-          <label for="fechaFin" class="form-label">Fecha Fin</label>
-          <input type="date" id="fechaFin" class="form-control" formControlName="fechaFin" />
+        <div class="form-field">
+          <label for="fechaFin">Fecha Fin</label>
+          <input type="date" id="fechaFin" formControlName="fechaFin" />
         </div>
-        <div class="col-md-5">
-          <label for="nombreSala" class="form-label">Sala (opcional)</label>
+        <div class="form-field">
+          <label for="nombreSala">Sala (opcional)</label>
           <input
             type="text"
             id="nombreSala"
-            class="form-control"
             placeholder="Ingrese el nombre de la sala"
             formControlName="nombreSala"
           />
         </div>
-        <div class="col-md-2">
-          <button type="submit" class="btn-generate w-100" [disabled]="isLoading">
+        <div class="form-action">
+          <button type="submit" [disabled]="isLoading" class="btn-generate">
             @if (isLoading) {
             <span>Generando...</span>
             } @else {
@@ -43,116 +42,82 @@
         </div>
       </div>
     </form>
-
-    @if (errorMessage) {
-    <div class="alert-error mt-3">
-      <i class="bi bi-exclamation-triangle"></i>
-      {{ errorMessage }}
-    </div>
-    }
-  </div>
+  </section>
 
   @if (report) {
-  <!-- Resumen General -->
-  <div class="section-card">
-    <div class="section-header">
-      <h2>
-        <i class="bi bi-cash-stack"></i>
-        Resumen General
-      </h2>
-    </div>
+  <section class="summary">
+    <h2><i class="bi bi-cash-stack"></i> Resumen General</h2>
 
-    @if (report.listadoVentas.length === 0) {
-    <div class="alert-info">
+    @if (report.boletosVendidos.length === 0) {
+    <div class="alert">
       <i class="bi bi-info-circle"></i>
       No hay boletos vendidos para los filtros seleccionados.
     </div>
     } @else {
-    <div class="summary-cards">
-      <div class="summary-card total-revenue">
-        <div class="summary-icon">
-          <i class="bi bi-currency-dollar"></i>
-        </div>
-        <div class="summary-content">
+    <div class="summary-grid">
+      <div class="summary-card">
+        <i class="bi bi-currency-dollar"></i>
+        <div>
           <h3>Total Recaudado</h3>
-          <span class="summary-value">{{ report.totalDineroRecaudado | currency }}</span>
+          <p>{{ report.totalDinero | currency }}</p>
         </div>
       </div>
-
-      <div class="summary-card total-rooms">
-        <div class="summary-icon">
-          <i class="bi bi-easel"></i>
-        </div>
-        <div class="summary-content">
+      <div class="summary-card">
+        <i class="bi bi-easel"></i>
+        <div>
           <h3>Salas con Ventas</h3>
-          <span class="summary-value">{{ report.listadoVentas.length }}</span>
+          <p>{{ report.boletosVendidos.length }}</p>
         </div>
       </div>
     </div>
     }
-  </div>
+  </section>
 
-  <!-- Detalles por Sala -->
-  @if (report.listadoVentas.length > 0) {
-  <div class="section-card">
-    <div class="section-header">
-      <h2>
-        <i class="bi bi-list-ul"></i>
-        Detalles por Sala
-      </h2>
-    </div>
+  @if (report.boletosVendidos.length > 0) {
+  <section class="details">
+    <h2><i class="bi bi-list-ul"></i> Detalles por Sala</h2>
 
-    @for (venta of report.listadoVentas; track venta.idSala) {
-    <div class="room-sales-block">
-      <div class="room-header">
-        <div class="room-info">
-          <h3 class="room-title">
-            <i class="bi bi-easel"></i>
-            {{ venta.nombreSala }}
-          </h3>
-          <span class="room-id">ID: {{ venta.idSala }}</span>
-        </div>
-        <div class="room-stats">
-          <span class="stat-badge">
-            <i class="bi bi-people"></i>
-            {{ venta.datosUsuario.length }} clientes
-          </span>
-        </div>
+    @for (venta of report.boletosVendidos; track venta.idSala) {
+    <article class="room-block">
+      <header class="room-header">
+        <h3><i class="bi bi-easel"></i> {{ venta.nombreSala }}</h3>
+        <span class="room-id">ID: {{ venta.idSala }}</span>
+        <span class="stat"><i class="bi bi-people"></i> {{ venta.usuarios.length }} clientes</span>
+      </header>
+
+      <div class="table-wrapper">
+        <table class="sales-table">
+          <thead>
+            <tr>
+              <th>ID Usuario</th>
+              <th>Nombre</th>
+              <th>Boletos</th>
+              <th>Monto Pagado</th>
+              <th>Fecha de Pago</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (usuario of venta.usuarios; track usuario.idUsuario) {
+            <tr>
+              <td>{{ usuario.idUsuario }}</td>
+              <td class="fw-bold">{{ usuario.nombreUsuario }}</td>
+              <td><i class="bi bi-ticket"></i> {{ usuario.cantidadBoleto }}</td>
+              <td>{{ usuario.montoPago | currency }}</td>
+              <td>{{ usuario.fechaPago | date : 'dd/MM/yyyy HH:mm' }}</td>
+            </tr>
+            }
+          </tbody>
+        </table>
       </div>
-
-      <div class="users-table">
-        <div class="table-responsive">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>ID Usuario</th>
-                <th>Nombre</th>
-                <th>Boletos Comprados</th>
-                <th>Monto Pagado</th>
-                <th>Fecha de Pago</th>
-              </tr>
-            </thead>
-            <tbody>
-              @for (usuario of venta.datosUsuario; track usuario.idUsuario) {
-              <tr>
-                <td>{{ usuario.idUsuario }}</td>
-                <td class="fw-bold">{{ usuario.nombreUsuario }}</td>
-                <td>
-                  <span class="ticket-count">
-                    <i class="bi bi-ticket"></i>
-                    {{ usuario.cantidadBoleto }}
-                  </span>
-                </td>
-                <td class="revenue-amount">{{ usuario.montoPago | currency }}</td>
-                <td class="date-cell">{{ usuario.fechaPago | date : 'dd/MM/yyyy HH:mm' }}</td>
-              </tr>
-              }
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
+    </article>
     }
-  </div>
+  </section>
   } }
 </div>
+
+<app-share-popup
+  [mensaje]="infoMessage || ''"
+  [tipo]="popupTipo"
+  [mostrar]="popupMostrar"
+  (cerrarEvent)="infoMessage = null"
+></app-share-popup>

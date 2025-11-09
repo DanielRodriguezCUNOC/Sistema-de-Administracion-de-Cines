@@ -24,7 +24,7 @@ public class MostPopularRoomReportService {
     try {
       List<RoomData> popularRooms = reportDB.getMostPopularRooms(startDate, endDate);
 
-      report.setRoomData(popularRooms.toArray(new RoomData[0]));
+      report.setRoomData(popularRooms);
     } catch (Exception e) {
       throw new ReportServiceException("Error al generar informe de sala más popular", e);
     }

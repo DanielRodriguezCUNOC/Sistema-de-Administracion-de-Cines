@@ -14,10 +14,6 @@ export class ProfitReportService {
 
   generateReport(startDate: string, endDate: string) {
     const url = `${this.apiUrl}/inicio/${startDate}/fin/${endDate}`;
-    return this.http.get<ProfitReportResponseDTO>(url).pipe(catchError(this.handleError));
-  }
-
-  private handleError(error: HttpErrorResponse): Observable<never> {
-    return throwError(() => new Error('Error al generar el reporte de ganancias'));
+    return this.http.get<ProfitReportResponseDTO>(url);
   }
 }

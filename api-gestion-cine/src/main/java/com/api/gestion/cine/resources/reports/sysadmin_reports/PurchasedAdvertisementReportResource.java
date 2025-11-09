@@ -14,11 +14,14 @@ import jakarta.ws.rs.core.Response;
 public class PurchasedAdvertisementReportResource {
 
   @GET
-  @Path("inicio/{fechaInicio}/fin/{fechaFin}/tipo-anuncio/{tipoAnuncio}")
+  @Path("inicio/{fechaInicio}/fin/{fechaFin}/tipo-anuncio/{tipoAnuncio}/offset/{offset}/limit/{limit}")
   @Produces(MediaType.APPLICATION_JSON)
-  public Response getResponse(@PathParam("fechaInicio") String fechaInicio,
+  public Response getResponse(
+      @PathParam("fechaInicio") String fechaInicio,
       @PathParam("fechaFin") String fechaFin,
-      @PathParam("tipoAnuncio") String tipoAnuncio) {
+      @PathParam("tipoAnuncio") String tipoAnuncio,
+      @PathParam("offset") int offset,
+      @PathParam("limit") int limit) {
     try {
 
       // * Creación del servicio de informes de anuncios comprados */
@@ -26,7 +29,7 @@ public class PurchasedAdvertisementReportResource {
 
       // * Generación del informe de anuncios comprados */
       PurchasedAdvertisementResponseReportDTO report = service.generateReport(fechaInicio,
-          fechaFin, tipoAnuncio);
+          fechaFin, tipoAnuncio, offset, limit);
 
       // * Retorno de la respuesta exitosa */
       return Response.ok(report).build();

@@ -3,11 +3,11 @@ package com.api.gestion.cine.services.reports.cinema_admin;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.api.gestion.cine.db.cinema_dmin.CommentedRoomReportDB;
+import com.api.gestion.cine.db.cinema_admin.CommentedRoomReportDB;
 import com.api.gestion.cine.dto.reports.cinema_admin.commented_room_report.CommentedRoomResponseReportDTO;
 import com.api.gestion.cine.dto.reports.sysadmin.most_commented_room_report.RoomComment;
 import com.api.gestion.cine.exceptions.ReportServiceException;
-import com.api.gestion.cine.services.util.FormatterDateCustom;
+import com.api.gestion.cine.services.util.ValidatorCustom;
 
 public class CommentedRoomReportService {
 
@@ -20,20 +20,19 @@ public class CommentedRoomReportService {
     LocalDate startDate = null;
     LocalDate endDate = null;
 
-    if (fechaInicio != null && !fechaInicio.trim().isEmpty()) {
-      startDate = FormatterDateCustom.parseStringToDate(fechaInicio);
+    if (ValidatorCustom.isValidDate(fechaInicio, fechaFin)) {
+      LocalDate[] dates = ValidatorCustom.convertDateStringToLocalDate(fechaInicio, fechaFin);
+      startDate = dates[0];
+      endDate = dates[1];
     }
 
-    if (fechaFin != null && !fechaFin.trim().isEmpty()) {
-      endDate = FormatterDateCustom.parseStringToDate(fechaFin);
+    if (ValidatorCustom.isNullOrEmpty(nombreSala)) {
+      nombreSala = null;
     }
 
-    if (nombreSala == null || nombreSala.trim().isEmpty()) {
-      nombreSala = "Todo";
-    }
     try {
       List<RoomComment> roomComments = reportDB.getCommentedRooms(startDate, endDate, nombreSala, offset, limit);
-      report.setCommentedRooms(roomComments.toArray(new RoomComment[0]));
+      report.setCommentedRooms(roomComments);
     } catch (Exception e) {
       throw new ReportServiceException("Error al generar el informe de salas comentadas", e);
     }

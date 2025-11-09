@@ -8,16 +8,16 @@ import { SoldTicketResponseReportDTO } from '../../../models/dto/cinema-admin/so
   providedIn: 'root',
 })
 export class TicketSoldReportService {
-  private apiUrl = `${environment.apiBaseUrl}/admin-cinema/report/ticket-sold`;
+  private apiUrl = `${environment.apiBaseUrl}/admin-cinema/report/sold-ticket`;
 
   constructor(private http: HttpClient) {}
 
-  generateReport(startDate: string, endDate: string, nombreSala?: string) {
+  generateReport(
+    startDate: string | null,
+    endDate: string | null,
+    nombreSala: string | null
+  ): Observable<SoldTicketResponseReportDTO> {
     const url = `${this.apiUrl}/inicio/${startDate}/fin/${endDate}/nombreSala/${nombreSala}`;
-    return this.http.get<SoldTicketResponseReportDTO>(url).pipe(catchError(this.handleError));
-  }
-
-  private handleError(error: HttpErrorResponse): Observable<never> {
-    return throwError(() => new Error('Error al generar el reporte de boletos vendidos'));
+    return this.http.get<SoldTicketResponseReportDTO>(url);
   }
 }

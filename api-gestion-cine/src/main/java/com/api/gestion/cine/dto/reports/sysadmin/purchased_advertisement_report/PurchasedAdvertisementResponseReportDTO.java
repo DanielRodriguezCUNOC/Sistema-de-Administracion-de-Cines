@@ -1,21 +1,23 @@
 package com.api.gestion.cine.dto.reports.sysadmin.purchased_advertisement_report;
 
+import java.util.List;
+
 public class PurchasedAdvertisementResponseReportDTO {
 
-    private PurchasedAdvertisement[] purchasedAdvertisements;
+    private List<PurchasedAdvertisement> purchasedAdvertisements;
 
     public PurchasedAdvertisementResponseReportDTO() {
     }
 
-    public PurchasedAdvertisementResponseReportDTO(PurchasedAdvertisement[] purchasedAdvertisements) {
+    public PurchasedAdvertisementResponseReportDTO(List<PurchasedAdvertisement> purchasedAdvertisements) {
         this.purchasedAdvertisements = purchasedAdvertisements;
     }
 
-    public PurchasedAdvertisement[] getPurchasedAdvertisements() {
+    public List<PurchasedAdvertisement> getPurchasedAdvertisements() {
         return purchasedAdvertisements;
     }
 
-    public void setPurchasedAdvertisements(PurchasedAdvertisement[] purchasedAdvertisements) {
+    public void setPurchasedAdvertisements(List<PurchasedAdvertisement> purchasedAdvertisements) {
         this.purchasedAdvertisements = purchasedAdvertisements;
     }
 }

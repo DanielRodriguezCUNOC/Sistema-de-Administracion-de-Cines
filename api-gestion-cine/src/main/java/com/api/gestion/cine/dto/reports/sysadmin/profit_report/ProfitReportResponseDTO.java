@@ -1,13 +1,13 @@
 package com.api.gestion.cine.dto.reports.sysadmin.profit_report;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class ProfitReportResponseDTO {
 
-    private CinemaCostReport[] costoCinema;
-    private AdvertisementProfitReport[] advertisementPaymentAmount;
-    private AdvertisementProfitReport[] amountAdBlock;
-
+    private List<CinemaCostReport> costoCinema;
+    private List<AdvertisementProfitReport> advertisementPaymentAmount;
+    private List<AdvertisementProfitReport> amountAdBlock;
     private BigDecimal totalProfit;
     private BigDecimal totalRevenue;
     private BigDecimal totalExpenses;
@@ -15,35 +15,35 @@ public class ProfitReportResponseDTO {
     public ProfitReportResponseDTO() {
     }
 
-    public ProfitReportResponseDTO(CinemaCostReport[] costoCinema,
-            AdvertisementProfitReport[] advertisementPaymentAmount,
-            AdvertisementProfitReport[] amountAdBlock) {
+    public ProfitReportResponseDTO(List<CinemaCostReport> costoCinema,
+            List<AdvertisementProfitReport> advertisementPaymentAmount,
+            List<AdvertisementProfitReport> amountAdBlock) {
         this.costoCinema = costoCinema;
         this.advertisementPaymentAmount = advertisementPaymentAmount;
         this.amountAdBlock = amountAdBlock;
     }
 
-    public CinemaCostReport[] getCostoCinema() {
+    public List<CinemaCostReport> getCostoCinema() {
         return costoCinema;
     }
 
-    public void setCostoCinema(CinemaCostReport[] costoCinema) {
+    public void setCostoCinema(List<CinemaCostReport> costoCinema) {
         this.costoCinema = costoCinema;
     }
 
-    public AdvertisementProfitReport[] getAdvertisementPaymentAmount() {
+    public List<AdvertisementProfitReport> getAdvertisementPaymentAmount() {
         return advertisementPaymentAmount;
     }
 
-    public void setAdvertisementPaymentAmount(AdvertisementProfitReport[] advertisementPaymentAmount) {
+    public void setAdvertisementPaymentAmount(List<AdvertisementProfitReport> advertisementPaymentAmount) {
         this.advertisementPaymentAmount = advertisementPaymentAmount;
     }
 
-    public AdvertisementProfitReport[] getAmountAdBlock() {
+    public List<AdvertisementProfitReport> getAmountAdBlock() {
         return amountAdBlock;
     }
 
-    public void setAmountAdBlock(AdvertisementProfitReport[] amountAdBlock) {
+    public void setAmountAdBlock(List<AdvertisementProfitReport> amountAdBlock) {
         this.amountAdBlock = amountAdBlock;
     }
 
@@ -73,11 +73,10 @@ public class ProfitReportResponseDTO {
         BigDecimal totalAdvertisementPaymentAmount = BigDecimal.ZERO;
         BigDecimal totalAmountAdBlock = BigDecimal.ZERO;
         for (AdvertisementProfitReport report : advertisementPaymentAmount) {
-            totalAdvertisementPaymentAmount = totalAdvertisementPaymentAmount
-                    .add(BigDecimal.valueOf(report.getAmount()));
+            totalAdvertisementPaymentAmount = totalAdvertisementPaymentAmount.add(report.getAmount());
         }
         for (AdvertisementProfitReport report : amountAdBlock) {
-            totalAmountAdBlock = totalAmountAdBlock.add(BigDecimal.valueOf(report.getAmount()));
+            totalAmountAdBlock = totalAmountAdBlock.add(report.getAmount());
         }
         return totalAdvertisementPaymentAmount.add(totalAmountAdBlock);
     }

@@ -3,18 +3,22 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { CommentedRoomResponseReportDTO } from '../../../models/dto/cinema-admin/commented-room-report/commented-room-response-report-dto';
 import { CommentedRoomReportService } from '../../../services/cinema-admin/reports/comment-room-report-service.service';
 import { RoomCommentDTO } from '../../../models/dto/sysadmin/most-commented-room-report/room-comment-dto';
+import { SharePopupComponent } from '../../../shared/share-popup.component/share-popup.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-coment-room-report',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, SharePopupComponent, CommonModule],
   templateUrl: './coment-room-report.component.html',
   styleUrls: ['./coment-room-report.component.scss'],
 })
 export class ComentRoomReportComponent {
   reportForm: FormGroup;
   comentarios: RoomCommentDTO[] = [];
-  errorMessage: string | null = null;
+  infoMessage: string | null = null;
+  popupTipo: 'error' | 'success' | 'info' = 'info';
+  popupMostrar = false;
   isLoading = false;
   isLoadingMore = false;
   tieneMasComentarios = false;
@@ -23,43 +27,39 @@ export class ComentRoomReportComponent {
   private limit = 3;
 
   constructor(private fb: FormBuilder, private service: CommentedRoomReportService) {
-    const today = new Date();
-    const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
-
     this.reportForm = this.fb.group({
-      fechaInicio: [this.formatDate(firstDay), Validators.required],
-      fechaFin: [this.formatDate(today), Validators.required],
+      fechaInicio: [''],
+      fechaFin: [''],
       nombreSala: [''],
     });
   }
 
-  private formatDate(date: Date): string {
-    return date.toISOString().split('T')[0];
-  }
-
   generateReport(): void {
-    if (this.reportForm.invalid) {
-      this.errorMessage = 'Por favor complete todos los campos requeridos.';
-      return;
-    }
-
-    this.errorMessage = null;
+    this.infoMessage = null;
     this.isLoading = true;
     this.offset = 0;
     this.comentarios = [];
 
     const { fechaInicio, fechaFin, nombreSala } = this.reportForm.value;
 
-    this.service.getComments(fechaInicio, fechaFin, nombreSala, this.offset, this.limit).subscribe({
+    const startDate: string | null = fechaInicio?.toString().trim() || null;
+    const endDate: string | null = fechaFin?.toString().trim() || null;
+    const roomName: string | null = nombreSala?.toString().trim() || null;
+
+    this.service.getComments(startDate, endDate, roomName, this.offset, this.limit).subscribe({
       next: (data: CommentedRoomResponseReportDTO) => {
-        const nuevos = data.salasComentadas || [];
-        this.comentarios = nuevos;
-        this.offset += nuevos.length;
-        this.tieneMasComentarios = nuevos.length === this.limit;
+        this.comentarios = data.commentedRooms || [];
+        this.offset += this.comentarios.length;
+        this.tieneMasComentarios = this.comentarios.length === this.limit;
+        this.infoMessage = 'Informe generado exitosamente';
+        this.popupTipo = 'success';
+        this.popupMostrar = true;
         this.isLoading = false;
       },
-      error: () => {
-        this.errorMessage = 'Error al generar el reporte. Por favor, inténtelo de nuevo.';
+      error: (error: Error) => {
+        this.infoMessage = `Error al generar el reporte: ${error.message}`;
+        this.popupTipo = 'error';
+        this.popupMostrar = true;
         this.isLoading = false;
       },
     });
@@ -69,16 +69,23 @@ export class ComentRoomReportComponent {
     this.isLoadingMore = true;
 
     const { fechaInicio, fechaFin, nombreSala } = this.reportForm.value;
-    this.service.getComments(fechaInicio, fechaFin, nombreSala, this.offset, this.limit).subscribe({
+
+    const startDate: string | null = fechaInicio?.toString().trim() || null;
+    const endDate: string | null = fechaFin?.toString().trim() || null;
+    const roomName: string | null = nombreSala?.toString().trim() || null;
+
+    this.service.getComments(startDate, endDate, roomName, this.offset, this.limit).subscribe({
       next: (data: CommentedRoomResponseReportDTO) => {
-        const nuevos = data.salasComentadas || [];
+        const nuevos = data.commentedRooms || [];
         this.comentarios.push(...nuevos);
         this.offset += nuevos.length;
         this.tieneMasComentarios = nuevos.length === this.limit;
         this.isLoadingMore = false;
       },
-      error: () => {
-        this.errorMessage = 'Error al cargar más comentarios.';
+      error: (err: Error) => {
+        this.infoMessage = `Error al cargar más comentarios: ${err.message}`;
+        this.popupTipo = 'error';
+        this.popupMostrar = true;
         this.isLoadingMore = false;
       },
     });

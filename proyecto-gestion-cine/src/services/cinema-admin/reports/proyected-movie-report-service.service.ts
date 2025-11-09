@@ -8,22 +8,18 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class ProyectedMovieReportService {
-  private apiUrl = `${environment.apiBaseUrl}/cinema-admin/report/proyected-movies`;
+  private apiUrl = `${environment.apiBaseUrl}/admin-cinema/report/proyected-movies`;
 
   constructor(private http: HttpClient) {}
 
   getMovies(
-    startDate: string,
-    endDate: string,
-    nombreSala: string,
+    fechaInicio: string | null,
+    fechaFin: string | null,
+    nombreSala: string | null,
     offset: number,
     limit: number
   ): Observable<ProyectedMoviesResponseReportDTO> {
-    const url = `${this.apiUrl}/inicio/${startDate}/fin/${endDate}/sala/${nombreSala}/offset/${offset}/limit/${limit}`;
-    return this.http.get<ProyectedMoviesResponseReportDTO>(url).pipe(catchError(this.handleError));
-  }
-
-  private handleError(error: HttpErrorResponse): Observable<never> {
-    return throwError(() => new Error('Error al generar el reporte de películas proyectadas'));
+    const url = `${this.apiUrl}/inicio/${fechaInicio}/fin/${fechaFin}/nombreSala/${nombreSala}/offset/${offset}/limit/${limit}`;
+    return this.http.get<ProyectedMoviesResponseReportDTO>(url);
   }
 }

@@ -11,7 +11,10 @@ export class MostCommentedRoomReportService {
   private apiUrl = `${environment.apiBaseUrl}/sysadmin/report/commented-room`;
 
   constructor(private http: HttpClient) {}
-  generateReport(fechaInicio: string, fechaFin: string) {
+  generateReport(
+    fechaInicio: string | null,
+    fechaFin: string | null
+  ): Observable<MostCommentedRoomReportResponseDTO> {
     const url = `${this.apiUrl}/inicio/${fechaInicio}/fin/${fechaFin}`;
 
     return this.http

@@ -1,0 +1,39 @@
+.cinema-list {
+  padding: 2rem;
+  background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+  border-radius: 1.5rem;
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th, td {
+      padding: 1rem;
+      text-align: left;
+      color: #fff;
+    }
+
+    tr:nth-child(even) {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    tr:hover {
+      background: rgba(102, 126, 234, 0.1);
+    }
+  }
+
+  .btn-outline-primary {
+    background-color: transparent;
+    border: 2px solid rgba(102, 126, 234, 0.8);
+    color: rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+
+    &:hover {
+      background-color: rgba(102, 126, 234, 0.1);
+      color: #fff;
+    }
+  }
+}

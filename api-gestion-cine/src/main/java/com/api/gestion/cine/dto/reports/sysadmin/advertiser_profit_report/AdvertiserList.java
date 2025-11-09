@@ -1,19 +1,20 @@
 package com.api.gestion.cine.dto.reports.sysadmin.advertiser_profit_report;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import com.api.gestion.cine.dto.reports.sysadmin.purchased_advertisement_report.PurchasedAdvertisement;
 
 public class AdvertiserList {
     private int idUsuario;
     private String nombreUsuario;
-    private PurchasedAdvertisement purchasedAdvertisement[];
+    private List<PurchasedAdvertisement> purchasedAdvertisement;
     private BigDecimal totalPurchasedAmount;
 
     public AdvertiserList() {
     }
 
-    public AdvertiserList(int idUsuario, String nombreUsuario, PurchasedAdvertisement[] purchasedAdvertisement,
+    public AdvertiserList(int idUsuario, String nombreUsuario, List<PurchasedAdvertisement> purchasedAdvertisement,
             BigDecimal totalPurchasedAmount) {
         this.idUsuario = idUsuario;
         this.nombreUsuario = nombreUsuario;
@@ -37,11 +38,11 @@ public class AdvertiserList {
         this.nombreUsuario = nombreUsuario;
     }
 
-    public PurchasedAdvertisement[] getPurchasedAdvertisement() {
+    public List<PurchasedAdvertisement> getPurchasedAdvertisement() {
         return purchasedAdvertisement;
     }
 
-    public void setPurchasedAdvertisement(PurchasedAdvertisement[] purchasedAdvertisement) {
+    public void setPurchasedAdvertisement(List<PurchasedAdvertisement> purchasedAdvertisement) {
         this.purchasedAdvertisement = purchasedAdvertisement;
     }
 

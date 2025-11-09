@@ -43,17 +43,10 @@
         </div>
       </div>
     </form>
-
-    @if (errorMessage) {
-    <div class="alert-error mt-3">
-      <i class="bi bi-exclamation-triangle"></i>
-      {{ errorMessage }}
-    </div>
-    }
   </div>
 
   @if (report) {
-  <!-- Resumen General -->
+
   <div class="section-card">
     <div class="section-header">
       <h2>
@@ -114,7 +107,7 @@
         <div class="advertiser-stats">
           <span class="stat-badge">
             <i class="bi bi-megaphone"></i>
-            {{ advertiser.purchasedAdvertisementList.length }} anuncios
+            {{ advertiser.purchasedAdvertisement.length }} anuncios
           </span>
           <span class="stat-badge revenue">
             <i class="bi bi-currency-dollar"></i>
@@ -135,10 +128,10 @@
               </tr>
             </thead>
             <tbody>
-              @for (ad of advertiser.purchasedAdvertisementList; track ad.id) {
+              @for (ad of advertiser.purchasedAdvertisement; track ad.idAnuncio) {
               <tr>
-                <td>{{ ad.id }}</td>
-                <td class="fw-bold">{{ ad.nombre }}</td>
+                <td>{{ ad.idAnuncio }}</td>
+                <td class="fw-bold">{{ ad.nombreAnuncio }}</td>
                 <td class="date-cell">{{ ad.fechaPago | date : 'dd/MM/yyyy' }}</td>
                 <td class="revenue-amount">{{ ad.montoPago | currency }}</td>
               </tr>
@@ -160,3 +153,9 @@
   </div>
   } }
 </div>
+<app-share-popup
+  [mensaje]="infoMessage || ''"
+  [tipo]="popupTipo"
+  [mostrar]="popupMostrar"
+  (cerrarEvent)="infoMessage = null"
+></app-share-popup>

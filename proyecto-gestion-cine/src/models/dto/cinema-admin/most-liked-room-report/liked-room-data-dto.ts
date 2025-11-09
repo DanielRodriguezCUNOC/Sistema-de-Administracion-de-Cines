@@ -4,6 +4,6 @@ export interface LikedRoomDataDTO {
   idSala: number;
   nombreSala: string;
   cantidadValoraciones: number;
-  promedioValoraciones: number;
+  promedioValoracion: number;
   valoraciones: LikedDataDTO[];
 }

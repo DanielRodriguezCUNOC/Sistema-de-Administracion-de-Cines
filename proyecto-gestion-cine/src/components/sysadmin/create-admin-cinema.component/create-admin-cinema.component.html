@@ -1,0 +1,86 @@
+<form [formGroup]="nuevoAdminCine" (submit)="submit()">
+  <div class="row g-3">
+    <div class="col-sm-6">
+      <label for="nombre" class="form-label">Nombre Completo</label>
+      <input
+        type="text"
+        class="form-control"
+        name="nombre"
+        id="nombre"
+        placeholder="Tu Nombre"
+        formControlName="nombre"
+      />
+    </div>
+
+    <div class="col-sm-6">
+      <label for="email" class="form-label">Correo Electrónico</label>
+      <input
+        type="email"
+        class="form-control"
+        name="email"
+        id="email"
+        placeholder="Tu Correo Electrónico"
+        formControlName="email"
+      />
+    </div>
+
+    <div class="col-sm-6">
+      <label for="usuario" class="form-label">Nombre de Usuario</label>
+      <input
+        type="text"
+        class="form-control"
+        name="usuario"
+        id="usuario"
+        placeholder="Tu Nombre de Usuario"
+        formControlName="usuario"
+      />
+    </div>
+
+    <div class="col-sm-6">
+      <label for="password" class="form-label">Contraseña</label>
+      <input
+        type="password"
+        class="form-control"
+        name="password"
+        id="password"
+        placeholder="Tu Contraseña"
+        formControlName="password"
+      />
+    </div>
+
+    <div class="col-sm-6">
+      <label for="telefono" class="form-label">Teléfono</label>
+      <input
+        type="text"
+        class="form-control"
+        name="telefono"
+        id="telefono"
+        placeholder="Tu Número de Teléfono"
+        formControlName="telefono"
+      />
+    </div>
+
+    <div class="col-sm-6">
+      <label for="fotografia" class="form-label">Fotografía</label>
+      <input
+        type="file"
+        class="form-control"
+        name="fotografia"
+        id="fotografia"
+        (change)="onFileSelected($event)"
+        formControlName="fotografia"
+      />
+    </div>
+
+    <div class="col-12">
+      <button type="submit" class="btn btn-primary">Registrar Administrador</button>
+    </div>
+  </div>
+</form>
+
+<app-share-popup
+  [mensaje]="infoMessage || ''"
+  [tipo]="popupTipo"
+  [mostrar]="popupMostrar"
+  (cerrarEvent)="popupMostrar = false"
+></app-share-popup>

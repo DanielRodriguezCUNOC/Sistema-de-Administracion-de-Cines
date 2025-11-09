@@ -1,18 +1,22 @@
 package com.api.gestion.cine.dto.reports.cinema_admin.most_liked_room_report;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.List;
+
 public class LikedRoomData {
 
     private int idSala;
     private String nombreSala;
     private int cantidadValoraciones;
-    private int promedioValoracion;
-    private LikedData[] valoraciones;
+    private BigDecimal promedioValoracion;
+    private List<LikedData> valoraciones;
 
     public LikedRoomData() {
     }
 
-    public LikedRoomData(int idSala, String nombreSala, int cantidadValoraciones, int promedioValoracion,
-            LikedData[] valoraciones) {
+    public LikedRoomData(int idSala, String nombreSala, int cantidadValoraciones, BigDecimal promedioValoracion,
+            List<LikedData> valoraciones) {
         this.idSala = idSala;
         this.nombreSala = nombreSala;
         this.cantidadValoraciones = cantidadValoraciones;
@@ -44,25 +48,25 @@ public class LikedRoomData {
         this.cantidadValoraciones = cantidadValoraciones;
     }
 
-    public int getPromedioValoracion() {
+    public BigDecimal getPromedioValoracion() {
         return promedioValoracion;
     }
 
-    public void setPromedioValoracion(int promedioValoracion) {
+    public void setPromedioValoracion(BigDecimal promedioValoracion) {
         this.promedioValoracion = promedioValoracion;
     }
 
-    public LikedData[] getValoraciones() {
+    public List<LikedData> getValoraciones() {
         return valoraciones;
     }
 
-    public void setValoraciones(LikedData[] valoraciones) {
+    public void setValoraciones(List<LikedData> valoraciones) {
         this.valoraciones = valoraciones;
     }
 
     public void obtenerPromedioValoracion() {
-        if (valoraciones == null || valoraciones.length == 0) {
-            this.promedioValoracion = 0;
+        if (valoraciones == null || valoraciones.isEmpty()) {
+            this.promedioValoracion = BigDecimal.ZERO;
             return;
         }
 
@@ -70,14 +74,15 @@ public class LikedRoomData {
         for (LikedData likedData : valoraciones) {
             suma += likedData.getValoracion();
         }
-        this.promedioValoracion = suma / valoraciones.length;
+        this.promedioValoracion = BigDecimal.valueOf(suma).divide(BigDecimal.valueOf(valoraciones.size()), 2,
+                RoundingMode.HALF_UP);
     }
 
     public void calcularCantidadValoraciones() {
         if (valoraciones == null) {
             this.cantidadValoraciones = 0;
         } else {
-            this.cantidadValoraciones = valoraciones.length;
+            this.cantidadValoraciones = valoraciones.size();
         }
     }
 }

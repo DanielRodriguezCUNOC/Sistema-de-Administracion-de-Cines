@@ -3,11 +3,11 @@ package com.api.gestion.cine.services.reports.cinema_admin;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.api.gestion.cine.db.cinema_dmin.ProyectedMovieReportDB;
+import com.api.gestion.cine.db.cinema_admin.ProyectedMovieReportDB;
 import com.api.gestion.cine.dto.reports.cinema_admin.proyected_movies_report.MovieProyectedRoom;
 import com.api.gestion.cine.dto.reports.cinema_admin.proyected_movies_report.ProyectedMovieResponseReportDTO;
 import com.api.gestion.cine.exceptions.ReportServiceException;
-import com.api.gestion.cine.services.util.FormatterDateCustom;
+import com.api.gestion.cine.services.util.ValidatorCustom;
 
 public class ProyectedMoviesReportService {
 
@@ -19,24 +19,22 @@ public class ProyectedMoviesReportService {
 
     LocalDate startDate = null;
     LocalDate endDate = null;
-
-    if (fechaInicio != null && !fechaInicio.trim().isEmpty()) {
-      startDate = FormatterDateCustom.parseStringToDate(fechaInicio);
+    if (ValidatorCustom.isValidDate(fechaInicio, fechaFin)) {
+      LocalDate[] dates = ValidatorCustom.convertDateStringToLocalDate(fechaInicio, fechaFin);
+      startDate = dates[0];
+      endDate = dates[1];
     }
 
-    if (fechaFin != null && !fechaFin.trim().isEmpty()) {
-      endDate = FormatterDateCustom.parseStringToDate(fechaFin);
-    }
-
-    if (nombreSala == null || nombreSala.trim().isEmpty()) {
-      nombreSala = "Todo";
+    if (ValidatorCustom.isNullOrEmpty(nombreSala)) {
+      nombreSala = null;
     }
 
     try {
+
       List<MovieProyectedRoom> proyectedRooms = reportDB.getProyectedMovies(startDate, endDate, offset, limit,
           nombreSala);
 
-      response.setSalasProyectadas(proyectedRooms.toArray(new MovieProyectedRoom[0]));
+      response.setPeliculasProyectadas(proyectedRooms);
 
     } catch (Exception e) {
       throw new ReportServiceException("Error al generar el informe de películas proyectadas", e);

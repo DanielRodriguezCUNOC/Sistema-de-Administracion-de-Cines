@@ -1,65 +1,46 @@
 import { Component, OnInit } from '@angular/core';
 import { Cine } from '../../../models/cinema/cine';
-import { Router } from '@angular/router';
 import { CineService } from '../../../services/cine/cine.service';
-import { DatePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RouterLinkActive } from '@angular/router';
 
 @Component({
-  selector: 'app-show-cinema.component',
-  imports: [DatePipe],
+  selector: 'app-show-cinema',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, RouterLinkActive],
   templateUrl: './show-cinema.component.html',
-  styleUrl: './show-cinema.component.scss',
+  styleUrls: ['./show-cinema.component.scss'],
 })
 export class ShowCinemaComponent implements OnInit {
   cines: Cine[] = [];
-  cineService: CineService;
+  popupTipo: 'error' | 'success' | 'info' = 'info';
+  popupMostrar = false;
+  infoMessage: string | null = null;
+  loading = false;
 
-  constructor(private router: Router, cineService: CineService) {
-    this.cineService = cineService;
-  }
+  constructor(private service: CineService) {}
 
   ngOnInit(): void {
     this.cargarCines();
   }
 
-  cargarCines() {
-    /*
-    this.cineService.obtenerCines().subscribe({
-      next: (data: Cine[]): any => {
-        this.cines = data;
+  cargarCines(): void {
+    this.loading = true;
+    this.service.obtenerCines().subscribe({
+      next: (response) => {
+        this.cines = response.cines;
+        this.infoMessage = 'Cines cargados exitosamente.';
+        this.popupTipo = 'success';
+        this.popupMostrar = true;
+        this.loading = false;
       },
-      error: (error: any): any => {
-        console.error('Error al cargar los cines', error);
+      error: (error) => {
+        this.popupTipo = 'error';
+        this.infoMessage = `Error al cargar cines: ${error.message}`;
+        this.popupMostrar = true;
+        this.loading = false;
       },
     });
-    */
-
-    // Datos de ejemplo (eliminar cuando se conecte al backend)
-    this.cines = [
-      {
-        idCine: 1,
-        nombreCine: 'Cine Central',
-        fechaCreacion: new Date('2024-01-15'),
-        costoOcultacionAnuncios: 50,
-      },
-      {
-        idCine: 2,
-        nombreCine: 'Cine Plaza Mayor',
-        fechaCreacion: new Date('2024-03-20'),
-        costoOcultacionAnuncios: 75,
-      },
-      {
-        idCine: 3,
-        nombreCine: 'Cine Premium',
-        fechaCreacion: new Date('2024-05-10'),
-        costoOcultacionAnuncios: 100,
-      },
-    ];
-  }
-  ingresarCine(idCine: number): void {
-    console.log('Ingresando al cine con ID:', idCine);
-
-    // Navegar a la ruta del cine seleccionado
-    this.router.navigate(['/cine-seleccionado', idCine]);
   }
 }

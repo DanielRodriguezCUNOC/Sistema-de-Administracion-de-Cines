@@ -20,6 +20,20 @@ import { AccessDeniedComponent } from '../components/access-denied/access-denied
 import { ProfitReportComponent } from '../components/reports/profit-report.component/profit-report.component';
 import { AdvertisementPurchasedReportComponent } from '../components/reports/advertisement-purchased-report.component/advertisement-purchased-report.component';
 import { SelectAdminReportComponent } from '../components/sysadmin/select-admin-report.component/select-admin-report.component';
+import { ComentRoomReportComponent } from '../components/reports/coment-room-report.component/coment-room-report.component';
+import { MovieShownReportComponent } from '../components/reports/movie-shown-report.component/movie-shown-report.component';
+import { MostLikedRoomReportComponent } from '../components/reports/most-liked-room-report.component/most-liked-room-report.component';
+import { TicketSoldReportComponent } from '../components/reports/ticket-sold-report.component/ticket-sold-report.component';
+import { SelectAdminCinemaReportComponent } from '../components/cinema-admin/select-admin-cinema-report.component/select-admin-cinema-report.component';
+import { CreateUserPageComponent } from '../pages/create-user-page.component/create-user-page.component';
+import { CreateUserComponent } from '../components/users/create-user.component/create-user.component';
+import { MostCommentedRoomReportComponent } from '../components/reports/most-commented-room-report.component/most-commented-room-report.component';
+import { MostPopularRoomReportComponent } from '../components/reports/most-popular-room-report.component/most-popular-room-report.component';
+import { AdvertiserProfitReportComponent } from '../components/reports/advertiser-profit-report.component/advertiser-profit-report.component';
+import { CreateCineFormComponent } from '../components/cinema/create-cine-form.component/create-cine-form.component';
+import { CreateMovieFormComponent } from '../components/movies/create-movie-form.component/create-movie-form.component';
+import { ListCinemaComponent } from '../components/sysadmin/list-cinema.component/list-cinema.component';
+import { UpdateCinemaComponent } from '../components/sysadmin/update-cinema.component/update-cinema.component';
 
 export const routes: Routes = [
   {
@@ -34,6 +48,22 @@ export const routes: Routes = [
       {
         path: 'form',
         component: LoginComponent,
+      },
+      {
+        path: '',
+        redirectTo: 'form',
+        pathMatch: 'full',
+      },
+    ],
+  },
+  {
+    path: 'register',
+    component: CreateUserPageComponent,
+
+    children: [
+      {
+        path: 'form',
+        component: CreateUserComponent,
       },
       {
         path: '',
@@ -79,7 +109,7 @@ export const routes: Routes = [
   },
 
   {
-    path: 'admin-cine',
+    path: 'admin-cinema',
     component: CinemaAdminDashboardPageComponent,
     canActivate: [authGuard],
     canActivateChild: [authGuard, authCinemaAdminGuard],
@@ -93,6 +123,31 @@ export const routes: Routes = [
         path: '',
         redirectTo: 'dashboard-admin-cinema',
         pathMatch: 'full',
+      },
+      {
+        path: 'dashboard-reports',
+        component: SelectAdminCinemaReportComponent,
+      },
+      {
+        path: 'reports',
+        children: [
+          {
+            path: 'comments-report',
+            component: ComentRoomReportComponent,
+          },
+          {
+            path: 'proyected-movies-report',
+            component: MovieShownReportComponent,
+          },
+          {
+            path: 'top-liked-rooms',
+            component: MostLikedRoomReportComponent,
+          },
+          {
+            path: 'sold-tickets-report',
+            component: TicketSoldReportComponent,
+          },
+        ],
       },
     ],
   },
@@ -128,7 +183,35 @@ export const routes: Routes = [
             path: 'advertisement-purchased-report',
             component: AdvertisementPurchasedReportComponent,
           },
+          {
+            path: 'most-commented-room-report',
+            component: MostCommentedRoomReportComponent,
+          },
+          {
+            path: 'most-popular-room-report',
+            component: MostPopularRoomReportComponent,
+          },
+          {
+            path: 'advertiser-profit-report',
+            component: AdvertiserProfitReportComponent,
+          },
         ],
+      },
+      {
+        path: 'registrar-cine',
+        component: CreateCineFormComponent,
+      },
+      {
+        path: 'registrar-pelicula',
+        component: CreateMovieFormComponent,
+      },
+      {
+        path: 'list-cinema',
+        component: ListCinemaComponent,
+      },
+      {
+        path: 'update-cinema/:idCine',
+        component: UpdateCinemaComponent,
       },
     ],
   },
@@ -142,5 +225,21 @@ export const routes: Routes = [
   {
     path: 'access-denied',
     component: AccessDeniedComponent,
+  },
+  {
+    path: 'register',
+    component: CreateUserPageComponent,
+
+    children: [
+      {
+        path: 'form',
+        component: CreateUserComponent,
+      },
+      {
+        path: '',
+        redirectTo: 'form',
+        pathMatch: 'full',
+      },
+    ],
   },
 ];

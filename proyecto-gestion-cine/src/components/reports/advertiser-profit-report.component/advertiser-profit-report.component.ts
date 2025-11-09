@@ -3,10 +3,11 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { AdvertiserProfitReportResponseDTO } from '../../../models/dto/sysadmin/advertiser-profit-report/advertiser-profit-report-response-dto';
 import { AdvertiserProfitReportService } from '../../../services/sysadmin/reports/advertiser-profit-report-service.service';
 import { CommonModule } from '@angular/common';
+import { SharePopupComponent } from '../../../shared/share-popup.component/share-popup.component';
 
 @Component({
   selector: 'app-advertiser-profit-report.component',
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, SharePopupComponent],
   templateUrl: './advertiser-profit-report.component.html',
   styleUrl: './advertiser-profit-report.component.scss',
 })
@@ -14,39 +15,40 @@ export class AdvertiserProfitReportComponent {
   reportForm: FormGroup;
   report: AdvertiserProfitReportResponseDTO | null = null;
   isLoading = false;
-  errorMessage: string | null = null;
+  infoMessage: string | null = null;
+  popupTipo: 'error' | 'success' | 'info' = 'info';
+  popupMostrar = false;
 
   constructor(private fb: FormBuilder, private service: AdvertiserProfitReportService) {
-    const today = new Date();
-    const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
     this.reportForm = this.fb.group({
-      fechaInicio: [this.formatDate(firstDayOfMonth), Validators.required],
-      fechaFin: [this.formatDate(today), Validators.required],
+      fechaInicio: [''],
+      fechaFin: [''],
       nombreAnunciante: [''],
     });
   }
 
-  formatDate(date: Date): string {
-    return date.toISOString().split('T')[0];
-  }
   generateReport(): void {
-    if (this.reportForm.invalid) {
-      this.errorMessage = 'Por favor complete todos los campos requeridos.';
-      return;
-    }
     this.isLoading = true;
-    this.errorMessage = '';
+    this.infoMessage = null;
 
     const { fechaInicio, fechaFin, nombreAnunciante } = this.reportForm.value;
 
-    this.service.generateReport(fechaInicio, fechaFin, nombreAnunciante).subscribe({
+    const startDate: string | null = fechaInicio?.toString().trim() || null;
+    const endDate: string | null = fechaFin?.toString().trim() || null;
+    const advertiserName: string | null = nombreAnunciante?.toString().trim() || null;
+
+    this.service.generateReport(startDate, endDate, advertiserName).subscribe({
       next: (data: AdvertiserProfitReportResponseDTO) => {
         this.report = data;
         this.isLoading = false;
+        this.infoMessage = 'Informe generado con éxito.';
+        this.popupTipo = 'success';
+        this.popupMostrar = true;
       },
-      error: (error) => {
-        this.errorMessage =
-          'Error al generar el informe de anuncios comprados. Por favor, inténtelo de nuevo más tarde.';
+      error: (error: Error) => {
+        this.infoMessage = `Error al generar el informe de ganancias del anunciante: ${error.message}`;
+        this.popupTipo = 'error';
+        this.popupMostrar = true;
         this.isLoading = false;
       },
     });

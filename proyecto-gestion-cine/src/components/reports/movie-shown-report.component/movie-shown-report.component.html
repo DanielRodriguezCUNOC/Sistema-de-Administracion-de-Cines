@@ -40,16 +40,9 @@
         </div>
       </div>
     </form>
-
-    @if (errorMessage) {
-    <div class="alert-error mt-3">
-      <i class="bi bi-exclamation-triangle"></i>
-      {{ errorMessage }}
-    </div>
-    }
   </div>
 
-  @if (peliculasProyectadas && peliculasProyectadas.length > 0) {
+  @if (report && report.length > 0) {
   <div class="section-card">
     <div class="section-header">
       <h2>
@@ -68,7 +61,7 @@
           </tr>
         </thead>
         <tbody>
-          @for (sala of peliculasProyectadas; track sala.idSala) {
+          @for (sala of report; track sala.idSala) {
           <tr>
             <td>{{ sala.idSala }}</td>
             <td class="fw-bold">{{ sala.nombreSala }}</td>
@@ -88,7 +81,7 @@
       </h2>
     </div>
 
-    @for (sala of peliculasProyectadas; track sala.idSala) {
+    @for (sala of report; track sala.idSala) {
     <div class="sala-block">
       <div class="sala-header">
         <h3 class="sala-title">
@@ -103,10 +96,7 @@
         }
       </div>
     </div>
-    }
-
-    <!-- Botón para cargar más resultados -->
-    @if (hayMasPeliculas) {
+    } @if (hayMasPeliculas) {
     <div class="text-center mt-4">
       <button class="btn-load-more" (click)="loadMore()" [disabled]="isLoading">
         @if (isLoading) {
@@ -119,7 +109,7 @@
     </div>
     }
   </div>
-  } @else if (peliculasProyectadas && peliculasProyectadas.length === 0) {
+  } @else if (report && report.length === 0) {
   <div class="section-card">
     <div class="alert-error">
       <i class="bi bi-info-circle"></i>
@@ -128,3 +118,9 @@
   </div>
   }
 </div>
+<app-share-popup
+  [mensaje]="infoMessage || ''"
+  [tipo]="popupTipo"
+  [mostrar]="popupMostrar"
+  (cerrarEvent)="infoMessage = null"
+></app-share-popup>

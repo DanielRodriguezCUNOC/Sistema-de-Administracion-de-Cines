@@ -10,7 +10,7 @@
       maxlength="50"
     />
 
-    @if(submitted && f['tituloPelicula'].invalid){
+    @if (submitted && f['tituloPelicula'].invalid) {
     <div class="invalid-feedback">
       @if (f['tituloPelicula'].errors?.['required']) {
       <div>El título es obligatorio.</div>
@@ -32,7 +32,7 @@
       maxlength="500"
     ></textarea>
 
-    @if(submitted && f['sinopsis'].invalid){
+    @if (submitted && f['sinopsis'].invalid) {
     <div class="invalid-feedback">
       @if (f['sinopsis'].errors?.['required']) {
       <div>La sinopsis es obligatoria.</div>
@@ -45,25 +45,26 @@
 
   <div class="row">
     <div class="col-md-4 mb-3">
-      <label for="duracion" class="form-label">Duración (mm:ss)</label>
+      <label for="duracion" class="form-label">Duración (minutos)</label>
       <input
         id="duracion"
-        type="text"
+        type="number"
         class="form-control"
         formControlName="duracion"
-        placeholder="e.g. 02:15"
+        placeholder="e.g. 120"
         [class.is-invalid]="submitted && f['duracion'].invalid"
-        maxlength="5"
+        min="1"
+        max="999"
       />
 
-      @if(submitted && f['duracion'].invalid){
+      @if (submitted && f['duracion'].invalid) {
       <div class="invalid-feedback">
         @if (f['duracion'].errors?.['required']) {
         <div>La duración es obligatoria.</div>
-        } @if (f['duracion'].errors?.['maxlength']) {
-        <div>Máximo 5 caracteres.</div>
-        } @if (f['duracion'].errors?.['pattern']) {
-        <div>Formato mm:ss.</div>
+        } @if (f['duracion'].errors?.['min']) {
+        <div>La duración debe ser mayor a 0.</div>
+        } @if (f['duracion'].errors?.['max']) {
+        <div>Máximo 999 minutos.</div>
         }
       </div>
       }
@@ -81,7 +82,7 @@
         maxlength="5"
       />
 
-      @if(submitted && f['clasificacion'].invalid){
+      @if (submitted && f['clasificacion'].invalid) {
       <div class="invalid-feedback">
         @if (f['clasificacion'].errors?.['required']) {
         <div>La clasificación es obligatoria.</div>
@@ -101,7 +102,7 @@
         formControlName="fechaEstreno"
         [class.is-invalid]="submitted && f['fechaEstreno'].invalid"
       />
-      @if(submitted && f['fechaEstreno'].invalid){
+      @if (submitted && f['fechaEstreno'].invalid) {
       <div class="invalid-feedback">
         @if (f['fechaEstreno'].errors?.['required']) {
         <div>La fecha de estreno es obligatoria.</div>
@@ -112,22 +113,21 @@
   </div>
 
   <div class="mb-3">
-    <label for="cast" class="form-label">Reparto (cast)</label>
+    <label for="reparto" class="form-label">Reparto</label>
     <input
-      id="cast"
+      id="reparto"
       type="text"
       class="form-control"
-      formControlName="cast"
-      [class.is-invalid]="submitted && f['cast'].invalid"
+      formControlName="reparto"
+      [class.is-invalid]="submitted && f['reparto'].invalid"
       maxlength="300"
     />
 
-    @if(submitted && f['cast'].invalid){
+    @if (submitted && f['reparto'].invalid) {
     <div class="invalid-feedback">
-      @if(movieForm.controls['cast'].errors?.['required']){
+      @if (f['reparto'].errors?.['required']) {
       <div>El reparto es obligatorio.</div>
-
-      } @if(movieForm.controls['cast'].errors?.['maxlength']){
+      } @if (f['reparto'].errors?.['maxlength']) {
       <div>Máximo 300 caracteres.</div>
       }
     </div>
@@ -144,11 +144,11 @@
       [class.is-invalid]="submitted && f['director'].invalid"
       maxlength="150"
     />
-    @if(submitted && f['director'].invalid){
+    @if (submitted && f['director'].invalid) {
     <div class="invalid-feedback">
-      @if(f['director'].errors?.['required']){
+      @if (f['director'].errors?.['required']) {
       <div>El director es obligatorio.</div>
-      } @if(f['director'].errors?.['maxlength']){
+      } @if (f['director'].errors?.['maxlength']) {
       <div>Máximo 150 caracteres.</div>
       }
     </div>
@@ -167,11 +167,11 @@
       [class.is-invalid]="submitted && f['precioPelicula'].invalid"
     />
 
-    @if(submitted && f['precioPelicula'].invalid){
+    @if (submitted && f['precioPelicula'].invalid) {
     <div class="invalid-feedback">
-      @if(f['precioPelicula'].errors?.['required']){
+      @if (f['precioPelicula'].errors?.['required']) {
       <div>El precio es obligatorio.</div>
-      } @if(f['precioPelicula'].errors?.['min']){
+      } @if (f['precioPelicula'].errors?.['min']) {
       <div>El precio no puede ser negativo.</div>
       }
     </div>
@@ -189,10 +189,29 @@
       [class.is-invalid]="submitted && f['poster'].invalid"
     />
 
-    @if(submitted && f['poster'].invalid){
+    @if (submitted && f['poster'].invalid) {
     <div class="invalid-feedback">
-      @if(f['poster'].errors?.['required']){
+      @if (f['poster'].errors?.['required']) {
       <div>El poster es obligatorio.</div>
+      }
+    </div>
+    }
+  </div>
+
+  <div class="mb-3">
+    <label for="categorias" class="form-label">Categorías</label>
+    <input
+      id="categorias"
+      type="text"
+      class="form-control"
+      placeholder="Separadas por comas"
+      formControlName="categorias"
+      [class.is-invalid]="submitted && f['categorias'].invalid"
+    />
+    @if (submitted && f['categorias'].invalid) {
+    <div class="invalid-feedback">
+      @if (f['categorias'].errors?.['required']) {
+      <div>Las categorías son obligatorias.</div>
       }
     </div>
     }
@@ -203,3 +222,10 @@
     <button type="button" class="btn btn-secondary ms-2" (click)="onReset()">Limpiar</button>
   </div>
 </form>
+
+<app-share-popup
+  [mensaje]="infoMessage || ''"
+  [tipo]="popupTipo"
+  [mostrar]="popupMostrar"
+  (cerrarEvent)="popupMostrar = false"
+></app-share-popup>

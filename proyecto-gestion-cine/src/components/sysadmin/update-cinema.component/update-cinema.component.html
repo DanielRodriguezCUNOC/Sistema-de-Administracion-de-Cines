@@ -1,0 +1,21 @@
+@if (cine) {
+<div>
+  <h2>Editar Cine</h2>
+  <form [formGroup]="cineForm" (ngSubmit)="actualizarCine()">
+    <div>
+      <label>Nombre:</label>
+      <input type="text" formControlName="nombreCine" required />
+      @if (cineForm.get('nombreCine')?.invalid && cineForm.get('nombreCine')?.touched) {
+      <div class="error">El nombre es requerido</div>
+      }
+    </div>
+    <button type="submit" [disabled]="cineForm.invalid">Actualizar Cine</button>
+  </form>
+</div>
+}
+<app-share-popup
+  [mensaje]="infoMessage || ''"
+  [tipo]="popupTipo"
+  [mostrar]="popupMostrar"
+  (cerrarEvent)="popupMostrar = false"
+></app-share-popup>

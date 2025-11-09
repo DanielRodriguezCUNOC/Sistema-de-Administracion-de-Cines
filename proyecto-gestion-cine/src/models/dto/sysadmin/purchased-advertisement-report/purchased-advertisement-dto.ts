@@ -2,7 +2,7 @@ export interface PurchasedAdvertisementDTO {
   idAnuncio: number;
   idUsuario: number;
   nombreAnuncio: string;
-  fechaCompra: Date;
+  fechaPago: Date;
   montoPago: number;
   tipoAnuncio: string;
 }

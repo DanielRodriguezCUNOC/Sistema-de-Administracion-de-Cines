@@ -1,5 +1,6 @@
 package com.api.gestion.cine.dto.reports.sysadmin.profit_report;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -13,12 +14,12 @@ public class AdvertisementProfitReport {
     @JsonFormat(pattern = "yyyy-MM-dd")
     @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate fechaPago;
-    private int montoPago;
+    private BigDecimal montoPago;
 
     public AdvertisementProfitReport() {
     }
 
-    public AdvertisementProfitReport(int id, String nombre, LocalDate fechaPago, int montoPago) {
+    public AdvertisementProfitReport(int id, String nombre, LocalDate fechaPago, BigDecimal montoPago) {
         this.id = id;
         this.nombre = nombre;
         this.fechaPago = fechaPago;
@@ -49,15 +50,15 @@ public class AdvertisementProfitReport {
         this.fechaPago = fechaPago;
     }
 
-    public int getMontoPago() {
+    public BigDecimal getMontoPago() {
         return montoPago;
     }
 
-    public void setMontoPago(int montoPago) {
+    public void setMontoPago(BigDecimal montoPago) {
         this.montoPago = montoPago;
     }
 
-    public int getAmount() {
+    public BigDecimal getAmount() {
         return montoPago;
     }
 }

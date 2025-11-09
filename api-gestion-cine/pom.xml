@@ -53,6 +53,13 @@
             <version>${restapi}</version>
         </dependency>
 
+         <!-- multipart files -->
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-multipart</artifactId>
+            <version>${restapi}</version>
+        </dependency>
+
         <!-- Librerías adicionales -->
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -79,7 +86,15 @@
             <artifactId>jasperreports-functions</artifactId>
             <version>7.0.3</version>
         </dependency>
+        
+        <dependency>
+            <groupId>net.sf.jasperreports</groupId>
+             <artifactId>jasperreports-pdf</artifactId>
+            <version>7.0.3</version>
+        </dependency>
     </dependencies>
+   
+
 
     <build>
         <plugins>

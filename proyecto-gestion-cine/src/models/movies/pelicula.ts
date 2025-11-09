@@ -9,5 +9,5 @@ export interface Pelicula {
   clasificacion: string;
   fechaEstreno: string;
   precioPelicula: number;
-  poster?: string;
+  poster?: File;
 }

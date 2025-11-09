@@ -4,12 +4,12 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.api.gestion.cine.db.cinema_dmin.SoldTicketReportDB;
+import com.api.gestion.cine.db.cinema_admin.SoldTicketReportDB;
 import com.api.gestion.cine.dto.reports.cinema_admin.sold_ticket_report.SoldTicketData;
 import com.api.gestion.cine.dto.reports.cinema_admin.sold_ticket_report.SoldTicketResponseReportDTO;
 import com.api.gestion.cine.dto.reports.cinema_admin.sold_ticket_report.UserData;
 import com.api.gestion.cine.exceptions.ReportServiceException;
-import com.api.gestion.cine.services.util.FormatterDateCustom;
+import com.api.gestion.cine.services.util.ValidatorCustom;
 
 public class SoldTicketReportService {
 
@@ -19,11 +19,13 @@ public class SoldTicketReportService {
     LocalDate startDate = null;
     LocalDate endDate = null;
 
-    if (fechaInicio != null && !fechaInicio.trim().isEmpty()) {
-      startDate = FormatterDateCustom.parseStringToDate(fechaInicio);
+    if (ValidatorCustom.isValidDate(fechaInicio, fechaFin)) {
+      LocalDate[] dates = ValidatorCustom.convertDateStringToLocalDate(fechaInicio, fechaFin);
+      startDate = dates[0];
+      endDate = dates[1];
     }
-    if (fechaFin != null && !fechaFin.trim().isEmpty()) {
-      endDate = FormatterDateCustom.parseStringToDate(fechaFin);
+    if (ValidatorCustom.isNullOrEmpty(nombreSala)) {
+      nombreSala = null;
     }
 
     SoldTicketResponseReportDTO reportDTO = new SoldTicketResponseReportDTO();
@@ -31,7 +33,7 @@ public class SoldTicketReportService {
 
     try {
       List<SoldTicketData> soldTickets = reportDB.getSoldTicket(startDate, endDate, nombreSala);
-      reportDTO.setData(soldTickets.toArray(new SoldTicketData[0]));
+      reportDTO.setBoletosVendidos(soldTickets);
 
       // * calcular el total general */
 

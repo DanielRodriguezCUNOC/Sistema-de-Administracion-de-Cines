@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { PeliculaService } from '../../../services/pelicula/pelicula.service';
+import { CreateMovieDto } from '../../../models/dto/movie/create-movie-dto';
+import { SharePopupComponent } from '../../../shared/share-popup.component/share-popup.component';
 
 @Component({
   selector: 'app-create-movie-form.component',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, SharePopupComponent],
   templateUrl: './create-movie-form.component.html',
   styleUrl: './create-movie-form.component.scss',
 })
@@ -11,23 +14,25 @@ export class CreateMovieFormComponent implements OnInit {
   movieForm!: FormGroup;
   submitted: boolean = false;
   posterFile: File | null = null;
+  popupTipo: 'error' | 'success' | 'info' = 'info';
+  popupMostrar = false;
+  infoMessage: string | null = null;
+  loading = false;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private service: PeliculaService) {}
 
   ngOnInit(): void {
     this.movieForm = this.fb.group({
       tituloPelicula: ['', [Validators.required, Validators.maxLength(50)]],
       sinopsis: ['', [Validators.required, Validators.maxLength(500)]],
-      duracion: [
-        '',
-        [Validators.required, Validators.maxLength(5), Validators.pattern(/^\d{2}:\d{2}$/)],
-      ],
+      duracion: ['', [Validators.required, Validators.min(1), Validators.max(999)]], // Cambiado a número
       clasificacion: ['', [Validators.required, Validators.maxLength(5)]],
       fechaEstreno: ['', [Validators.required]],
-      cast: ['', [Validators.required, Validators.maxLength(300)]],
+      reparto: ['', [Validators.required, Validators.maxLength(300)]],
       director: ['', [Validators.required, Validators.maxLength(150)]],
       precioPelicula: ['', [Validators.required, Validators.min(0)]],
       poster: [null, [Validators.required]],
+      categorias: ['', [Validators.required]],
     });
   }
 
@@ -50,26 +55,42 @@ export class CreateMovieFormComponent implements OnInit {
       return;
     }
 
-    // Preparar payload (ejemplo con FormData para envío con fichero)
-    const formData = new FormData();
-    formData.append('titulo_pelicula', this.f['tituloPelicula'].value);
-    formData.append('sinopsis', this.f['sinopsis'].value);
-    formData.append('duracion', this.f['duracion'].value);
-    formData.append('cast', this.f['cast'].value);
-    formData.append('director', this.f['director'].value);
-    formData.append('clasificacion', this.f['clasificacion'].value);
-    formData.append('fecha_estreno', this.f['fechaEstreno'].value);
-    formData.append('precio_pelicula', this.f['precioPelicula'].value);
-    if (this.posterFile) {
-      formData.append('poster', this.posterFile, this.posterFile.name);
-    }
+    const categoriasArray = this.movieForm.value.categorias
+      .split(',')
+      .map((cat: string) => cat.trim())
+      .filter((cat: string) => cat.length > 0);
 
-    // TODO: llamar al servicio que haga POST al backend
-    console.log('Formulario válido. Preparado para enviar:', this.movieForm.value);
-    // ejemplo: this.movieService.createMovie(formData).subscribe(...)
-
-    // Reset opcional
-    this.onReset();
+    const pelicula: CreateMovieDto = {
+      tituloPelicula: this.movieForm.value.tituloPelicula,
+      sinopsis: this.movieForm.value.sinopsis,
+      duracion: this.movieForm.value.duracion,
+      clasificacion: this.movieForm.value.clasificacion,
+      fechaEstreno: this.movieForm.value.fechaEstreno,
+      reparto: this.movieForm.value.reparto,
+      director: this.movieForm.value.director,
+      precioPelicula: this.movieForm.value.precioPelicula,
+      poster: this.posterFile || undefined,
+      categorias: categoriasArray,
+      idUsuario: localStorage.getItem('usuarioActual')
+        ? JSON.parse(localStorage.getItem('usuarioActual')!).idUsuario
+        : 0,
+    };
+    console.log('ID Usuario:', pelicula.idUsuario);
+    this.service.createNewPelicula(pelicula).subscribe({
+      next: () => {
+        this.popupTipo = 'success';
+        this.infoMessage = 'Película creada exitosamente';
+        this.popupMostrar = true;
+        this.loading = false;
+        this.onReset();
+      },
+      error: (error: Error) => {
+        this.popupTipo = 'error';
+        this.infoMessage = `Error al crear la película: ${error.message}`;
+        this.popupMostrar = true;
+        this.loading = false;
+      },
+    });
   }
 
   onReset(): void {

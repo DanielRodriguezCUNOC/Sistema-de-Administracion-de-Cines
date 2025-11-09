@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { MostCommentedRoomReportResponseDTO } from '../../../models/dto/sysadmin/most-commented-room-report/most-commented-room-report-response-dto';
 import { MostCommentedRoomReportService } from '../../../services/sysadmin/reports/most-commented-room-report-service.service';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { SharePopupComponent } from '../../../shared/share-popup.component/share-popup.component';
 
 @Component({
   selector: 'app-most-commented-room-report.component',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, SharePopupComponent],
   templateUrl: './most-commented-room-report.component.html',
   styleUrl: './most-commented-room-report.component.scss',
 })
@@ -13,38 +14,37 @@ export class MostCommentedRoomReportComponent {
   reportForm: FormGroup;
   report: MostCommentedRoomReportResponseDTO | null = null;
   isLoading = false;
-  errorMessage: string | null = null;
+  infoMessage: string | null = null;
+  popupTipo: 'error' | 'success' | 'info' = 'info';
+  popupMostrar = false;
 
   constructor(private fb: FormBuilder, private service: MostCommentedRoomReportService) {
-    const today = new Date();
-    const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
     this.reportForm = this.fb.group({
-      fechaInicio: [this.formatDate(firstDayOfMonth), Validators.required],
-      fechaFin: [this.formatDate(today), Validators.required],
+      fechaInicio: [''],
+      fechaFin: [''],
     });
   }
-
-  formatDate(date: Date): string {
-    return date.toISOString().split('T')[0];
-  }
   generateReport(): void {
-    if (this.reportForm.invalid) {
-      this.errorMessage = 'Por favor complete todos los campos requeridos.';
-      return;
-    }
     this.isLoading = true;
-    this.errorMessage = '';
+    this.infoMessage = '';
 
     const { fechaInicio, fechaFin } = this.reportForm.value;
 
-    this.service.generateReport(fechaInicio, fechaFin).subscribe({
+    const startDate: string | null = fechaInicio?.toString().trim() || null;
+    const endDate: string | null = fechaFin?.toString().trim() || null;
+
+    this.service.generateReport(startDate, endDate).subscribe({
       next: (data: MostCommentedRoomReportResponseDTO) => {
         this.report = data;
+        this.infoMessage = 'Informe generado exitosamente';
+        this.popupTipo = 'success';
+        this.popupMostrar = true;
         this.isLoading = false;
       },
-      error: (error) => {
-        this.errorMessage =
-          'Error al generar el informe de anuncios comprados. Por favor, inténtelo de nuevo más tarde.';
+      error: (error: Error) => {
+        this.infoMessage = `Error al generar el informe de salas más comentadas: ${error.message}`;
+        this.popupTipo = 'error';
+        this.popupMostrar = true;
         this.isLoading = false;
       },
     });

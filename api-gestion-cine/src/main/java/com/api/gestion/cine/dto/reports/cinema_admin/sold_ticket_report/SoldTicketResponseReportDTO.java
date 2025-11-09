@@ -1,21 +1,22 @@
 package com.api.gestion.cine.dto.reports.cinema_admin.sold_ticket_report;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class SoldTicketResponseReportDTO {
 
-    private SoldTicketData[] data;
+    private List<SoldTicketData> boletosVendidos;
     private BigDecimal totalDinero;
 
     public SoldTicketResponseReportDTO() {
     }
 
-    public SoldTicketData[] getData() {
-        return data;
+    public List<SoldTicketData> getBoletosVendidos() {
+        return boletosVendidos;
     }
 
-    public void setData(SoldTicketData[] data) {
-        this.data = data;
+    public void setBoletosVendidos(List<SoldTicketData> boletosVendidos) {
+        this.boletosVendidos = boletosVendidos;
     }
 
     public BigDecimal getTotalDinero() {

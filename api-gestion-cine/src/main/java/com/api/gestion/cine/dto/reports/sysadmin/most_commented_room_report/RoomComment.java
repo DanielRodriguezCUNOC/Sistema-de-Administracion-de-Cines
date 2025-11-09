@@ -1,22 +1,41 @@
 package com.api.gestion.cine.dto.reports.sysadmin.most_commented_room_report;
 
+import java.time.LocalDate;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+
 public class RoomComment {
 
     private int idSala;
     private String nombreSala;
     private String nombreUsuario;
     private String comentario;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonSerialize(using = LocalDateSerializer.class)
+    private LocalDate fechaPublicacion;
     private int totalComentarios;
 
     public RoomComment() {
     }
 
-    public RoomComment(int idSala, String nombreSala, String nombreUsuario, String comentario, int totalComentarios) {
+    public RoomComment(int idSala, String nombreSala, String nombreUsuario, String comentario,
+            LocalDate fechaPublicacion, int totalComentarios) {
         this.idSala = idSala;
         this.nombreSala = nombreSala;
         this.nombreUsuario = nombreUsuario;
         this.comentario = comentario;
+        this.fechaPublicacion = fechaPublicacion;
         this.totalComentarios = totalComentarios;
+    }
+
+    public LocalDate getFechaPublicacion() {
+        return fechaPublicacion;
+    }
+
+    public void setFechaPublicacion(LocalDate fechaPublicacion) {
+        this.fechaPublicacion = fechaPublicacion;
     }
 
     public int getIdSala() {

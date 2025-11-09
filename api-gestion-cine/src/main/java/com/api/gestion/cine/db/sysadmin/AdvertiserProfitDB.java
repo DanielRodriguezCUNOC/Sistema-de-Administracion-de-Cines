@@ -5,7 +5,6 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,29 +20,40 @@ public class AdvertiserProfitDB {
       throws Exception {
 
     List<AdvertiserList> advertisers = new ArrayList<>();
-
     Connection conn = DBConnectionSingleton.getInstance().getConnection();
 
-    // * Obtenemos el nombre del anunciante */
+    StringBuilder sql = new StringBuilder(
+        "SELECT DISTINCT u.id_usuario, u.nombre_completo " +
+            "FROM usuario u " +
+            "INNER JOIN pago_anuncio pa ON u.id_usuario = pa.id_usuario " +
+            "WHERE 1=1 ");
 
-    String sql = "SELECT DISTINCT u.id_usuario, u.nombre_completo " +
-        "FROM usuario u " +
-        "INNER JOIN pago_anuncio pa ON u.id_usuario = pa.id_usuario " +
-        "WHERE pa.fecha_pago BETWEEN ? AND ? " +
-        "AND (? IS NULL OR u.nombre_completo LIKE CONCAT('%', ?, '%')) " +
-        "ORDER BY u.nombre_completo";
+    // * Agregar dinámicamente filtros
+    if (startDate != null) {
+      sql.append("AND pa.fecha_pago >= ? ");
+    }
+    if (endDate != null) {
+      sql.append("AND pa.fecha_pago <= ? ");
+    }
+    if (nombreAnunciante != null && !nombreAnunciante.trim().isEmpty()) {
+      sql.append("AND LOWER(u.nombre_completo) LIKE LOWER(?) ");
+    }
 
-    try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+    sql.append("ORDER BY u.nombre_completo");
 
-      pstmt.setDate(1, Date.valueOf(startDate));
-      pstmt.setDate(2, Date.valueOf(endDate));
+    try (
+        PreparedStatement pstmt = conn.prepareStatement(sql.toString())) {
 
-      if (nombreAnunciante != null && !nombreAnunciante.trim().isEmpty() && !nombreAnunciante.equals("Todo")) {
-        pstmt.setString(3, nombreAnunciante);
-        pstmt.setString(4, nombreAnunciante);
-      } else {
-        pstmt.setNull(3, Types.VARCHAR);
-        pstmt.setNull(4, Types.VARCHAR);
+      int paramIndex = 1;
+
+      if (startDate != null) {
+        pstmt.setDate(paramIndex++, Date.valueOf(startDate));
+      }
+      if (endDate != null) {
+        pstmt.setDate(paramIndex++, Date.valueOf(endDate));
+      }
+      if (nombreAnunciante != null && !nombreAnunciante.trim().isEmpty()) {
+        pstmt.setString(paramIndex++, "%" + nombreAnunciante + "%");
       }
 
       try (ResultSet rs = pstmt.executeQuery()) {
@@ -51,17 +61,14 @@ public class AdvertiserProfitDB {
           int userId = rs.getInt("id_usuario");
           String userName = rs.getString("nombre_completo");
 
-          // * Para cada anunciante, obtener sus anuncios */
+          // * Traer los anuncios de ese anunciante
           List<PurchasedAdvertisement> ads = getAdsByAdvertiser(userId, startDate, endDate);
 
-          // * Solo agregar anunciantes que tengan anuncios en el período */
           if (!ads.isEmpty()) {
             AdvertiserList advertiser = new AdvertiserList();
             advertiser.setIdUsuario(userId);
             advertiser.setNombreUsuario(userName);
-            advertiser.setPurchasedAdvertisement(ads.toArray(new PurchasedAdvertisement[0]));
-            advertiser.calculateTotalPurchasedAmount();
-
+            advertiser.setPurchasedAdvertisement(ads);
             advertisers.add(advertiser);
           }
         }
@@ -71,7 +78,6 @@ public class AdvertiserProfitDB {
     }
 
     return advertisers;
-
   }
 
   private List<PurchasedAdvertisement> getAdsByAdvertiser(int userId, LocalDate startDate, LocalDate endDate)
@@ -79,24 +85,36 @@ public class AdvertiserProfitDB {
 
     List<PurchasedAdvertisement> ads = new ArrayList<>();
 
-    Connection conn = DBConnectionSingleton.getInstance().getConnection();
+    StringBuilder sql = new StringBuilder(
+        "SELECT a.id_anuncio, a.nombre_anuncio, ta.tipo_anuncio, " +
+            "pa.fecha_pago, pa.monto_pago " +
+            "FROM pago_anuncio pa " +
+            "INNER JOIN anuncio a ON pa.id_anuncio = a.id_anuncio " +
+            "INNER JOIN configuracion_anuncio ca ON a.id_configuracion_anuncio = ca.id_configuracion_anuncio " +
+            "INNER JOIN tipo_anuncio ta ON ca.id_tipo_anuncio = ta.id_tipo_anuncio " +
+            "WHERE pa.id_usuario = ? ");
 
-    // * Obtenemos los anuncios que ha pagado el anunciante */
-    String sql = "SELECT a.id_anuncio, a.nombre_anuncio, ta.tipo_anuncio, " +
-        "pa.fecha_pago, pa.monto_pago " +
-        "FROM pago_anuncio pa " +
-        "INNER JOIN anuncio a ON pa.id_anuncio = a.id_anuncio " +
-        "INNER JOIN configuracion_anuncio ca ON a.id_configuracion_anuncio = ca.id_configuracion_anuncio " +
-        "INNER JOIN tipo_anuncio ta ON ca.id_tipo_anuncio = ta.id_tipo_anuncio " +
-        "WHERE pa.id_usuario = ? AND pa.fecha_pago BETWEEN ? AND ? " +
-        "ORDER BY pa.fecha_pago DESC";
+    if (startDate != null) {
+      sql.append("AND pa.fecha_pago >= ? ");
+    }
+    if (endDate != null) {
+      sql.append("AND pa.fecha_pago <= ? ");
+    }
 
-    try (
-        PreparedStatement stmt = conn.prepareStatement(sql)) {
+    sql.append("ORDER BY pa.fecha_pago DESC");
 
-      stmt.setInt(1, userId);
-      stmt.setDate(2, Date.valueOf(startDate));
-      stmt.setDate(3, Date.valueOf(endDate));
+    try (Connection conn = DBConnectionSingleton.getInstance().getConnection();
+        PreparedStatement stmt = conn.prepareStatement(sql.toString())) {
+
+      int paramIndex = 1;
+      stmt.setInt(paramIndex++, userId);
+
+      if (startDate != null) {
+        stmt.setDate(paramIndex++, Date.valueOf(startDate));
+      }
+      if (endDate != null) {
+        stmt.setDate(paramIndex++, Date.valueOf(endDate));
+      }
 
       try (ResultSet rs = stmt.executeQuery()) {
         while (rs.next()) {
@@ -115,4 +133,5 @@ public class AdvertiserProfitDB {
 
     return ads;
   }
+
 }

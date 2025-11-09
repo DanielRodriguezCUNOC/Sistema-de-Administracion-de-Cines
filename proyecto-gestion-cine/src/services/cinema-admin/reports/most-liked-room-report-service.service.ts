@@ -8,16 +8,16 @@ import { MostLikedRoomResponseReportDTO } from '../../../models/dto/cinema-admin
   providedIn: 'root',
 })
 export class MostLikedRoomReportService {
-  private apiUrl = `${environment.apiBaseUrl}/cinema-admin/report/liked-room`;
+  private apiUrl = `${environment.apiBaseUrl}/admin-cinema/report/liked-room`;
 
   constructor(private http: HttpClient) {}
 
   generateReport(
-    startDate: string,
-    endDate: string,
-    nombreSala?: string
+    startDate: string | null,
+    endDate: string | null,
+    nombreSala?: string | null
   ): Observable<MostLikedRoomResponseReportDTO> {
-    const url = `${this.apiUrl}/inicio/${startDate}/fin/${endDate}/sala/${nombreSala}`;
+    const url = `${this.apiUrl}/inicio/${startDate}/fin/${endDate}/nombreSala/${nombreSala}`;
     return this.http.get<MostLikedRoomResponseReportDTO>(url).pipe(catchError(this.handleError));
   }
 

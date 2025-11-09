@@ -1,4 +1,4 @@
-package com.api.gestion.cine.db.cinema_dmin;
+package com.api.gestion.cine.db.cinema_admin;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -16,27 +16,26 @@ import com.api.gestion.cine.exceptions.DataBaseException;
 public class SoldTicketReportDB {
 
   public List<SoldTicketData> getSoldTicket(LocalDate startDate, LocalDate endDate, String nombreSala)
-      throws Exception, DataBaseException {
+      throws DataBaseException, Exception {
 
     List<SoldTicketData> listaSalas = new ArrayList<>();
     Connection conn = DBConnectionSingleton.getInstance().getConnection();
 
-    // * Construcción dinámica de la consulta
     StringBuilder sql = new StringBuilder(
         "SELECT s.id_sala, s.nombre_sala, " +
             "u.id_usuario, u.nombre_completo, " +
-            "p.id_pago_boleto, p.cantidad_boleto, p.monto_pago, p.fecha_pago " +
+            "p.cantidad_boleto, p.monto_pago, p.fecha_pago " +
             "FROM pago_boleto p " +
             "INNER JOIN sala s ON p.id_sala = s.id_sala " +
             "INNER JOIN usuario u ON p.id_usuario = u.id_usuario " +
             "WHERE 1=1 ");
 
-    // * Agregar filtros según los parámetros proporcionados
-    if (startDate != null && endDate != null) {
-      sql.append("AND p.fecha_pago BETWEEN ? AND ? ");
-    }
-    if (nombreSala != null && !nombreSala.isEmpty()) {
-      sql.append("AND s.nombre_sala = ? ");
+    if (startDate != null)
+      sql.append("AND p.fecha_pago >= ? ");
+    if (endDate != null)
+      sql.append("AND p.fecha_pago <= ? ");
+    if (nombreSala != null && !nombreSala.trim().isEmpty()) {
+      sql.append("AND s.nombre_sala LIKE ? ");
     }
 
     sql.append("ORDER BY s.id_sala, u.id_usuario");
@@ -44,12 +43,12 @@ public class SoldTicketReportDB {
     try (PreparedStatement stmt = conn.prepareStatement(sql.toString())) {
 
       int index = 1;
-      if (startDate != null && endDate != null) {
+      if (startDate != null)
         stmt.setDate(index++, Date.valueOf(startDate));
+      if (endDate != null)
         stmt.setDate(index++, Date.valueOf(endDate));
-      }
-      if (nombreSala != null && !nombreSala.isEmpty()) {
-        stmt.setString(index++, nombreSala);
+      if (nombreSala != null && !nombreSala.trim().isEmpty()) {
+        stmt.setString(index++, "%" + nombreSala + "%");
       }
 
       try (ResultSet rs = stmt.executeQuery()) {
@@ -60,10 +59,9 @@ public class SoldTicketReportDB {
         while (rs.next()) {
           int idSala = rs.getInt("id_sala");
 
-          // * Si cambia de sala, creamos un nuevo grupo
           if (idSala != salaActual) {
             if (salaData != null) {
-              salaData.setUsuarios(usuarios.toArray(new UserData[0]));
+              salaData.setUsuarios(usuarios);
               listaSalas.add(salaData);
             }
 
@@ -71,11 +69,12 @@ public class SoldTicketReportDB {
             salaData = new SoldTicketData();
             usuarios = new ArrayList<>();
 
-            salaData.setIdBoleto(rs.getInt("id_pago_boleto"));
             salaData.setNombreSala(rs.getString("nombre_sala"));
+            salaData.setIdSala(idSala);
+
           }
 
-          // * Crear usuario asociado
+          // * Crear usuario asociado al pago
           UserData user = new UserData(
               rs.getInt("id_usuario"),
               rs.getString("nombre_completo"),
@@ -85,16 +84,16 @@ public class SoldTicketReportDB {
 
           usuarios.add(user);
         }
-
-        // * Agregar el último grupo
         if (salaData != null) {
-          salaData.setUsuarios(usuarios.toArray(new UserData[0]));
+          salaData.setUsuarios(usuarios);
           listaSalas.add(salaData);
         }
       }
+
+    } catch (Exception e) {
+      throw new DataBaseException("Error al obtener boletos vendidos", e);
     }
 
     return listaSalas;
   }
-
 }

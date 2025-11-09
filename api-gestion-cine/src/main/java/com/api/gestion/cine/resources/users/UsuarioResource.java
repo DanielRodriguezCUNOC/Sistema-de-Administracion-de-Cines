@@ -1,6 +1,14 @@
 package com.api.gestion.cine.resources.users;
 
+import java.io.InputStream;
+
+import org.glassfish.jersey.media.multipart.FormDataBodyPart;
+import org.glassfish.jersey.media.multipart.FormDataParam;
+
+import com.api.gestion.cine.dto.users.CreateUserDTO;
+import com.api.gestion.cine.exceptions.ObjectAlreadyExistsInDB;
 import com.api.gestion.cine.model.user.UsuarioModel;
+import com.api.gestion.cine.services.user.CreateUserService;
 
 import jakarta.websocket.server.PathParam;
 import jakarta.ws.rs.Consumes;
@@ -11,13 +19,43 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-@Path("usuarios")
+@Path("usuario")
 public class UsuarioResource {
 
     @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response crearUsuario(UsuarioModel usuario) {
-        return Response.status(Response.Status.CREATED).entity(usuario).build();
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Response crearUsuario(
+            @FormDataParam("nombreCompleto") String nombreCompleto,
+            @FormDataParam("tipoUsuario") String tipoUsuario,
+            @FormDataParam("usuario") String user,
+            @FormDataParam("password") String password,
+            @FormDataParam("correo") String correo,
+            @FormDataParam("telefono") String telefono,
+            @FormDataParam("foto") InputStream fotoStream,
+            @FormDataParam("foto") FormDataBodyPart fotoPart) {
+        CreateUserService service = new CreateUserService();
+
+        try {
+            CreateUserDTO usuario = service.convertFormDataToDTO(nombreCompleto, tipoUsuario, user, password, correo,
+                    telefono, fotoPart);
+            service.createUser(usuario);
+            return Response.status(Response.Status.CREATED).entity(usuario).build();
+
+        } catch (ObjectAlreadyExistsInDB e) {
+            return Response.status(Response.Status.CONFLICT)
+                    .entity(e.getMessage())
+                    .build();
+
+        } catch (IllegalArgumentException e) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity(e.getMessage())
+                    .build();
+
+        } catch (Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("Error interno al crear usuario")
+                    .build();
+        }
     }
 
     @GET

@@ -3,11 +3,11 @@ package com.api.gestion.cine.services.reports.cinema_admin;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.api.gestion.cine.db.cinema_dmin.MostLikedRoomReportDB;
+import com.api.gestion.cine.db.cinema_admin.MostLikedRoomReportDB;
 import com.api.gestion.cine.dto.reports.cinema_admin.most_liked_room_report.LikedRoomData;
 import com.api.gestion.cine.dto.reports.cinema_admin.most_liked_room_report.MostLikedRoomResponseReportDTO;
 import com.api.gestion.cine.exceptions.ReportServiceException;
-import com.api.gestion.cine.services.util.FormatterDateCustom;
+import com.api.gestion.cine.services.util.ValidatorCustom;
 
 public class MostLikedRoomReportService {
 
@@ -20,19 +20,19 @@ public class MostLikedRoomReportService {
     LocalDate startDate = null;
     LocalDate endDate = null;
 
-    if (fechaInicio != null && !fechaInicio.trim().isEmpty()) {
-      startDate = FormatterDateCustom.parseStringToDate(fechaInicio);
+    if (ValidatorCustom.isValidDate(fechaInicio, fechaFin)) {
+      LocalDate[] dates = ValidatorCustom.convertDateStringToLocalDate(fechaInicio, fechaFin);
+      startDate = dates[0];
+      endDate = dates[1];
+    }
 
-    }
-    if (fechaFin != null && !fechaFin.trim().isEmpty()) {
-      endDate = FormatterDateCustom.parseStringToDate(fechaFin);
-    }
-    if (nombreSala != null && !nombreSala.trim().isEmpty()) {
+    if (ValidatorCustom.isNullOrEmpty(nombreSala)) {
       nombreSala = null;
     }
     try {
       List<LikedRoomData> likedRooms = reportDB.getMostLikedRoom(startDate, endDate, nombreSala);
-      reportDTO.setLikedRooms(likedRooms.toArray(new LikedRoomData[0]));
+      System.out.println("Salas gustadas: " + likedRooms.size());
+      reportDTO.setLikedRooms(likedRooms);
     } catch (Exception e) {
       throw new ReportServiceException("Error al generar el informe de salas más gustadas", e);
     }
