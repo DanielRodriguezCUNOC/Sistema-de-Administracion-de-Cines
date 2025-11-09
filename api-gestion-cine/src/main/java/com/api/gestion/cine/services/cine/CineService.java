@@ -1,7 +1,6 @@
 package com.api.gestion.cine.services.cine;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.List;
 
 import com.api.gestion.cine.db.cine.CineDB;
@@ -33,8 +32,7 @@ public class CineService {
     }
   }
 
-  public void actualizarCinema(int idCine, String nombreCine, LocalDate fechaCreacion,
-      BigDecimal costoOcultacionAnuncio) {
+  public void actualizarCinema(int idCine, String nombreCine) {
     // Validaciones
     if (idCine <= 0) {
       throw new IllegalArgumentException("ID del cine inválido.");
@@ -42,16 +40,10 @@ public class CineService {
     if (nombreCine == null || nombreCine.isBlank()) {
       throw new IllegalArgumentException("El nombre del cine no puede estar vacío.");
     }
-    if (fechaCreacion == null) {
-      throw new IllegalArgumentException("La fecha de creación no puede estar vacía.");
-    }
-    if (costoOcultacionAnuncio == null || costoOcultacionAnuncio.compareTo(BigDecimal.ZERO) < 0) {
-      throw new IllegalArgumentException("El costo de ocultación del anuncio debe ser un número positivo.");
-    }
 
     try {
       CineDB cineDB = new CineDB();
-      cineDB.actualizarCinema(idCine, nombreCine, fechaCreacion, costoOcultacionAnuncio);
+      cineDB.actualizarCinema(idCine, nombreCine);
     } catch (Exception e) {
       throw new RuntimeException("Error al actualizar el cinema: ", e);
     }
@@ -68,7 +60,6 @@ public class CineService {
     }
   }
 
-  // Método para obtener un cine por ID
   public CineModel obtenerCinePorId(int idCine) {
     if (idCine <= 0) {
       throw new IllegalArgumentException("ID del cine inválido.");
@@ -85,7 +76,6 @@ public class CineService {
     }
   }
 
-  // Método para desactivar un cine
   public void desactivarCine(int idCine) {
     if (idCine <= 0) {
       throw new IllegalArgumentException("ID del cine inválido.");
@@ -98,7 +88,6 @@ public class CineService {
     }
   }
 
-  // Método para buscar cines por nombre
   public List<CineModel> buscarCinesPorNombre(String nombre) {
     if (nombre == null || nombre.isBlank()) {
       throw new IllegalArgumentException("El nombre no puede estar vacío.");

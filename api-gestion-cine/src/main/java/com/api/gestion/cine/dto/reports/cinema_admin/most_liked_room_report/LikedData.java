@@ -9,8 +9,6 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 public class LikedData {
     private String nombreUsuario;
     private int valoracion;
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate fechaValoracion;
 
     public LikedData() {

@@ -21,7 +21,6 @@ export class CineService {
   constructor(private http: HttpClient) {}
 
   //* Obtener la lista de cines */
-
   obtenerCines(): Observable<ListadoCineDTO> {
     return this.http.get<ListadoCineDTO>(this.apiUrl);
   }
@@ -44,9 +43,16 @@ export class CineService {
   /*
    * Actualizar un cine existente
    */
-  actualizarCine(idCine: number, cine: Cine): Observable<Cine> {
-    const url = `${this.apiUrl}/actualizar-cine/${idCine}`;
-    return this.http.put<Cine>(url, cine, this.httpOptions);
+  actualizarCine(idCine: number, cineData: { nombreCine: string }): Observable<any> {
+    // Envía solo el string en lugar del objeto
+    const nombreString =
+      typeof cineData.nombreCine === 'string'
+        ? cineData.nombreCine
+        : JSON.stringify(cineData.nombreCine);
+
+    console.log('Enviando solo string:', nombreString);
+
+    return this.http.put(`${this.apiUrl}/${idCine}`, nombreString, this.httpOptions);
   }
 
   /*

@@ -17,7 +17,7 @@ public class ExportMostLikedRoomReportResource {
 
   @GET
   @Path("inicio/{fechaInicio}/fin/{fechaFin}/sala/{nombreSala}")
-  @Produces("application/pdf") // ✅ importante
+  @Produces("application/pdf")
   public Response getResponse(
       @PathParam("fechaInicio") String fechaInicio,
       @PathParam("fechaFin") String fechaFin,

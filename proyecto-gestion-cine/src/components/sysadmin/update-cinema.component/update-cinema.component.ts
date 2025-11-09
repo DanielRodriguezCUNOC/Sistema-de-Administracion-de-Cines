@@ -27,24 +27,24 @@ export class UpdateCinemaComponent implements OnInit {
 
   ngOnInit(): void {
     const idCine = Number(this.route.snapshot.paramMap.get('idCine'));
-    this.obtenerCine(idCine);
     this.inicializarFormulario();
+    this.obtenerCine(idCine);
   }
 
   inicializarFormulario(): void {
     this.cineForm = this.fb.group({
       idCine: [{ value: '', disabled: true }],
       nombreCine: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
-      fechaCreacion: ['', [Validators.required]],
-      costoOcultacionAnuncio: ['', [Validators.required, Validators.min(0)]],
     });
   }
 
   obtenerCine(idCine: number): void {
     this.service.obtenerCinePorId(idCine).subscribe({
       next: (data) => {
+        console.log('Cine obtenido:', data);
         this.cine = data;
         this.cineForm.patchValue(this.cine);
+        this.cineForm.get('idCine')?.setValue(this.cine.idCine);
       },
       error: (error: Error) => {
         this.infoMessage = `Error al obtener el cine: ${error.message}`;
@@ -55,21 +55,48 @@ export class UpdateCinemaComponent implements OnInit {
   }
 
   actualizarCine(): void {
-    if (this.cineForm.valid) {
-      const cineData = this.cineForm.value;
-      this.service.actualizarCine(cineData.idCine, cineData).subscribe({
+    if (this.cineForm.valid && this.cine) {
+      // Obtén el valor directamente del control
+      const nombreControl = this.cineForm.get('nombreCine');
+      if (!nombreControl) {
+        console.error('Control nombreCine no encontrado');
+        return;
+      }
+
+      const nombreCineValue = nombreControl.value;
+
+      console.log('=== DEBUG COMPONENTE ===');
+      console.log('Valor del formulario:', nombreCineValue);
+      console.log('Tipo:', typeof nombreCineValue);
+      console.log('Cine ID:', this.cine.idCine);
+      console.log('========================');
+
+      // Prepara los datos para enviar
+      const cineData = {
+        nombreCine: nombreCineValue,
+      };
+
+      console.log('Datos a enviar al servicio:', cineData);
+
+      this.service.actualizarCine(this.cine.idCine, cineData).subscribe({
         next: () => {
           this.infoMessage = 'Cine actualizado exitosamente';
           this.popupTipo = 'success';
           this.popupMostrar = true;
-          this.router.navigate(['/list-cinema']);
+          setTimeout(() => {
+            this.router.navigate(['/list-cinema']);
+          }, 2000);
         },
         error: (error: Error) => {
+          console.error('Error en la actualización:', error);
           this.infoMessage = `Error al actualizar el cine: ${error.message}`;
           this.popupTipo = 'error';
           this.popupMostrar = true;
         },
       });
+    } else {
+      console.log('Formulario inválido o cine no definido');
+      this.cineForm.markAllAsTouched();
     }
   }
 }

@@ -19,7 +19,7 @@ public class ExportMostLikedRoomReportService {
 
     InputStream reportStream = getClass().getClassLoader()
         .getResourceAsStream(
-            "export/cinema_admin_reports/most_liked_rooms/MostLikedRoomReport.jasper");
+            "export/cinema_admin_reports/most_liked_rooms/MostLikedRoomResponseReportDTO.jasper");
 
     if (reportStream == null) {
       System.out.println("El archivo del informe no se encontró.");
