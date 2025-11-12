@@ -1,0 +1,250 @@
+-- Configuracion de la base de datos
+
+CREATE USER 'codenbugs'@'localhost' IDENTIFIED BY 'code';
+CREATE DATABASE gestion_cine;
+GRANT ALL PRIVILEGES ON gestion_cine.* TO 'codenbugs'@'localhost';
+FLUSH PRIVILEGES;
+
+USE gestion_cine;
+
+-- Creacion de tablas
+
+CREATE TABLE rol (
+ id_rol INT AUTO_INCREMENT PRIMARY KEY,
+ rol VARCHAR(30) UNIQUE NOT NULL 
+);
+
+CREATE TABLE tipo_anuncio (
+ id_tipo_anuncio INT AUTO_INCREMENT PRIMARY KEY,
+ tipo_anuncio VARCHAR(20) UNIQUE NOT NULL
+);
+
+CREATE TABLE tipo_vigencia (
+ id_tipo_vigencia INT AUTO_INCREMENT PRIMARY KEY,
+ tipo_vigencia VARCHAR(50) UNIQUE NOT NULL,
+ duracion INT UNIQUE NOT NULL
+);
+
+CREATE TABLE categoria (
+ id_categoria INT AUTO_INCREMENT PRIMARY KEY,
+ categoria VARCHAR(15) NOT NULL
+);
+
+CREATE TABLE configuracion_anuncio (
+ id_configuracion_anuncio INT AUTO_INCREMENT PRIMARY KEY,
+ id_tipo_anuncio INT NOT NULL,
+ id_tipo_vigencia INT NOT NULL,
+ costo DECIMAL(10,2) NOT NULL,
+ CONSTRAINT fk_configuracion_anuncio_tipo_anuncio
+ FOREIGN KEY (id_tipo_anuncio) REFERENCES tipo_anuncio(id_tipo_anuncio),
+ CONSTRAINT fk_configuracion_anuncio_tipo_vigencia
+ FOREIGN KEY (id_tipo_vigencia) REFERENCES tipo_vigencia(id_tipo_vigencia)
+);
+
+CREATE TABLE usuario (
+ id_usuario INT AUTO_INCREMENT PRIMARY KEY,
+ id_rol INT NOT NULL,
+ nombre_completo VARCHAR(255) NOT NULL UNIQUE,
+ usuario VARCHAR(100) NOT NULL UNIQUE,
+ password VARCHAR(100) NOT NULL,
+ correo VARCHAR(150) NOT NULL UNIQUE,
+ telefono VARCHAR(20) NOT NULL UNIQUE,
+ foto LONGBLOB NULL,
+ CONSTRAINT fk_usuario_rol
+ FOREIGN KEY (id_rol) REFERENCES rol(id_rol)
+);
+
+CREATE TABLE anuncio (
+ id_anuncio INT AUTO_INCREMENT PRIMARY KEY,
+ id_usuario INT NOT NULL,
+ id_configuracion_anuncio INT NOT NULL,
+ nombre_anuncio VARCHAR(100) NOT NULL UNIQUE,
+ fecha_compra DATETIME NOT NULL,
+ fecha_caducidad DATETIME NOT NULL,
+ texto VARCHAR(600) NULL,
+ imagen LONGBLOB NULL, 
+ link_video VARCHAR(600) NULL UNIQUE,
+ estado TINYINT NOT NULL DEFAULT(1),
+ CONSTRAINT fk_anuncio_usuario
+ FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario),
+ CONSTRAINT fk_anuncio_configuracion_anuncio
+ FOREIGN KEY (id_configuracion_anuncio) REFERENCES configuracion_anuncio(id_configuracion_anuncio)
+);
+
+CREATE TABLE pelicula (
+ id_pelicula INT AUTO_INCREMENT PRIMARY KEY,
+ id_usuario INT NOT NULL,
+ titulo_pelicula VARCHAR(50) NOT NULL UNIQUE,
+ sinopsis VARCHAR(500) NOT NULL,
+ duracion INT NOT NULL,
+ reparto VARCHAR(300) NOT NULL,
+ director VARCHAR(150) NOT NULL,
+ clasificacion VARCHAR(5) NOT NULL,
+ fecha_estreno DATE NOT NULL,
+ precio_pelicula DECIMAL(10,2) NOT NULL,
+ poster LONGBLOB NULL,
+ estado TINYINT NOT NULL DEFAULT(1),
+ CONSTRAINT fk_pelicula_usuario
+ FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
+);
+
+CREATE TABLE cine (
+ id_cine INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+ nombre_cine VARCHAR(100) NOT NULL UNIQUE,
+ fecha_creacion DATE NOT NULL,
+ costo_ocultacion_anuncio DECIMAL(10,2) NOT NULL,
+ estado TINYINT NOT NULL DEFAULT(1)
+);
+
+CREATE TABLE sala (
+ id_sala INT AUTO_INCREMENT PRIMARY KEY,
+ id_cine INT NOT NULL,
+ nombre_sala VARCHAR(100) NOT NULL,
+ fila INT NOT NULL,
+ columna INT NOT NULL,
+ estado_comentario TINYINT NOT NULL DEFAULT 1,
+ estado_valoracion TINYINT NOT NULL DEFAULT 1,
+ estado TINYINT NOT NULL DEFAULT(1),
+ CONSTRAINT fk_sala_cine
+ FOREIGN KEY(id_cine) REFERENCES cine(id_cine)
+);
+
+CREATE TABLE categoria_pelicula (
+ id_pelicula INT NOT NULL,
+ id_categoria INT NOT NULL,
+ PRIMARY KEY (id_pelicula, id_categoria),
+ CONSTRAINT fk_categoria_pelicula_pelicula
+ FOREIGN KEY (id_pelicula) REFERENCES pelicula(id_pelicula),
+ CONSTRAINT fk_categoria_pelicula_categoria
+ FOREIGN KEY (id_categoria) REFERENCES categoria(id_categoria)
+);
+
+CREATE TABLE cartera_digital (
+ id_cartera INT AUTO_INCREMENT PRIMARY KEY,
+ id_usuario INT NOT NULL,
+ saldo DECIMAL(10,2) NOT NULL,
+ CONSTRAINT fk_cartera_usuario
+ FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
+);
+
+CREATE TABLE pago_anuncio (
+ id_pago_anuncio INT AUTO_INCREMENT PRIMARY KEY,
+ id_anuncio INT NOT NULL,
+ id_usuario INT NOT NULL,
+ fecha_pago DATE NOT NULL,
+ monto_pago DECIMAL(10,2) NOT NULL,
+ CONSTRAINT fk_pago_anuncio_anuncio
+ FOREIGN KEY (id_anuncio) REFERENCES anuncio(id_anuncio),
+ CONSTRAINT fk_pago_anuncio_usuario
+ FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
+);
+
+CREATE TABLE pago_boleto (
+ id_pago_boleto INT AUTO_INCREMENT PRIMARY KEY,
+ id_pelicula INT NOT NULL,
+ id_usuario INT NOT NULL,
+ id_sala INT NOT NULL,
+ fecha_pago DATE NOT NULL,
+ cantidad_boleto INT NOT NULL,
+ monto_pago DECIMAL(10,2) NOT NULL,
+ CONSTRAINT fk_pago_boleto_pelicula
+ FOREIGN KEY(id_pelicula) REFERENCES pelicula(id_pelicula),
+ CONSTRAINT fk_pago_boleto_usuario
+ FOREIGN KEY(id_usuario) REFERENCES usuario(id_usuario),
+ CONSTRAINT fk_pago_boleto_sala
+ FOREIGN KEY(id_sala) REFERENCES sala(id_sala)
+);
+
+CREATE TABLE pago_ocultacion_anuncios (
+ id_pago_ocultacion INT AUTO_INCREMENT PRIMARY KEY,
+ id_usuario INT NOT NULL,
+ fecha_pago DATE NOT NULL,
+ monto DECIMAL(10,2) NOT NULL,
+ CONSTRAINT fk_pago_ocultacion_usuario
+ FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
+);
+
+CREATE TABLE comentario_pelicula (
+ id_comentario_pelicula INT AUTO_INCREMENT PRIMARY KEY,
+ id_pelicula INT NOT NULL,
+ id_usuario INT NOT NULL,
+ fecha_publicacion DATE NOT NULL,
+ comentario VARCHAR(600) NOT NULL,
+ CONSTRAINT fk_comentario_pelicula_pelicula
+ FOREIGN KEY(id_pelicula) REFERENCES pelicula(id_pelicula),
+ CONSTRAINT fk_comentario_pelicula_usuario
+ FOREIGN KEY(id_usuario) REFERENCES usuario(id_usuario)
+);
+
+CREATE TABLE valoracion_pelicula (
+ id_valoracion_pelicula INT AUTO_INCREMENT PRIMARY KEY,
+ id_pelicula INT NOT NULL,
+ id_usuario INT NOT NULL,
+ fecha_valoracion DATE NOT NULL,
+ valoracion INT NOT NULL CHECK(valoracion BETWEEN 1 AND 5),
+ CONSTRAINT fk_valoracion_pelicula_pelicula
+ FOREIGN KEY(id_pelicula) REFERENCES pelicula(id_pelicula),
+ CONSTRAINT fk_valoracion_pelicula_usuario
+ FOREIGN KEY(id_usuario) REFERENCES usuario(id_usuario)
+);
+
+CREATE TABLE pelicula_proyectada (
+ id_pelicula_proyectada INT AUTO_INCREMENT PRIMARY KEY,
+ id_pelicula INT NOT NULL,
+ id_sala INT NOT NULL,
+ fecha_proyeccion DATE NOT NULL,
+ CONSTRAINT fk_pelicula_proyectada_pelicula
+ FOREIGN KEY(id_pelicula) REFERENCES pelicula(id_pelicula),
+ CONSTRAINT fk_pelicula_proyectada_sala
+ FOREIGN KEY(id_sala) REFERENCES sala(id_sala)
+);
+
+CREATE TABLE comentario_sala (
+ id_comentario_sala INT AUTO_INCREMENT PRIMARY KEY,
+ id_sala INT NOT NULL,
+ id_usuario INT NOT NULL,
+ fecha_publicacion DATE NOT NULL,
+ comentario VARCHAR(600) NOT NULL,
+ CONSTRAINT fk_comentario_sala_sala
+ FOREIGN KEY(id_sala) REFERENCES sala(id_sala),
+ CONSTRAINT fk_comentario_sala_usuario
+ FOREIGN KEY(id_usuario) REFERENCES usuario(id_usuario)
+);
+
+CREATE TABLE valoracion_sala (
+ id_valoracion_sala INT AUTO_INCREMENT PRIMARY KEY,
+ id_sala INT NOT NULL,
+ id_usuario INT NOT NULL,
+ fecha_valoracion DATE NOT NULL,
+ valoracion INT NOT NULL CHECK(valoracion BETWEEN 1 AND 5),
+ CONSTRAINT fk_valoracion_sala_sala
+ FOREIGN KEY(id_sala) REFERENCES sala(id_sala),
+ CONSTRAINT fk_valoracion_sala_usuario
+ FOREIGN KEY(id_usuario) REFERENCES usuario(id_usuario)
+);
+
+CREATE TABLE cine_asignado (
+ id_cine INT NOT NULL,
+ id_usuario INT NOT NULL,
+ PRIMARY KEY (id_cine, id_usuario),
+ FOREIGN KEY (id_cine) REFERENCES cine(id_cine),
+ FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
+);
+
+CREATE TABLE costo_cine (
+ id_costo_cine INT AUTO_INCREMENT PRIMARY KEY,
+ id_cine INT NOT NULL,
+ fecha_modificacion DATE NOT NULL,
+ costo_cine DECIMAL(10,2) NOT NULL,
+ CONSTRAINT fk_costo_cine_cine
+ FOREIGN KEY(id_cine) REFERENCES cine(id_cine)
+);
+
+CREATE TABLE bloqueo_anuncio_cine (
+ id_bloqueo_anuncio_cine INT AUTO_INCREMENT PRIMARY KEY,
+ id_cine INT NOT NULL,
+ fecha_inicio DATETIME NOT NULL,
+ fecha_fin DATETIME NOT NULL,
+ CONSTRAINT fk_bloqueo_anuncio_cine_cine
+ FOREIGN KEY (id_cine) REFERENCES cine(id_cine)
+);
