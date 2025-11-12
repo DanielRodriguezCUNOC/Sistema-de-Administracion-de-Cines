@@ -16,25 +16,33 @@ import com.api.gestion.cine.exceptions.DataBaseException;
 public class MostPopularRoomReportDB {
 
   public List<RoomData> getMostPopularRooms(LocalDate fechaInicio, LocalDate fechaFin) throws Exception {
-
     List<RoomData> popularRooms = new ArrayList<>();
-
     Connection conn = DBConnectionSingleton.getInstance().getConnection();
 
-    String sql = "SELECT s.id_sala, s.nombre_sala, " +
-        "u.nombre_completo as nombre_usuario, " +
-        "SUM(pb.cantidad_boleto) as total_boletos_vendidos " +
-        "FROM sala s " +
-        "INNER JOIN pago_boleto pb ON s.id_sala = pb.id_sala " +
-        "INNER JOIN usuario u ON pb.id_usuario = u.id_usuario " +
-        "WHERE pb.fecha_pago BETWEEN ? AND ? " +
-        "GROUP BY s.id_sala, s.nombre_sala, u.nombre_completo " +
-        "ORDER BY total_boletos_vendidos DESC " +
-        "LIMIT 5";
+    // 🔹 Construcción dinámica del SQL
+    StringBuilder sql = new StringBuilder(
+        "SELECT s.id_sala, s.nombre_sala, " +
+            "u.nombre_completo AS nombre_usuario, " +
+            "SUM(pb.cantidad_boleto) AS total_boletos_vendidos " +
+            "FROM sala s " +
+            "INNER JOIN pago_boleto pb ON s.id_sala = pb.id_sala " +
+            "INNER JOIN usuario u ON pb.id_usuario = u.id_usuario ");
 
-    try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-      pstmt.setDate(1, Date.valueOf(fechaInicio));
-      pstmt.setDate(2, Date.valueOf(fechaFin));
+    // Solo agregamos filtro si ambas fechas están presentes
+    if (fechaInicio != null && fechaFin != null) {
+      sql.append("WHERE pb.fecha_pago BETWEEN ? AND ? ");
+    }
+
+    sql.append("GROUP BY s.id_sala, s.nombre_sala, u.nombre_completo ")
+        .append("ORDER BY total_boletos_vendidos DESC ")
+        .append("LIMIT 5");
+
+    try (PreparedStatement pstmt = conn.prepareStatement(sql.toString())) {
+      // Si hay fechas válidas, las pasamos como parámetros
+      if (fechaInicio != null && fechaFin != null) {
+        pstmt.setDate(1, Date.valueOf(fechaInicio));
+        pstmt.setDate(2, Date.valueOf(fechaFin));
+      }
 
       try (ResultSet rs = pstmt.executeQuery()) {
         while (rs.next()) {
@@ -43,14 +51,15 @@ public class MostPopularRoomReportDB {
           room.setNombreSala(rs.getString("nombre_sala"));
           room.setNombreUsuario(rs.getString("nombre_usuario"));
           room.setTotalBoletosVendidos(rs.getInt("total_boletos_vendidos"));
-
           popularRooms.add(room);
         }
       }
 
     } catch (SQLException e) {
-      throw new DataBaseException("Error al obtener las salas más populares", e);
+      throw new DataBaseException("Error al obtener las salas más populares.", e);
     }
+
     return popularRooms;
   }
+
 }

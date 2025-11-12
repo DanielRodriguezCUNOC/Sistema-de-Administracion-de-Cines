@@ -27,14 +27,24 @@ public class ExportMostLikedRoomReportResource {
 
     try {
       // Servicio que genera el DTO
+      System.out.println("Generando el DTO del informe..." +
+          " fechaInicio=" + fechaInicio +
+          ", fechaFin=" + fechaFin +
+          ", nombreSala=" + nombreSala);
       MostLikedRoomResponseReportDTO reportDTO = reportService.generateReport(fechaInicio, fechaFin, nombreSala);
+      System.out.println("Reporte DTO generado con " +
+          (reportDTO.getLikedRooms() != null ? reportDTO.getLikedRooms().size() : "null") + " likedRooms.");
 
+      System.out.println("Antes de llamar al servicio de exportacion " +
+          (reportDTO.getLikedRooms() != null ? reportDTO.getLikedRooms().size() : "null") + " likedRooms.");
       // Servicio que genera el PDF
       ExportMostLikedRoomReportService service = new ExportMostLikedRoomReportService();
       byte[] pdfData = service.getReport(reportDTO);
+      System.out.println("PDF antes del return: " + (pdfData != null ? pdfData.length : "null"));
 
       if (pdfData == null || pdfData.length == 0) {
-        return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+        System.out.println("No se generó ningún PDF.");
+        return Response.status(Response.Status.NOT_FOUND)
             .entity("No se generó ningún PDF.").build();
       }
 

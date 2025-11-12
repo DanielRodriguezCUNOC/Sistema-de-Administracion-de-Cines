@@ -31,7 +31,7 @@ public class MostLikedRoomReportDB {
       sql.append("AND vs.fecha_valoracion >= ? ");
     if (endDate != null)
       sql.append("AND vs.fecha_valoracion <= ? ");
-    if (nombreSala != null && !nombreSala.trim().isEmpty() && !nombreSala.equalsIgnoreCase("Todo"))
+    if (nombreSala != null && !nombreSala.trim().isEmpty())
       sql.append("AND s.nombre_sala LIKE ? ");
 
     sql.append("GROUP BY s.id_sala, s.nombre_sala ")
