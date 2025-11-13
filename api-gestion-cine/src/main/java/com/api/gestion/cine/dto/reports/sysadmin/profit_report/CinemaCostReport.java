@@ -4,24 +4,19 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
-
 public class CinemaCostReport {
 
     private int idCine;
     private String nombreCine;
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @JsonSerialize(using = LocalDateSerializer.class)
     private List<LocalDate> fechasModificacion;
-    private BigDecimal[] costos;
+    private List<BigDecimal> costos;
     private BigDecimal costoTotal;
 
     public CinemaCostReport() {
     }
 
-    public CinemaCostReport(int idCine, String nombreCine, List<LocalDate> fechasModificacion, BigDecimal[] costos) {
+    public CinemaCostReport(int idCine, String nombreCine, List<LocalDate> fechasModificacion,
+            List<BigDecimal> costos) {
         this.idCine = idCine;
         this.nombreCine = nombreCine;
         this.fechasModificacion = fechasModificacion;
@@ -44,11 +39,11 @@ public class CinemaCostReport {
         this.nombreCine = nombreCine;
     }
 
-    public BigDecimal[] getCostos() {
+    public List<BigDecimal> getCostos() {
         return costos;
     }
 
-    public void setCostos(BigDecimal[] costos) {
+    public void setCostos(List<BigDecimal> costos) {
         this.costos = costos;
     }
 

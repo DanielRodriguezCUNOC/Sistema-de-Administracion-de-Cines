@@ -6,16 +6,16 @@ import java.util.List;
 
 public class LikedRoomData {
 
-    private int idSala;
+    private Integer idSala;
     private String nombreSala;
-    private int cantidadValoraciones;
+    private Integer cantidadValoraciones;
     private BigDecimal promedioValoracion;
     private List<LikedData> valoraciones;
 
     public LikedRoomData() {
     }
 
-    public LikedRoomData(int idSala, String nombreSala, int cantidadValoraciones, BigDecimal promedioValoracion,
+    public LikedRoomData(int idSala, String nombreSala, Integer cantidadValoraciones, BigDecimal promedioValoracion,
             List<LikedData> valoraciones) {
         this.idSala = idSala;
         this.nombreSala = nombreSala;
@@ -24,11 +24,11 @@ public class LikedRoomData {
         this.valoraciones = valoraciones;
     }
 
-    public int getIdSala() {
+    public Integer getIdSala() {
         return idSala;
     }
 
-    public void setIdSala(int idSala) {
+    public void setIdSala(Integer idSala) {
         this.idSala = idSala;
     }
 
@@ -40,11 +40,11 @@ public class LikedRoomData {
         this.nombreSala = nombreSala;
     }
 
-    public int getCantidadValoraciones() {
+    public Integer getCantidadValoraciones() {
         return cantidadValoraciones;
     }
 
-    public void setCantidadValoraciones(int cantidadValoraciones) {
+    public void setCantidadValoraciones(Integer cantidadValoraciones) {
         this.cantidadValoraciones = cantidadValoraciones;
     }
 
@@ -70,7 +70,7 @@ public class LikedRoomData {
             return;
         }
 
-        int suma = 0;
+        Integer suma = 0;
         for (LikedData likedData : valoraciones) {
             suma += likedData.getValoracion();
         }

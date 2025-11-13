@@ -36,8 +36,8 @@ export class ProfitReportComponent {
 
     const { fechaInicio, fechaFin } = this.reportForm.value;
 
-    const startDate = fechaInicio || '';
-    const endDate = fechaFin || '';
+    const startDate = fechaInicio ? fechaInicio : null;
+    const endDate = fechaFin ? fechaFin : null;
 
     this.profitReportService.generateReport(startDate, endDate).subscribe({
       next: (data: ProfitReportResponseDTO) => {

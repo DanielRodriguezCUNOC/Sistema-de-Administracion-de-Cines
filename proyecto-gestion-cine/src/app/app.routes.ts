@@ -35,6 +35,8 @@ import { CreateMovieFormComponent } from '../components/movies/create-movie-form
 import { ListCinemaComponent } from '../components/sysadmin/list-cinema.component/list-cinema.component';
 import { UpdateCinemaComponent } from '../components/sysadmin/update-cinema.component/update-cinema.component';
 import { ListMovieComponent } from '../components/sysadmin/list-movie.component/list-movie.component';
+import { Component } from '@angular/core';
+import { CreateAdminCinemaComponent } from '../components/sysadmin/create-admin-cinema.component/create-admin-cinema.component';
 
 export const routes: Routes = [
   {
@@ -221,6 +223,10 @@ export const routes: Routes = [
       {
         path: 'list-movie',
         component: ListMovieComponent,
+      },
+      {
+        path: 'create-admin-cinema',
+        component: CreateAdminCinemaComponent,
       },
     ],
   },

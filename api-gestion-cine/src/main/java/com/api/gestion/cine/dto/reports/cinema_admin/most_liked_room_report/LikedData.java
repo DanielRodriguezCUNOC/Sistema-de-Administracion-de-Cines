@@ -4,13 +4,13 @@ import java.time.LocalDate;
 
 public class LikedData {
     private String nombreUsuario;
-    private int valoracion;
+    private Integer valoracion;
     private LocalDate fechaValoracion;
 
     public LikedData() {
     }
 
-    public LikedData(String nombreUsuario, int valoracion, LocalDate fechaValoracion) {
+    public LikedData(String nombreUsuario, Integer valoracion, LocalDate fechaValoracion) {
         this.nombreUsuario = nombreUsuario;
         this.valoracion = valoracion;
         this.fechaValoracion = fechaValoracion;
@@ -24,11 +24,11 @@ public class LikedData {
         this.nombreUsuario = nombreUsuario;
     }
 
-    public int getValoracion() {
+    public Integer getValoracion() {
         return valoracion;
     }
 
-    public void setValoracion(int valoracion) {
+    public void setValoracion(Integer valoracion) {
         this.valoracion = valoracion;
     }
 

@@ -8,7 +8,7 @@ import { MostPopularRoomReportResponseDTO } from '../../../models/dto/sysadmin/m
   providedIn: 'root',
 })
 export class MostPopularRoomReportService {
-  private apiUrl = `${environment.apiBaseUrl}/sysadmin/report/commented-room`;
+  private apiUrl = `${environment.apiBaseUrl}/sysadmin/report/popular-room`;
 
   constructor(private http: HttpClient) {}
   generateReport(fechaInicio: string | null, fechaFin: string | null) {

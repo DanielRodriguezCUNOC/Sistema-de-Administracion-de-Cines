@@ -9,45 +9,49 @@ import com.api.gestion.cine.dto.reports.sysadmin.profit_report.AdvertisementProf
 import com.api.gestion.cine.dto.reports.sysadmin.profit_report.CinemaCostReport;
 import com.api.gestion.cine.dto.reports.sysadmin.profit_report.ProfitReportResponseDTO;
 import com.api.gestion.cine.exceptions.ReportServiceException;
-import com.api.gestion.cine.services.util.FormatterDateCustom;
+import com.api.gestion.cine.services.util.ValidatorCustom;
 
 public class ProfitReportService {
-
         public ProfitReportResponseDTO generateReport(String fechaInicio, String fechaFin) throws Exception {
-
-                LocalDate startDate = FormatterDateCustom.parseStringToDate(fechaInicio);
-                LocalDate endDate = FormatterDateCustom.parseStringToDate(fechaFin);
-
                 ProfitReportResponseDTO report = new ProfitReportResponseDTO();
                 ProfitReportDB profitReportDB = new ProfitReportDB();
 
-                // *Obtenemos los dato desde la BD
+                LocalDate startDate = null;
+                LocalDate endDate = null;
 
                 try {
-                        List<CinemaCostReport> cinemaCosts = profitReportDB.getCinemaCosts(startDate, endDate);
-                        List<AdvertisementProfitReport> adPayments = profitReportDB
-                                        .getAdvertisementPayments(startDate, endDate);
-                        List<AdvertisementProfitReport> adBlockPayments = profitReportDB
-                                        .getAdBlockPayments(startDate, endDate);
+                        // Validación usando tu ValidatorCustom
+                        if (!ValidatorCustom.isNullOrEmpty(fechaInicio) || !ValidatorCustom.isNullOrEmpty(fechaFin)) {
+                                if (!ValidatorCustom.isValidDate(fechaInicio, fechaFin)) {
+                                        throw new ReportServiceException(
+                                                        "Formato de fecha inválido. Debe ser yyyy-MM-dd");
+                                }
 
-                        // * Calcular costo total de cines */
+                                LocalDate[] dates = ValidatorCustom.convertDateStringToLocalDate(fechaInicio, fechaFin);
+                                startDate = dates[0];
+                                endDate = dates[1];
+                        }
+
+                        // 🔹 Si no hay fechas, las pasamos como null al DB → traer todos los datos
+                        List<CinemaCostReport> cinemaCosts = profitReportDB.getCinemaCosts(startDate, endDate);
+                        List<AdvertisementProfitReport> adPayments = profitReportDB.getAdvertisementPayments(startDate,
+                                        endDate);
+                        List<AdvertisementProfitReport> adBlockPayments = profitReportDB.getAdBlockPayments(startDate,
+                                        endDate);
+
+                        // Calcular costos
                         for (CinemaCostReport cinemaCost : cinemaCosts) {
                                 if (cinemaCost.getCostos() != null) {
                                         cinemaCost.calcularCostoTotal();
-
                                 } else {
                                         cinemaCost.setCostoTotal(BigDecimal.ZERO);
                                 }
                         }
 
-                        // * Asignamos los datos al reporte */
-
+                        // Asignar datos al reporte
                         report.setCostoCinema(cinemaCosts);
-
                         report.setAdvertisementPaymentAmount(adPayments);
                         report.setAmountAdBlock(adBlockPayments);
-
-                        // * Asignar valores totales */
                         report.assignValues();
 
                         return report;
@@ -55,7 +59,6 @@ public class ProfitReportService {
                 } catch (Exception e) {
                         throw new ReportServiceException("Error al generar informe de ganancias", e);
                 }
-
         }
 
 }

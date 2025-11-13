@@ -37,6 +37,7 @@ export class MostPopularRoomReportComponent {
     this.service.generateReport(startDate, endDate).subscribe({
       next: (data: MostPopularRoomReportResponseDTO) => {
         this.report = data;
+        console.log(data);
         this.infoMessage = 'Informe generado exitosamente';
         this.popupTipo = 'success';
         this.popupMostrar = true;

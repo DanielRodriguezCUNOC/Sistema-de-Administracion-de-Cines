@@ -43,14 +43,14 @@
       </h2>
     </div>
 
-    @if (report.roomList.length === 0) {
+    @if (report.roomData.length === 0) {
     <div class="alert-info">
       <i class="bi bi-info-circle"></i>
       No hay datos de salas populares para el intervalo seleccionado.
     </div>
     } @else {
     <div class="popular-rooms-grid">
-      @for (room of report.roomList; track room.idSala; let rank = $index) {
+      @for (room of report.roomData; track room.idSala; let rank = $index) {
       <div class="room-card" [class]="'rank-' + (rank + 1)">
         <div class="room-rank">
           <span class="rank-number">#{{ rank + 1 }}</span>
